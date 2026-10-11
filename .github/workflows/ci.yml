@@ -30,6 +30,17 @@ jobs:
       - name: Check repository and licensing contracts
         run: python3 tools/ci/check_repo.py
 
+      - name: Checkout pinned creator CC0 artwork (no upstream code imported)
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: pixel-boy/NinjaAdventure
+          ref: 6ac78232d5aedcc85ce5f27d060ea92366f7c24a
+          path: _vendor_reference/ninja
+          persist-credentials: false
+
+      - name: Verify and import selected CC0 environment textures
+        run: python3 tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
+
       - name: Build original PNG sprites and verify art contracts
         shell: bash
         run: |
@@ -115,6 +126,9 @@ jobs:
           echo 'All output atlases are attached as PNG and JSON artifacts. Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
           mkdir -p artifacts/atlases
           cp assets/*.png assets/atlas.json artifacts/atlases/
+          mkdir -p artifacts/cc0_sources
+          cp assets/third_party/ninja_adventure/PROVENANCE.json artifacts/cc0_sources/
+          cp assets/third_party/ninja_adventure/*.png artifacts/cc0_sources/
           for capture in artifacts/screenshots/*.png; do
             if test -f "$capture"; then echo "- $(basename "$capture")" >> "$GITHUB_STEP_SUMMARY"; fi
           done
@@ -154,6 +168,20 @@ jobs:
           $exe = Get-ChildItem $dest -Recurse -Filter '*win64_console.exe' | Select-Object -First 1
           if ($null -eq $exe) { throw 'Godot console executable not found' }
           Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
+
+      - name: Checkout pinned creator CC0 artwork on Windows
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: pixel-boy/NinjaAdventure
+          ref: 6ac78232d5aedcc85ce5f27d060ea92366f7c24a
+          path: _vendor_reference/ninja
+          persist-credentials: false
+
+      - name: Verify and import selected CC0 environment textures on Windows
+        shell: pwsh
+        run: |
+          python tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
+          if ($LASTEXITCODE -ne 0) { throw 'CC0 source asset validation failed' }
 
       - name: Build and validate original art on Windows
         shell: pwsh

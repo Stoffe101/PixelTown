@@ -10,3 +10,8 @@ artifacts/
 Thumbs.db
 .vscode/
 .idea/
+
+# Pinned creator CC0 artwork fetched/imported reproducibly by CI or locally.
+_vendor_reference/
+/assets/third_party/ninja_adventure/*.png
+/assets/third_party/ninja_adventure/PROVENANCE.json

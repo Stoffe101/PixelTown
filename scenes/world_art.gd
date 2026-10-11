@@ -3,6 +3,11 @@ extends Node2D
 ## View/sprite animations are driven by the existing deterministic demo state.
 
 const TERRAIN = preload("res://assets/terrain.png")
+# CC0 art selected from Pixel-boy's Ninja Adventure; original art author separate
+# from PixelTown's ARR source. See docs/10 and import_ninja_cc0.py.
+const CC0_FLOOR = preload("res://assets/third_party/ninja_adventure/tileset_floor.png")
+const CC0_INTERIOR = preload("res://assets/third_party/ninja_adventure/tileset_interior_floor.png")
+const CC0_VILLAGE = preload("res://assets/third_party/ninja_adventure/tileset_village_abandoned.png")
 const OBJECTS = preload("res://assets/objects.png")
 const BODIES = preload("res://assets/characters.png")
 const EQUIPMENT = preload("res://assets/equipment.png")
@@ -88,12 +93,22 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 	var set := TileSet.new()
 	set.tile_size = TILE
 	var atlas := TileSetAtlasSource.new()
-	atlas.texture = TERRAIN
+	atlas.texture = CC0_INTERIOR if underground else CC0_FLOOR
 	atlas.texture_region_size = TILE
-	for y in range(4):
-		for x in range(16):
-			atlas.create_tile(Vector2i(x, y))
-	var source_id: int = set.add_source(atlas)
+	# Only the authored cells used by this miniature are instantiated.
+	# The third-party sheets contain unused empty regions.
+	for y in range(7,16):
+		for x in range(0,22):
+			if underground and x >= 22:
+				continue
+			atlas.create_tile(Vector2i(x,y))
+	var atlas_id: int = set.add_source(atlas)
+	var water_tiles := TileSetAtlasSource.new()
+	water_tiles.texture = TERRAIN
+	water_tiles.texture_region_size = TILE
+	for x in range(8,16):
+		water_tiles.create_tile(Vector2i(x,1))
+	var water_id: int = set.add_source(water_tiles)
 	var ground := TileMapLayer.new()
 	ground.name = "CaveTiles" if underground else "VillageTiles"
 	ground.tile_set = set
@@ -104,42 +119,27 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 		for x in range(WIDTH):
 			var seed: int = _hash(x,y,1 if underground else 0)
 			var cell: Vector2i
+			var source_id := atlas_id
 			if underground:
-				# Irregular exposed rock on both cavern sides, with a clear
-				# central floor where the actual encounter happens.
+				# Darker brickwork is from the *same* CC0 source family.
 				var north: int = 13 + _hash(x,3,45) % 3
 				var south: int = 33 - _hash(x,9,51) % 3
-				var wall: bool = (y < north or y > south or x < 3 or x > WIDTH-4)
-				cell = Vector2i(seed % 8,3 if wall else 2)
+				var wall: bool = y < north or y > south or x < 3 or x > WIDTH-4
+				cell = Vector2i(13 + seed % 5, 12 if wall else 15)
 				if not wall and x > 19 and x < 53 and abs(y-22) < 3:
-					cell = Vector2i(8 + seed % 8,2)
+					cell = Vector2i(12 + seed % 6, 14)
 			else:
-				cell = Vector2i(seed % 8,0)
+				cell = Vector2i(2 + seed % 2, 12)
 				if _is_road(x,y):
-					var up: bool = _is_road(x,y-1)
-					var down: bool = _is_road(x,y+1)
-					var left: bool = _is_road(x-1,y)
-					var right: bool = _is_road(x+1,y)
-					if not up and not left:
-						cell = Vector2i(13,0)
-					elif not up and not right:
-						cell = Vector2i(14,0)
-					elif not down and not right:
-						cell = Vector2i(15,0)
-					elif not up:
-						cell = Vector2i(9,0)
-					elif not down:
-						cell = Vector2i(10,0)
-					elif not left:
-						cell = Vector2i(11,0)
-					elif not right:
-						cell = Vector2i(12,0)
-					else:
-						cell = Vector2i(8,0)
+					cell = Vector2i(7,8)
+					if not _is_road(x,y-1): cell = Vector2i(7,7)
+					elif not _is_road(x,y+1): cell = Vector2i(7,9)
 				if y >= 30 and y <= 36:
+					source_id = water_id
 					cell = Vector2i(8 + seed % 8,1)
 				if y >= 30 and y <= 36 and x >= 32 and x <= 36:
-					cell = Vector2i(seed % 8,1)
+					source_id = atlas_id
+					cell = Vector2i(7,8)
 			ground.set_cell(Vector2i(x,y), source_id, cell)
 
 func _is_road(x:int,y:int) -> bool:
@@ -151,14 +151,26 @@ func _is_road(x:int,y:int) -> bool:
 			return true
 	return false
 
+func _cc0_object(parent: Node2D, name: String, region: Rect2, foot: Vector2) -> Sprite2D:
+	var s := Sprite2D.new()
+	s.name = name
+	s.texture = _atlas_region(CC0_VILLAGE,region)
+	s.centered = false
+	s.offset = Vector2(-region.size.x/2.0,-region.size.y)
+	s.position = foot
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	parent.add_child(s)
+	return s
+
 func _make_village_objects() -> void:
 	# Props are actual reuse of a single sprite atlas, not rect commands.
+	# CC0 canopy sprite trials: same native 16px grid as the selected terrain.
 	for point in [Vector2(73,309),Vector2(278,270),Vector2(499,271),Vector2(800,267),Vector2(1050,298),Vector2(124,443),Vector2(1033,451)]:
-		_object(village,"tree",point)
+		_cc0_object(village,"CC0 Tree",Rect2(0,101,64,55),point)
 	_object(village,"cottage",Vector2(207,335))
 	_object(village,"storage",Vector2(386,334))
 	_object(village,"forge",Vector2(613,336))
-	_object(village,"cave_mouth",Vector2(935,343))
+	_cc0_object(village,"CC0 Rock Cave",Rect2(0,0,64,52),Vector2(935,343))
 	_object(village,"well",Vector2(489,433))
 	_object(village,"farm",Vector2(230,459))
 	_object(village,"farm",Vector2(954,455))
