@@ -8,6 +8,7 @@ const TERRAIN = preload("res://assets/terrain.png")
 const CC0_FLOOR = preload("res://assets/third_party/ninja_adventure/tileset_floor.png")
 const CC0_INTERIOR = preload("res://assets/third_party/ninja_adventure/tileset_interior_floor.png")
 const CC0_VILLAGE = preload("res://assets/third_party/ninja_adventure/tileset_village_abandoned.png")
+const CURATED_HOUSES = preload("res://assets/third_party/ninja_adventure/curated_houses.png")
 const OBJECTS = preload("res://assets/objects.png")
 const BODIES = preload("res://assets/characters.png")
 const EQUIPMENT = preload("res://assets/equipment.png")
@@ -200,15 +201,26 @@ func _cc0_object(parent: Node2D, name: String, region: Rect2, foot: Vector2) -> 
 	parent.add_child(s)
 	return s
 
+func _curated_house(parent: Node2D, kind: String, region: Rect2, foot: Vector2) -> Sprite2D:
+	var sprite := Sprite2D.new()
+	sprite.name = kind
+	sprite.texture = _atlas_region(CURATED_HOUSES,region)
+	sprite.centered = false
+	sprite.offset = Vector2(-region.size.x/2.0,-region.size.y)
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	sprite.position = foot
+	parent.add_child(sprite)
+	return sprite
+
 func _make_village_objects() -> void:
 	# Keep the eye on three human-scale landmark buildings and their work.
 	# All landmark facades are cropped from one cleared, attribution-tracked
 	# CC0 environment atlas. Source coordinates are not enlarged or traced.
 	# Use distinct ground positions so this reads as a settlement rather than
 	# identically sized items on one display shelf.
-	_cc0_object(village,"Timber Cottage",Rect2(176, 96, 82, 80),Vector2(250,365))
-	_cc0_object(village,"Village Storehouse",Rect2(255, 96, 65, 80),Vector2(409,331))
-	_cc0_object(village,"Village Smithy",Rect2(221, 0, 65, 91),Vector2(621,357))
+	_curated_house(village,"Timber Cottage",Rect2(0, 0, 67, 76),Vector2(250,365))
+	_curated_house(village,"Village Storehouse",Rect2(80, 12, 64, 57),Vector2(409,331))
+	_curated_house(village,"Village Smithy",Rect2(160, 12, 64, 57),Vector2(621,357))
 	_cc0_object(village,"Cave Gate",Rect2(0,0,64,52),Vector2(949,342))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.
