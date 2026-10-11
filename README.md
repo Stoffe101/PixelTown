@@ -4,6 +4,13 @@
 
 **Status:** pre-production / design documentation. **PixelTown is a temporary repo name, not the final game title.** No playable game, approved art pack, or implemented systems are implied by these documents.
 
+## License and public visibility
+
+**Copyright © 2026 Christoffer Lööf. All rights reserved.** Original source code, artwork, designs, documentation, and other project materials are **proprietary, not open-source**. This repository is intentionally public so development can use public GitHub CI minutes, **not** to grant permission for reuse, modification, commercial use or redistribution. See [LICENSE](LICENSE) and [Contributor policy](CONTRIBUTING.md).
+
+GitHub's Terms of Service still permit ordinary viewing and platform functionality (including certain forking). Public visibility cannot prevent unauthorized copying; it means the repository is viewable without granting an open-source license. Any future third-party assets keep their own licenses and must be tracked separately.
+
+
 ## The fantasy
 
 Start with a handful of little inhabitants. They gather, farm, transport goods, and work in a village that visibly lives. Build a workshop and smithy, commission equipment, train or recruit adventurers, choose a party and its supplies, and send it into the caves. Watch explorers navigate and fight automatically, with optional tactical commands. Discoveries and rare materials return to the village to unlock new recipes, infrastructure, and capabilities. The upgraded settlement prepares stronger and more interesting expeditions. Both halves of the game continue supporting each other.
