@@ -39,3 +39,7 @@ python tools/art/curate_v4_houses.py
 ```
 
 Open `project.godot` in Godot 4.7.2. F1 shows/hides temporary help; 1/2 compares current size candidates; Tab changes between village/cave. Your physical Windows test still matters, and none of these generated sprites are frozen as a final art pack.
+
+## Latest owner-feedback checkpoint and current capture
+
+The [latest verified Linux/Windows render run, 38157472174](https://github.com/Stoffe101/PixelTown/actions/runs/38157472174), places all four village landmarks within the normal 1920×1080 camera without clipping the cottage. The HUD is less intrusive, and carried vs. delivered wood are visibly linked to state. In 3440×1440 the environment extends horizontally without sprite stretching. Screenshot review still indicates **Art Gate A = FAIL**: generic/spaced-out structures, insufficient natural ground transitions, no properly layered Aseprite character artwork and an unconvincing cave chamber. Production-design acceptance must not be inferred from successful CI.

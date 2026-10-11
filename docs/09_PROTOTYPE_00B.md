@@ -72,3 +72,16 @@ The owner explicitly rejected the previous screenshot quality as resembling toy 
 CI provenance: [last green art-camera run, before source-driven wood visuals](https://github.com/Stoffe101/PixelTown/actions/runs/38156614365). Any later run/capture supersedes it for code-quality claims. The wood-hauling sprite and plot alignment were adjusted to match the actual conserved resource ledger, preserving all simulation tests.
 
 Full, explicit acceptance/failure criteria in [12_VISUAL_QUALITY_GATE.md](12_VISUAL_QUALITY_GATE.md). The next art work should be a source-editable, **hero-quality blacksmith and character**, not random decorative scatter. The PR stays draft and main unchanged.
+
+## 2026-10-11: composition, grounded wood hauling and QA revision
+
+The owner called out the previous render as resembling toy bricks. Instead of adding random decoration, the branch now separates concerns: pinned CC0 nature art with **reproducibly masked, transparent** candidate facade crops (not damaged hand-uploaded PNGs); quieter original meadow variants and thinner branching paths; a cooler, quieter cave floor rather than a repeating brickwork carpet; and a smaller world-first diagnostic HUD.
+
+Critical actual-scene fixes: fit the cottage, storage, forge and cave gate into the **1920×1080** camera view (where the first house was previously clipped and cave was offscreen), update cave click target, and align the physical construction plot with the worker's simulation target. Three delivered bundles and the one carried bundle are now shown **only when the real demonstration resource ledger says they exist**.
+
+- [CI run 38156344505](https://github.com/Stoffe101/PixelTown/actions/runs/38156344505): successful reproducible source-derived building imagery on Linux and Windows, replacing broken uploaded PNG.
+- [CI run 38156614365](https://github.com/Stoffe101/PixelTown/actions/runs/38156614365): passed road and cave floor revision, real captures at 16:9 and ultrawide.
+- [CI run 38157195023](https://github.com/Stoffe101/PixelTown/actions/runs/38157195023): passed simulation-linked carried/delivered wood sprites.
+- [CI run 38157472174](https://github.com/Stoffe101/PixelTown/actions/runs/38157472174): passed camera/landmark composition and smaller temporary HUD. Real screenshots reviewed at 1920×1080 and 3440×1440.
+
+**Art Gate A: STILL FAILED.** The 1080p framing and material feedback are genuinely better, but the villagers remain crude, the supposedly medieval CC0 facades are too generic and the cave lacks convincing wall geometry, lighting hierarchy and a recognizable adventure composition. The next visual stage must be a **purpose-authored original hero building and human/equipment sheet** in Aseprite, not a sixth automatic background-tile variation. No final art is approved and no main merge is authorized.
