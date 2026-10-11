@@ -127,23 +127,28 @@ jobs:
           3440 1440 cave 1 8 2
           CAPTURES
 
-      - name: Pixel-density A/B visual experiment (2× physical pixels)
+      - name: Pixel-density A/B visual experiment (2x physical pixels)
         shell: bash
         run: |
-          # Isolated throwaway comparison. Keep the canonical 640×360
-          # configuration until actual gameplay screenshot approval.
+          # Temporary art comparison only. Restore the tested production
+          # 640x360 contract after captures; keep main project untouched.
           cp project.godot artifacts/logs/project-before-density-experiment.godot
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('project.godot')
-          t=p.read_text()
-          assert 'window/size/viewport_width=640' in t
-          assert 'window/size/viewport_height=360' in t
-          p.write_text(t.replace('window/size/viewport_width=640','window/size/viewport_width=960')
-                       .replace('window/size/viewport_height=360','window/size/viewport_height=540'))
-          PY
           for dims in '1920 1080' '3440 1440'; do
             read -r width height <<< "$dims"
+            # Force exactly 2 physical pixels per logical pixel for the
+            # preview rather than relying on Godot's viewport rounding.
+            python3 - "$width" "$height" <<'PY'
+          import sys
+          from pathlib import Path
+          w,h=int(sys.argv[1]),int(sys.argv[2])
+          assert w%2==0 and h%2==0
+          text=Path('artifacts/logs/project-before-density-experiment.godot').read_text()
+          assert 'window/size/viewport_width=640' in text
+          assert 'window/size/viewport_height=360' in text
+          text=text.replace('window/size/viewport_width=640',f'window/size/viewport_width={w//2}')
+          text=text.replace('window/size/viewport_height=360',f'window/size/viewport_height={h//2}')
+          Path('project.godot').write_text(text)
+          PY
             for view in village cave; do
               output="artifacts/screenshots/${width}x${height}-${view}-density2x.png"
               timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
