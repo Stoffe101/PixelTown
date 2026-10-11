@@ -23,7 +23,7 @@
 | D-015 | Avoid uncanny/overly exaggerated character proportions and random inconsistent AI assets | Player disliked earlier character references |
 | D-016 | **Prove pixel-art pipeline in an actual Godot prototype** before creating large asset catalogs | Feasibility and consistency |
 | D-017 | **Prototype first**, notably The First Descent: tiny village, workshop, two adventurers, three floor difficulties, one meaningful discovery | Prevent long work on unproven gameplay |
-| D-018 | Original code/art/docs are **All Rights Reserved**, even though the repo is public | Public access is for review and CI, not reuse permission |
+| D-019 | **3440×1440 ultrawide monitor is a required supported resolution** alongside conventional 16:9 desktop targets | Real user display; include in QA from the beginning; exact presentation/scaling remains a prototype question |\n| D-018 | Original code/art/docs are **All Rights Reserved**, even though the repo is public | Public access is for review and CI, not reuse permission |
 
 ## Strong design intentions, pending prototype evidence
 

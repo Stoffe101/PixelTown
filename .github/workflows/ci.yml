@@ -1,0 +1,168 @@
+name: Godot CI
+
+on:
+  push:
+    branches: [main, 'ci/**']
+  pull_request:
+  workflow_dispatch:
+
+# Public-repository workflows are untrusted: don't provide write tokens or secrets.
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  GODOT_VERSION: '4.7.2'
+
+jobs:
+  linux-and-visual:
+    name: Linux, unit tests, rendered resolutions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout, without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Check repository and licensing contracts
+        run: python3 tools/ci/check_repo.py
+
+      - name: Install pinned Godot and verify release hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/godot"
+          curl --fail --location --retry 3 --silent --show-error \
+            "https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip" \
+            --output "$RUNNER_TEMP/godot.zip"
+          echo "cadd3204e728a35d3f13adb7fd0d7902636b79f6b95c40c265eb73b6c35329e4  $RUNNER_TEMP/godot.zip" | sha256sum --check --status
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          mv "$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" "$RUNNER_TEMP/godot/godot"
+          chmod +x "$RUNNER_TEMP/godot/godot"
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+
+      - name: Godot version and asset import/parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/logs
+          godot --version
+          timeout 120s godot --headless --editor --import --path . --log-file artifacts/logs/linux-import.log 2>&1 | tee artifacts/logs/linux-import.stdout.log
+          python3 tools/ci/check_engine_log.py artifacts/logs/linux-import.stdout.log
+
+      - name: Engine unit tests and runtime smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 120s godot --headless --path . --script res://tests/ci_runner.gd --log-file artifacts/logs/linux-unit.log 2>&1 | tee artifacts/logs/linux-unit.stdout.log
+          python3 tools/ci/check_engine_log.py artifacts/logs/linux-unit.stdout.log
+          timeout 120s godot --headless --path . --quit-after 12 --log-file artifacts/logs/linux-smoke.log 2>&1 | tee artifacts/logs/linux-smoke.stdout.log
+          python3 tools/ci/check_engine_log.py artifacts/logs/linux-smoke.stdout.log
+
+      - name: Ensure virtual display is available
+        shell: bash
+        run: |
+          if ! command -v xvfb-run >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends xvfb
+          fi
+
+      - name: Render and validate 16:9 and ultrawide screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/screenshots
+          for size in '1920 1080' '2560 1440' '3440 1440'; do
+            read -r width height <<< "$size"
+            stem="${width}x${height}"
+            output="artifacts/screenshots/display-probe-${stem}.png"
+            timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${stem}" --windowed \
+              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" \
+              2>&1 | tee "artifacts/logs/render-${stem}.log"
+            python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
+            python3 tools/ci/verify_png.py "$output" "$width" "$height"
+          done
+
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          echo '## PixelTown Linux CI' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Godot 4.7.2; unit tests, engine smoke, and actual rendered display-probe captures.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Requested resolutions: 1920x1080, 2560x1440, **3440x1440**.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'These are **display diagnostics, not final game-art screenshots or approved baselines**.' >> "$GITHUB_STEP_SUMMARY"
+          for size in 1920x1080 2560x1440 3440x1440; do
+            if test -s "artifacts/screenshots/display-probe-${size}.png"; then
+              echo "- Captured: ${size}" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "- Missing: ${size}" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+
+      - name: Attach render evidence and failure logs (no baseline updates)
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: linux-godot-evidence
+          path: artifacts/
+          retention-days: 7
+          if-no-files-found: warn
+
+  windows-smoke:
+    name: Windows Godot parse, unit tests, smoke
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - name: Checkout, without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Install pinned Windows Godot and verify hash
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $uri = 'https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_win64.exe.zip'
+          $zip = Join-Path $env:RUNNER_TEMP 'godot.zip'
+          Invoke-WebRequest -Uri $uri -OutFile $zip
+          $actual = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actual -ne '731980f9608d61333e5baf54a2ef17210acc7a538446c0cb9969f002aca1e953') {
+            throw "Windows Godot checksum mismatch: $actual"
+          }
+          $dest = Join-Path $env:RUNNER_TEMP 'godot'
+          Expand-Archive -Path $zip -DestinationPath $dest
+          $exe = Get-ChildItem $dest -Recurse -Filter '*win64_console.exe' | Select-Object -First 1
+          if ($null -eq $exe) { throw 'Godot console executable not found' }
+          Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
+
+      - name: Project import, unit tests and boot on Windows
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force artifacts/logs | Out-Null
+          & $env:GODOT_EXE --version
+          & $env:GODOT_EXE --headless --editor --import --path . --log-file artifacts/logs/windows-import.log
+          if ($LASTEXITCODE -ne 0) { Get-Content artifacts/logs/windows-import.log -ErrorAction SilentlyContinue; throw "Windows import failed, exit code $LASTEXITCODE" }
+          python tools/ci/check_engine_log.py artifacts/logs/windows-import.log
+          if ($LASTEXITCODE -ne 0) { throw 'Windows import log contains errors' }
+          & $env:GODOT_EXE --headless --path . --script res://tests/ci_runner.gd --log-file artifacts/logs/windows-unit.log
+          if ($LASTEXITCODE -ne 0) { Get-Content artifacts/logs/windows-unit.log -ErrorAction SilentlyContinue; throw 'Windows unit tests failed' }
+          python tools/ci/check_engine_log.py artifacts/logs/windows-unit.log
+          if ($LASTEXITCODE -ne 0) { throw 'Windows test log contains errors' }
+          & $env:GODOT_EXE --headless --path . --quit-after 12 --log-file artifacts/logs/windows-smoke.log
+          if ($LASTEXITCODE -ne 0) { throw 'Windows game boot failed' }
+          python tools/ci/check_engine_log.py artifacts/logs/windows-smoke.log
+          if ($LASTEXITCODE -ne 0) { throw 'Windows smoke log contains errors' }
+
+      - name: Attach Windows failure logs
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: windows-godot-logs
+          path: artifacts/logs/
+          retention-days: 7
+          if-no-files-found: warn

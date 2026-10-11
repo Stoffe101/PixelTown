@@ -28,7 +28,7 @@ The settlement should feel comfortable, charming and autonomous; going undergrou
 | [First prototype & roadmap](docs/04_PROTOTYPE_AND_ROADMAP.md) | The First Descent vertical slice, acceptance gates, future phases and boundaries |
 | [Decisions & open questions](docs/05_DECISIONS_AND_OPEN_QUESTIONS.md) | Agreed ideas versus illustrative examples and unresolved design decisions |
 | [Technical approach & QA](docs/06_TECHNICAL_AND_QA.md) | Proposed engine, modular simulation, evidence, testing and documentation rules |
-| [New-chat handoff](docs/START_HERE_NEXT_CHAT.md) | Self-contained prompt to give a fresh ChatGPT conversation |
+| [CI and ultrawide display](docs/07_CI_AND_DISPLAY.md) | Implemented initial CI checks, diagnostic rendering evidence and 3440×1440 support target |\n| [New-chat handoff](docs/START_HERE_NEXT_CHAT.md) | Self-contained prompt to give a fresh ChatGPT conversation |
 
 **Start with the vision, decisions log and first prototype** before implementing features.
 
@@ -41,3 +41,7 @@ All mechanics are **design only** until implemented and tested. The older NODE//
 ## Source of truth
 
 This repository tracks the design discussion through October 2026. Gameplay decisions may evolve through prototypes and explicit player review. Preserve previously agreed decisions when refining the design, and mark newly invented details as proposals, not commitments.
+
+## First technical foundation
+
+A provisional Godot 4.7.2 display probe and CI pipeline now live in this repository. They are NOT the visual prototype or gameplay. CI checks Linux + Windows startup and captures 1920×1080, 2560×1440 and 3440×1440 diagnostics with real Godot rendering. See [CI & display](docs/07_CI_AND_DISPLAY.md) for evidence and limits.
