@@ -77,3 +77,7 @@ Then open Godot 4.7.2. CI imports the **same SHA256-verified source PNGs** from 
 The first and second source-atlas trials **did not pass the desired visual bar**. The current screenshots are technical experiments. See [review checklist, current problems and required hero art](docs/12_VISUAL_QUALITY_GATE.md). No finalized proprietary production sprites or approved visual regression baselines exist yet.
 
 **Local build order:** run `python -m pip install pillow==11.3.0`, then `python tools/art/build_art.py`, then `python tools/art/import_ninja_cc0.py --zip "/local/path/Godot Project V4.zip"`, then `python tools/art/curate_v4_houses.py`, then open Godot. CI automatically does these source steps.
+
+## Art Pass 01 status
+
+[Art Pass 01 implementation, evidence and failed visual gate](docs/13_ART_PASS_01.md) includes original isolated smithy/cottage/storage/cave artwork, original trees, layered character/equipment masters and a source-driven construction-stage visualization. [Display-density experiment](docs/14_DISPLAY_DENSITY_EXPERIMENT.md) compares 2×-physical-pixel captures against the canonical viewport. **The latest technical checks pass; the art is still awaiting substantial hand-polish and owner approval.**

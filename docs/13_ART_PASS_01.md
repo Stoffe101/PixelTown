@@ -43,3 +43,16 @@ Art Gate A must fail if any of those visual fundamentals still look cheap. Do no
 **Latest visual-specific work:** a purpose-authored half-built scaffold and a completed community hut replace the earlier X-marked crossed-square placeholder; three real delivered wood bundles remain tied to the demo's material ledger. A cave mineral shrine adds a deliberate focal landmark. These are isolated original PNGs with layered editable masters. Review them only using CI evidence from commits after this paragraph; don't claim the latest revisions look finished before inspecting those images.
 
 **Art Gate A remains open.** Next artistic problem is environmental composition and character charm, not additional code-generated roof styles.
+
+## Real visual QA outcome for the complete first pass
+
+[CI run 38161167674](https://github.com/Stoffe101/PixelTown/actions/runs/38161167674) passed **Linux and Windows**, including deterministic simulation tests, actual Godot 1920×1080 / 2560×1440 / 3440×1440 village-and-cave screenshots, density comparisons, source-layer verification, and frame/PNG integrity. The exact tested artwork includes the two-stage hut and mineral shrine.
+
+**Actual manual screenshot review:**
+- The original pitched buildings now have separate silhouettes and coherent material sets. The arbitrary ruined-building atlas crops and overflowing neighboring pixels are gone from the four key landmarks.
+- The supported wood-hauling demonstration now shows discrete delivered logs, scaffolding and a matched finished structure; it is no longer a giant X-marked square.
+- The guard visibly equips a layered helmet/shield/sword, but the character animation is still **blocky and too simple** compared to the target professional visual language. Correct sheet geometry alone is not attractive art.
+- The cave has a threshold, authored rock forms and central mineral shrine; despite that, terrain remains too uniform and the cave wall/lighting composition is still **not immersive**.
+- The 1920×1080 2× density sample looks less like oversized toy blocks, while the 3440×1440 universal 2× view reveals too much empty meadow. No scale is final.
+
+**Conclusion: Art Gate A remains FAILED.** This is a genuine, technically green, source-editable starting point but **not a release-worthy art direction yet**. The next art pass should prioritize hand-drawn source-art improvements, natural landscape and cave transitions, lighting/value grouping, and fluid expressive animations, evaluated at both screen sizes. Keep PR #4 draft and `main` untouched.
