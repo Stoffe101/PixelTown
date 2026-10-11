@@ -387,8 +387,9 @@ def make_inhabitants():
                      "#3b655f" if role==0 else "#526372")
                 line(detail,[(xc,fy-20),(xc,fy-7)],"#95a493",2)
             # Pixel limbs with genuinely different work and attack poses.
-            ly=-24 if work else -21 if strike else -19
-            ry=-22 if strike else -19
+            # Actual alternating tool/action poses, not duplicate cells.
+            ly=(-25 if frame==4 else -17) if work else (-23 if frame==6 else -18) if strike else -19
+            ry=(-17 if frame==4 else -25) if work else (-17 if frame==6 else -23) if strike else -19
             rect(skin,(xc-w-3,fy+ly-short,xc-w+1,fy-11),
                  "#c39070")
             rect(skin,(xc+w-1,fy+ry-short,xc+w+3,fy-11),
@@ -426,7 +427,11 @@ def make_inhabitants():
                 rect(detail,(xc+6,fy-13,xc+8,fy-11),"#c59b61")
                 rect(detail,(xc-5,fy-18,xc-3,fy-16),"#e1bb86")
                 if work:
-                    rect(detail,(xc-9,fy-27-short,xc-8,fy-19-short),"#a48a65")
+                    # Hammer lifts and lowers with the real work-frame index.
+                    head_y = fy - (27 if frame==4 else 20) - short
+                    rect(detail,(xc-9,head_y,xc-8,head_y+9),"#a48a65")
+                    rect(detail,(xc-13,head_y-2,xc-6,head_y),"#bac8c4")
+                    rect(detail,(xc-11,head_y-3,xc-9,head_y-1),"#e7d6ad")
             else:
                 ey=32*direction
                 cfy=ey+31
@@ -450,7 +455,7 @@ def make_inhabitants():
                 rect(shield,(xx+1,cfy-19-short,xx+7,cfy-14-short),"#b98453")
                 rect(shield,(xx+3,cfy-17-short,xx+5,cfy-13-short),"#eacb86")
                 xx=xc+11 if direction!=2 else xc-13
-                offset=-7 if strike else 0
+                offset=-7 if frame==6 else 2 if frame==7 else 0
                 ar(weapon,xx,-28+offset,xx+2,-10+offset,"#99b6bb")
                 ar(weapon,xx,-29+offset,xx+1,-24+offset,"#d8dfd9")
                 ar(weapon,xx-3,-12+offset,xx+5,-10+offset,"#edc48d")

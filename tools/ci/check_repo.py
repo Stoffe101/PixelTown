@@ -13,6 +13,7 @@ REQUIRED = (
     "scenes/main.gd",
     "scenes/levels/village_layout.tscn",
     "scenes/levels/cave_layout.tscn",
+    "scenes/levels/character_studio.tscn",
     "assets/terrain_paint_tileset.tres",
     "setup-pixeltown.ps1",
     ".gitattributes",

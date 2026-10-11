@@ -3,6 +3,7 @@ extends RefCounted
 
 const Village = preload("res://scenes/levels/village_layout.tscn")
 const Cave = preload("res://scenes/levels/cave_layout.tscn")
+const Studio = preload("res://scenes/levels/character_studio.tscn")
 const DemoState = preload("res://scripts/demo_simulation.gd")
 
 func run() -> Array[String]:
@@ -51,6 +52,10 @@ func run() -> Array[String]:
 			issues.append("Prop has missing art or wrong anchor: " + name)
 		if item != null:
 			item.free()
+	var studio := Studio.instantiate()
+	if studio.get_child_count() < 20:
+		issues.append("Character studio is missing direction/gear previews")
+	studio.free()
 	village.free()
 	cave.free()
 	return issues

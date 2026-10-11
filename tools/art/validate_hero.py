@@ -46,7 +46,20 @@ def main():
             for col in range(16):
                 if im.crop((col*24,row*32,(col+1)*24,(row+1)*32)).getchannel("A").getbbox() is None:
                     raise ValueError(f"{name}: blank frame {col},{row}")
-    print("HERO ART PASS: all 4-way frames nonempty and layered masters verified")
+    # Real action frames must differ. This prevents accidentally exporting
+    # duplicate worker hammer or guard strike frames.
+    for direction in range(4):
+        worker=Image.open(TARGET/"inhabitants.png").convert("RGBA")
+        guard_gear=Image.open(TARGET/"guard_equipment.png").convert("RGBA")
+        for scale in range(2):
+            base=scale*8
+            def frame(img,row,col):
+                return img.crop((col*24,row*32,(col+1)*24,(row+1)*32)).tobytes()
+            if frame(worker,direction,base+4) == frame(worker,direction,base+5):
+                raise ValueError(f"Identical worker work poses dir={direction} scale={scale}")
+            if frame(guard_gear,direction,base+6) == frame(guard_gear,direction,base+7):
+                raise ValueError(f"Identical equipment strike poses dir={direction} scale={scale}")
+    print("HERO ART PASS: all 4-way frames nonempty and active poses distinct")
 if __name__=="__main__":
     try:main()
     except (ValueError,OSError,zipfile.BadZipFile) as exc:
