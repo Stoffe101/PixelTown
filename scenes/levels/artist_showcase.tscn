@@ -12,6 +12,14 @@ y_sort_enabled = true
 
 [node name="ExistingVillage" parent="." instance=ExtResource("Base")]
 
+[editable path="ExistingVillage"]
+
+[node name="Objects" parent="ExistingVillage" index="2"]
+visible = false
+
+[node name="EditorBackdrop" parent="ExistingVillage" index="0"]
+visible = false
+
 [node name="ShowcaseCamera" type="Camera2D" parent="."]
 position = Vector2(552, 351)
 
