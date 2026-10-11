@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3]
+[ext_resource type="PackedScene" path="res://scenes/levels/village_layout.tscn" id="Base"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/HouseSmall.tscn" id="P0"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Blacksmith.tscn" id="P1"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/StorageHut.tscn" id="P2"]
+[ext_resource type="PackedScene" path="res://scenes/environment/OakTree.tscn" id="P3"]
+[ext_resource type="PackedScene" path="res://scenes/environment/LargeRock.tscn" id="P4"]
+[ext_resource type="PackedScene" path="res://scenes/props/Barrel.tscn" id="P5"]
+[ext_resource type="PackedScene" path="res://scenes/caves/CaveEntrance.tscn" id="P6"]
+[node name="ArtistShowcase" type="Node2D"]
+y_sort_enabled = true
+
+[node name="ExistingVillage" parent="." instance=ExtResource("Base")]
+
+[node name="ShowcaseCamera" type="Camera2D" parent="."]
+position = Vector2(552, 351)
+
+[node name="HouseTest01" parent="." instance=ExtResource("P0")]
+position = Vector2(300, 337)
+
+[node name="HouseTest02" parent="." instance=ExtResource("P0")]
+position = Vector2(425, 310)
+
+[node name="HouseTest03" parent="." instance=ExtResource("P0")]
+position = Vector2(690, 380)
+
+[node name="SmithyTest" parent="." instance=ExtResource("P1")]
+position = Vector2(576, 313)
+
+[node name="StorehouseTest" parent="." instance=ExtResource("P2")]
+position = Vector2(782, 349)
+
+[node name="OakTree01" parent="." instance=ExtResource("P3")]
+position = Vector2(242, 300)
+
+[node name="OakTree02" parent="." instance=ExtResource("P3")]
+position = Vector2(352, 232)
+
+[node name="OakTree03" parent="." instance=ExtResource("P3")]
+position = Vector2(532, 250)
+
+[node name="OakTree04" parent="." instance=ExtResource("P3")]
+position = Vector2(735, 246)
+
+[node name="OakTree05" parent="." instance=ExtResource("P3")]
+position = Vector2(825, 319)
+
+[node name="Rock01" parent="." instance=ExtResource("P4")]
+position = Vector2(610, 365)
+
+[node name="Rock02" parent="." instance=ExtResource("P4")]
+position = Vector2(484, 408)
+
+[node name="Barrel01" parent="." instance=ExtResource("P5")]
+position = Vector2(630, 361)
+
+[node name="Barrel02" parent="." instance=ExtResource("P5")]
+position = Vector2(760, 395)
+
+[node name="CaveEntranceTest" parent="." instance=ExtResource("P6")]
+position = Vector2(850, 440)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/placeable_sprite.gd" id="Placeable"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="Texture"]
+
+[sub_resource type="RectangleShape2D" id="Footprint"]
+size = Vector2(64, 24)
+
+[node name="StorageHut" type="Sprite2D"]
+script = ExtResource("Placeable")
+texture_filter = 1
+texture = ExtResource("Texture")
+centered = false
+offset = Vector2(-62, -105)
+display_name = "Storage Hut"
+category = "Building"
+footprint_cells = Vector2i(4, 3)
+blocks_movement = true
+
+[node name="Obstacle" type="StaticBody2D" parent="."]
+position = Vector2(0, -16)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+shape = SubResource("Footprint")
