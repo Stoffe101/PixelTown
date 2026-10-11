@@ -125,15 +125,15 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 				var north: int = 13 + _hash(x,3,45) % 3
 				var south: int = 33 - _hash(x,9,51) % 3
 				var wall: bool = y < north or y > south or x < 3 or x > WIDTH-4
-				cell = Vector2i(13 + seed % 5, 12 if wall else 15)
+				cell = Vector2i(13 + seed % 2, 13 if wall else 10)
 				if not wall and x > 19 and x < 53 and abs(y-22) < 3:
-					cell = Vector2i(12 + seed % 6, 14)
+					cell = Vector2i(12 + seed % 2, 7)
 			else:
 				cell = Vector2i(2 + seed % 2, 12)
 				if _is_road(x,y):
-					cell = Vector2i(7,8)
-					if not _is_road(x,y-1): cell = Vector2i(7,7)
-					elif not _is_road(x,y+1): cell = Vector2i(7,9)
+					cell = Vector2i(8,8)
+					if not _is_road(x,y-1): cell = Vector2i(8,7)
+					elif not _is_road(x,y+1): cell = Vector2i(8,9)
 				if y >= 30 and y <= 36:
 					source_id = water_id
 					cell = Vector2i(8 + seed % 8,1)
@@ -166,7 +166,7 @@ func _make_village_objects() -> void:
 	# Props are actual reuse of a single sprite atlas, not rect commands.
 	# CC0 canopy sprite trials: same native 16px grid as the selected terrain.
 	for point in [Vector2(73,309),Vector2(278,270),Vector2(499,271),Vector2(800,267),Vector2(1050,298),Vector2(124,443),Vector2(1033,451)]:
-		_cc0_object(village,"CC0 Tree",Rect2(0,101,64,55),point)
+		_cc0_object(village,"CC0 Tree",Rect2(0,101,64,43),point)
 	_object(village,"cottage",Vector2(207,335))
 	_object(village,"storage",Vector2(386,334))
 	_object(village,"forge",Vector2(613,336))

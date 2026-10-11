@@ -96,7 +96,7 @@ func _create_hud() -> void:
 	var header := PanelContainer.new()
 	header.name = "Header"
 	header.position = Vector2(12, 12)
-	header.custom_minimum_size = Vector2(270, 55)
+	header.custom_minimum_size = Vector2(230, 55)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color("#17232ae9")
 	style.border_color = Color("#b5ab7d")
@@ -137,9 +137,9 @@ func _update_presentation() -> void:
 	world.update_art(sim, selected_view == "cave", art_scale)
 	var label_size := "16 x 24" if art_scale == 0 else "20 x 30"
 	if selected_view == "village":
-		hud_title.text = "THE LITTLE SETTLEMENT  /  ART PROTOTYPE 00B"
+		hud_title.text = "VILLAGE  /  ART PROTOTYPE 00B"
 		hud_detail.text = "Wood: %d  |  At plot: %d/3  |  %s" % [sim.storage_wood,sim.delivered_wood,sim.status()]
 	else:
-		hud_title.text = "UNDER THE HILL  /  CAVE ART PROTOTYPE 00B"
+		hud_title.text = "CAVE  /  ART PROTOTYPE 00B"
 		hud_detail.text = "Guard vs cavern slime  |  Slime vitality: %d/5  |  Demo encounters: %d" % [sim.enemy_hp, sim.expedition_loot]
 	hud_footer.text = "TAB views   1/2 character (%s)   SPACE pause   R reset   MMB pan   wheel zoom" % label_size
