@@ -85,3 +85,7 @@ The first and second source-atlas trials **did not pass the desired visual bar**
 ## Edit the village and cave in Godot (artist workflow)
 
 [**Editable village, cave, terrain painting and prefab guide**](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md). Switch to draft feature branch `prototype/art-direction-v1-00b` (not `main`) and run `setup-pixeltown.ps1` once with the legally cleared CC0 Godot V4 source pack. In Godot, open `scenes/levels/village_layout.tscn` or `cave_layout.tscn`. Drag prefabs from `scenes/props/`, move/duplicate scenery under `Objects`, paint optional terrain under `PaintedTerrain`, and place the simulation's locations with `Markers`. Scene changes persist on disk and the demonstration logic reads their positions. Art sign-off is still pending.
+
+## Art assets are real files, not runtime-generated images
+
+Art Pass 01 now tracks all required original PNG/ORA art, selected CC0 texture sheets, source provenance, and saved tile-painted Godot scenes. A fresh clone or branch checkout **must open in Godot without Python, ZIP files, generation scripts or downloading dependencies**. `tools/art/` is an optional offline authoring toolkit, never game startup logic. `setup-pixeltown.ps1` verifies tracked files instead of generating them. Run `python tools/ci/check_asset_dependencies.py` to verify that scene/script art dependencies are present **and tracked in Git**. See [editable scene guide](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md).

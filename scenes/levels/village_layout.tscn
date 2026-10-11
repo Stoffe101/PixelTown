@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/original/hero/cottage.png" id="tcottage"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="tstorehouse"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/smithy.png" id="tsmithy"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/cave_gate.png" id="tcave_gate"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/construction_site.png" id="tconstruction_site"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/watch_hut.png" id="twatch_hut"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/mature_tree.png" id="tmature_tree"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="tguard_equipment"]
@@ -98,6 +99,13 @@ offset = Vector2(-65, -110)
 [node name="ConstructionSite" type="Sprite2D" parent="Objects"]
 position = Vector2(731, 370)
 texture = ExtResource("tconstruction_site")
+centered = false
+offset = Vector2(-59, -94)
+
+[node name="CompletedHut" type="Sprite2D" parent="Objects"]
+visible = false
+position = Vector2(731, 370)
+texture = ExtResource("twatch_hut")
 centered = false
 offset = Vector2(-59, -94)
 

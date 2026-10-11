@@ -1,24 +1,14 @@
-# PixelTown / Godot 4 generated editor state.
+# Godot editor caches and build/debug outputs only
 .godot/
 *.gd.uid
-
-# Build outputs and diagnostic captures.
 artifacts/
 *.log
 
-# Generated art preview exports are reproducible from tools/art and
-# should not crowd GitHub Desktop on every local rebuild.
-# Hand-authored replacements must be saved under assets/handmade/
-# and source masters under art/handmade/ instead.
-/assets/*.png
-/assets/atlas.json
-/assets/original/hero/*.png
-/art/source/architecture/*.ora
-/assets/third_party/ninja_adventure/*.png
-/assets/third_party/ninja_adventure/PROVENANCE.json
+# Temporary cloned upstream sources, NOT shipping art.
 _vendor_reference/
 
-# OS/IDE state.
+# ORIGINAL PixelTown PNG/ORA art and CC0 assets are deliberately tracked!
+# Never ignore assets/ or art/source/architecture/ again.
 .DS_Store
 Thumbs.db
 .vscode/

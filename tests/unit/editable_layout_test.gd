@@ -21,6 +21,10 @@ func run() -> Array[String]:
 			"Markers/GuardPost", "Markers/EnemySpawn"]:
 		if cave.get_node_or_null(path) == null:
 			issues.append("Cave is missing editable node: " + path)
+	for layout in [village,cave]:
+		var terrain := layout.get_node_or_null("PaintedTerrain") as TileMapLayer
+		if terrain == null or terrain.get_used_cells().size() < 500:
+			issues.append("Editable terrain was not committed to the scene file")
 	var site: Sprite2D = village.get_node_or_null("Objects/ConstructionSite")
 	var storage: Marker2D = village.get_node_or_null("Markers/Storage")
 	if site != null and storage != null:

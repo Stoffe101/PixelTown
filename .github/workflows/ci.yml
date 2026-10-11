@@ -30,33 +30,14 @@ jobs:
       - name: Check repository and licensing contracts
         run: python3 tools/ci/check_repo.py
 
-      - name: Checkout pinned creator CC0 artwork (no upstream code imported)
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          repository: pixel-boy/NinjaAdventure
-          ref: 6ac78232d5aedcc85ce5f27d060ea92366f7c24a
-          path: _vendor_reference/ninja
-          persist-credentials: false
-
-      - name: Verify and import selected CC0 environment textures
-        run: python3 tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
-
-      - name: Generate clean isolated CC0 building candidates
+      - name: Validate committed source artwork (no runtime generation)
         shell: bash
         run: |
+          set -euo pipefail
           python3 -m pip install --disable-pip-version-check pillow==11.3.0
-          python3 tools/art/curate_v4_houses.py
-
-      - name: Render original layered hero artwork
-        run: |
-          python3 tools/art/hero_art.py
-          python3 tools/art/validate_hero.py
-
-      - name: Build original PNG sprites and verify art contracts
-        shell: bash
-        run: |
-          python3 tools/art/build_art.py
+          python3 tools/ci/check_asset_dependencies.py
           python3 tools/art/validate_assets.py
+          python3 tools/art/validate_hero.py
 
       - name: Install pinned Godot and verify release hash
         shell: bash
@@ -217,43 +198,17 @@ jobs:
           if ($null -eq $exe) { throw 'Godot console executable not found' }
           Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
 
-      - name: Checkout pinned creator CC0 artwork on Windows
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          repository: pixel-boy/NinjaAdventure
-          ref: 6ac78232d5aedcc85ce5f27d060ea92366f7c24a
-          path: _vendor_reference/ninja
-          persist-credentials: false
-
-      - name: Verify and import selected CC0 environment textures on Windows
-        shell: pwsh
-        run: |
-          python tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
-          if ($LASTEXITCODE -ne 0) { throw 'CC0 source asset validation failed' }
-
-      - name: Generate clean CC0 building candidates on Windows
+      - name: Validate committed artwork on Windows
         shell: pwsh
         run: |
           python -m pip install --disable-pip-version-check pillow==11.3.0
-          if ($LASTEXITCODE -ne 0) { throw 'Pinned art dependency install failed' }
-          python tools/art/curate_v4_houses.py
-          if ($LASTEXITCODE -ne 0) { throw 'CC0 building generation failed' }
-
-      - name: Render original layered hero artwork on Windows
-        shell: pwsh
-        run: |
-          python tools/art/hero_art.py
-          if ($LASTEXITCODE -ne 0) { throw 'Layered hero art generation failed' }
-          python tools/art/validate_hero.py
-          if ($LASTEXITCODE -ne 0) { throw 'Layered hero art validation failed' }
-
-      - name: Build and validate original art on Windows
-        shell: pwsh
-        run: |
-          python tools/art/build_art.py
-          if ($LASTEXITCODE -ne 0) { throw 'Art generation failed' }
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot install art validator dependency' }
+          python tools/ci/check_asset_dependencies.py
+          if ($LASTEXITCODE -ne 0) { throw 'Committed asset dependencies are missing' }
           python tools/art/validate_assets.py
-          if ($LASTEXITCODE -ne 0) { throw 'Art validation failed' }
+          if ($LASTEXITCODE -ne 0) { throw 'Art sheets are invalid' }
+          python tools/art/validate_hero.py
+          if ($LASTEXITCODE -ne 0) { throw 'Hero master integrity failure' }
 
       - name: Project import, unit tests and boot on Windows
         shell: pwsh

@@ -5,14 +5,8 @@
 ## First-time installation on Windows
 
 1. In GitHub Desktop, **Fetch origin**. The latest Art Pass is on branch `prototype/art-direction-v1-00b`, **not** `main`. From **Current Branch** choose it; if there are local changes, first use **Branch → Stash All Changes** (or commit work you want to keep). Do not blindly discard edits to `project.godot` or `main.tscn`. The Godot-generated `*.gd.uid` files are temporarily ignored, as this prototype references scripts by path. After switching, pull.
-2. Install Python 3 and Godot **4.7.2**. Keep a local copy of the originally supplied **Godot Project V4.zip**, which contains the CC0 Ninja Adventure reference textures. The paid/restricted packs are not used.
-3. Right-click `setup-pixeltown.ps1` and run with PowerShell, or from a terminal in the project folder run:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\setup-pixeltown.ps1 -GodotExampleZip "D:\Assets\Godot Project V4.zip"
-   ```
-
-   The script verifies source file hashes, regenerates our original PNG sprites and layered OpenRaster masters, and prepares the selected CC0 terrain. **These preview PNGs must be generated once before opening the level scenes**. Rerunning the generator overwrites generated previews, so save manually edited artwork into `assets/handmade/` and source masters into `art/handmade/`.
+2. Install **Godot 4.7.2**. PixelTown's PNG sprite sheets, isolated prop art, CC0 dependency files and layered OpenRaster masters are **committed to the feature branch**. **You do not need Python or any asset ZIP to load/edit scenes.**
+3. Optional: run `powershell -ExecutionPolicy Bypass -File .\\setup-pixeltown.ps1` to check that the committed art files exist. This script **does not regenerate or overwrite artwork**.
 4. Open `project.godot` in Godot. Let the import scan finish. In FileSystem, open **`scenes/levels/village_layout.tscn`** or **`scenes/levels/cave_layout.tscn`**.
 
 ## Place and reposition artwork visually
@@ -56,7 +50,7 @@ This is a practical authoring workflow, not permanent locking of camera scale or
 
 ## Troubleshooting: where are my art assets?
 
-The GitHub branch tracks the **source generators and level files**, but to keep generated preview files from flooding GitHub Desktop the generated `assets/original/hero/*.png` and `art/source/architecture/*.ora` are temporarily ignored. **Run `setup-pixeltown.ps1` once before opening the editor scenes.** If Godot reports missing textures after switching branches, close the editor, run setup and reopen the project so import can complete. To make permanent original work, save a **new source** under `art/handmade/` and PNG export under `assets/handmade/`; these directories are intentionally NOT ignored and should be committed alongside scene changes. The setup script must never be rerun over those handmade paths.
+All required PNGs, tilesets, level scenes and initial layered source masters are version-controlled. When you clone/pull the feature branch, opening Godot **must work directly**. `setup-pixeltown.ps1` only validates presence and will report a broken checkout rather than hide the error. Add any new art source under `art/handmade/` and PNGs under `assets/handmade/`, or edit the existing source master deliberately and commit its matching export.
 
 ## Character art and animation workflow
 
