@@ -20,26 +20,30 @@ func _capture() -> void:
 	var scale_choice := int(args[4]) if args.size() > 4 else 0
 	var seconds := float(args[5]) if args.size() > 5 else 0.0
 	var camera_zoom := float(args[6]) if args.size() > 6 else 1.0
-	if mode != "village" and mode != "cave":
+	if mode != "village" and mode != "cave" and mode != "showcase":
 		printerr("Unknown capture mode ",mode)
 		quit(2)
 		return
 
 	DisplayServer.window_set_size(expected_size)
-	var source := load("res://scenes/main.tscn") as PackedScene
+	var scene_file: String = "res://scenes/levels/artist_showcase.tscn" if mode == "showcase" else "res://scenes/main.tscn"
+	var source := load(scene_file) as PackedScene
 	if source == null:
 		printerr("Unable to load main scene")
 		quit(1)
 		return
 	var scene: Node = source.instantiate()
 	get_root().add_child(scene)
-	if not scene.has_method("configure_capture"):
+	if mode != "showcase" and not scene.has_method("configure_capture"):
 		printerr("Scene missing capture configuration")
 		quit(1)
 		return
-	scene.call("configure_capture",mode,scale_choice,seconds)
+	if mode != "showcase":
+		scene.call("configure_capture",mode,scale_choice,seconds)
+	else:
+		(scene.get_node("ShowcaseCamera") as Camera2D).make_current()
 	if camera_zoom != 1.0:
-		var camera: Camera2D = scene.get_node_or_null("WorldCamera")
+		var camera: Camera2D = scene.get_node_or_null("ShowcaseCamera" if mode == "showcase" else "WorldCamera")
 		if camera != null:
 			camera.zoom = Vector2.ONE * camera_zoom
 	for i in range(6):

@@ -85,3 +85,8 @@ Critical actual-scene fixes: fit the cottage, storage, forge and cave gate into 
 - [CI run 38157472174](https://github.com/Stoffe101/PixelTown/actions/runs/38157472174): passed camera/landmark composition and smaller temporary HUD. Real screenshots reviewed at 1920×1080 and 3440×1440.
 
 **Art Gate A: STILL FAILED.** The 1080p framing and material feedback are genuinely better, but the villagers remain crude, the supposedly medieval CC0 facades are too generic and the cave lacks convincing wall geometry, lighting hierarchy and a recognizable adventure composition. The next visual stage must be a **purpose-authored original hero building and human/equipment sheet** in Aseprite, not a sixth automatic background-tile variation. No final art is approved and no main merge is authorized.
+
+
+## 2026-10-12 reusable scene pilot (awaiting CI and visual sign-off)
+
+Added five original RGBA single-object native-pixel candidate drawings (house, smithy, oak, rock, barrel), one 16px manual painting atlas, seven shared scene prefabs with exposed Inspector settings and authored colliders, a drag-and-drop showcase using multiple shared instances, an Aseprite CLI batch export workflow, and test coverage for texture-resource identity and instance overrides. The existing two layouts, demo movement/combat, markers, current terrain and proprietary/CC0 separation are deliberately unchanged. New showcase capture modes will be in CI artifacts. New art is deliberately labeled **not owner approved**; terrain-bitmask rules, character redesign, richer building hand-polish, Aseprite layered masters for these candidates, physical Windows QA and live Aseprite reimport demonstration remain outstanding.

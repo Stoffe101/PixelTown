@@ -1,6 +1,6 @@
 extends RefCounted
 ## Confirm instancing, texture sharing, anchors and Inspector overrides.
-const PATHS := [
+const PATHS = [
 	"res://scenes/buildings/HouseSmall.tscn",
 	"res://scenes/buildings/Blacksmith.tscn",
 	"res://scenes/buildings/StorageHut.tscn",
