@@ -4,11 +4,11 @@ import re
 import sys
 from pathlib import Path
 
-ERROR = re.compile(r"^\\s*(?:ERROR:|SCRIPT ERROR:|Parse Error:)", re.IGNORECASE)
+ERROR = re.compile(r"^\s*(?:ERROR:|SCRIPT ERROR:|Parse Error:)", re.IGNORECASE)
 # Treat recurring Godot script warnings as actionable CI failures. Ordinary
 # informational output is not an error.
 NOISY_GDSCRIPT = re.compile(
-    r"GDScript::reload: (?:Integer division\\.|The parameter .+ is never used)",
+    r"GDScript::reload: (?:Integer division\.|The parameter .+ is never used)",
     re.IGNORECASE,
 )
 

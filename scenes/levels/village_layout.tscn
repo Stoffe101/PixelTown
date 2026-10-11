@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/original/hero/cottage.png" id="tcottage"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="tstorehouse"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="tguard_equipment"]
 [ext_resource type="Texture2D" path="res://assets/objects.png" id="tobj"]
+
+[ext_resource type="TileSet" path="res://assets/terrain_paint_tileset.tres" id="paint_tileset"]
 
 [sub_resource type="AtlasTexture" id="atlas1"]
 atlas = ExtResource("tobj")
@@ -52,6 +54,19 @@ region = Rect2(360, 96, 24, 40)
 
 [node name="VillageLayout" type="Node2D"]
 texture_filter = 1
+
+[node name="EditorBackdrop" type="ColorRect" parent="."]
+offset_left = -600.0
+offset_top = -320.0
+offset_right = 1870.0
+offset_bottom = 1140.0
+z_index = -20
+color = Color(0.43, 0.56, 0.35, 1)
+mouse_filter = 2
+
+[node name="PaintedTerrain" type="TileMapLayer" parent="."]
+z_index = -9
+tile_set = ExtResource("paint_tileset")
 
 [node name="Objects" type="Node2D" parent="."]
 y_sort_enabled = true

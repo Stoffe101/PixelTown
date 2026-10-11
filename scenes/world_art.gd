@@ -34,6 +34,10 @@ func _ready() -> void:
 	cave.y_sort_enabled = true
 	add_child(village)
 	add_child(cave)
+	# Guide backdrops are only visible in Godot's 2D editor; live terrain
+	# comes from the underlying generated TileMapLayer + painted tiles.
+	(village.get_node("EditorBackdrop") as CanvasItem).hide()
+	(cave.get_node("EditorBackdrop") as CanvasItem).hide()
 	_make_tiles(village, false)
 	_make_tiles(cave, true)
 	worker = village.get_node("Objects/Worker") as Sprite2D
