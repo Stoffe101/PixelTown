@@ -76,3 +76,7 @@ Generated artwork also needs a source-editable master, usage notes and a coheren
 - In each implementation pass report code changed, real tests, screenshot references, unverified behavior, TODO and remaining blockers.
 - Preserve a short fresh-chat handoff in START_HERE_NEXT_CHAT.md after major direction changes.
 - Avoid committing to a complete story, tech tree, economy or visual detail before the first full loop earns approval.
+
+## CI/display foundation (2026-10-11)
+
+Initial CI and display-contract setup is documented in [07_CI_AND_DISPLAY.md](07_CI_AND_DISPLAY.md). Include **3440×1440 ultrawide** in rendered QA alongside 1920×1080 and 2560×1440. Current display-probe screenshots are NOT actual gameplay or approval of the art direction. The 640×360 pixel-art viewport, expand aspect and integer scaling remain provisional pending Windows review.
