@@ -10,6 +10,12 @@ const CC0_INTERIOR = preload("res://assets/third_party/ninja_adventure/tileset_i
 const CC0_VILLAGE = preload("res://assets/third_party/ninja_adventure/tileset_village_abandoned.png")
 const CURATED_HOUSES = preload("res://assets/third_party/ninja_adventure/curated_houses.png")
 const OBJECTS = preload("res://assets/objects.png")
+const HERO_SMITHY = preload("res://assets/original/hero/smithy.png")
+const HERO_COTTAGE = preload("res://assets/original/hero/cottage.png")
+const HERO_STORE = preload("res://assets/original/hero/storehouse.png")
+const HERO_CAVE_GATE = preload("res://assets/original/hero/cave_gate.png")
+const HERO_TREE = preload("res://assets/original/hero/mature_tree.png")
+const HERO_CAVE_WALL = preload("res://assets/original/hero/cave_wall.png")
 const BODIES = preload("res://assets/characters.png")
 const EQUIPMENT = preload("res://assets/equipment.png")
 
@@ -221,27 +227,39 @@ func _curated_house(parent: Node2D, kind: String, region: Rect2, foot: Vector2) 
 	parent.add_child(sprite)
 	return sprite
 
+func _hero(parent: Node2D, label: String, art_texture: Texture2D, foot: Vector2) -> Sprite2D:
+	# One isolated sprite per intentional object, never an arbitrary region
+	# clipped from a larger atlas. The shadow and roof ship together at 1:1.
+	var sprite := Sprite2D.new()
+	sprite.name = label
+	sprite.texture = art_texture
+	sprite.centered = false
+	sprite.offset = Vector2(-art_texture.get_width()/2.0,-art_texture.get_height())
+	sprite.position = foot
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	parent.add_child(sprite)
+	return sprite
+
 func _make_village_objects() -> void:
 	# Keep the eye on three human-scale landmark buildings and their work.
 	# All landmark facades are cropped from one cleared, attribution-tracked
 	# CC0 environment atlas. Source coordinates are not enlarged or traced.
 	# Use distinct ground positions so this reads as a settlement rather than
 	# identically sized items on one display shelf.
-	_curated_house(village,"Timber Cottage",Rect2(0, 0, 65, 81),Vector2(298,365))
-	_curated_house(village,"Village Storehouse",Rect2(80, 12, 51, 48),Vector2(401,331))
-	_curated_house(village,"Village Smithy",Rect2(160, 0, 65, 75),Vector2(598,357))
-	_cc0_object(village,"Cave Gate",Rect2(0,0,64,52),Vector2(816,342))
+	_hero(village,"Cottage",HERO_COTTAGE,Vector2(292,365))
+	_hero(village,"Storehouse",HERO_STORE,Vector2(405,334))
+	_hero(village,"Working Smithy",HERO_SMITHY,Vector2(604,358))
+	_hero(village,"Cave Entrance",HERO_CAVE_GATE,Vector2(825,350))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.
 	# The 64x48 crop contains a complete canopy, unlike the old cropped tree.
-	var tree_a: Rect2 = Rect2(0,96,64,48)
-	var tree_b: Rect2 = Rect2(64,96,63,42)
-	for p in [Vector2(87,325),Vector2(132,284),Vector2(183,276),
-			Vector2(299,269),Vector2(348,250),Vector2(497,287),
-			Vector2(758,278),Vector2(805,249),Vector2(1063,318),
-			Vector2(77,504),Vector2(170,509),Vector2(1071,485)]:
-		var tree_region: Rect2 = tree_a if _hash(int(p.x),int(p.y),3)%2==0 else tree_b
-		_cc0_object(village,"Canopy",tree_region,p)
+	# Deliberately clustered trees around clearing edges, with a single
+	# recognizable mature-tree source and no neighboring atlas debris.
+	for p in [Vector2(110,319),Vector2(157,296),Vector2(480,267),
+			Vector2(756,276),Vector2(1014,307),Vector2(1059,362),
+			Vector2(101,479),Vector2(1041,490)]:
+		var tree := _hero(village,"Mature Tree",HERO_TREE,p)
+		tree.flip_h = _hash(int(p.x),int(p.y)) % 2 == 0
 
 	# Profession-specific readable objects share one deliberately restricted
 	# color/material family. These are NOT complete management systems yet.
@@ -279,6 +297,8 @@ func _make_village_objects() -> void:
 	guard_gear.position = guard.position
 
 func _make_cave_objects() -> void:
+	for p in [Vector2(208,265),Vector2(353,260),Vector2(500,263),Vector2(652,267),Vector2(799,276),Vector2(947,299)]:
+		_hero(cave,"Layered Cave Cliff",HERO_CAVE_WALL,p)
 	# A protected encounter floor surrounded by connected rockwork. Subtle
 	# environmental clusters on the perimeter preserve enemy readability.
 	for p in [Vector2(182,305),Vector2(287,360),Vector2(875,330),

@@ -47,6 +47,10 @@ jobs:
           python3 -m pip install --disable-pip-version-check pillow==11.3.0
           python3 tools/art/curate_v4_houses.py
 
+      - name: Render original layered hero artwork
+        run: |
+          python3 tools/art/hero_art.py
+
       - name: Build original PNG sprites and verify art contracts
         shell: bash
         run: |
@@ -132,6 +136,9 @@ jobs:
           echo 'All output atlases are attached as PNG and JSON artifacts. Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
           mkdir -p artifacts/atlases
           cp assets/*.png assets/atlas.json artifacts/atlases/
+          mkdir -p artifacts/hero-art artifacts/layered-masters
+          cp assets/original/hero/*.png artifacts/hero-art/
+          cp art/source/architecture/*.ora artifacts/layered-masters/
           mkdir -p artifacts/cc0_sources
           cp assets/third_party/ninja_adventure/PROVENANCE.json artifacts/cc0_sources/
           cp assets/third_party/ninja_adventure/*.png artifacts/cc0_sources/
@@ -196,6 +203,12 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Pinned art dependency install failed' }
           python tools/art/curate_v4_houses.py
           if ($LASTEXITCODE -ne 0) { throw 'CC0 building generation failed' }
+
+      - name: Render original layered hero artwork on Windows
+        shell: pwsh
+        run: |
+          python tools/art/hero_art.py
+          if ($LASTEXITCODE -ne 0) { throw 'Layered hero art generation failed' }
 
       - name: Build and validate original art on Windows
         shell: pwsh

@@ -15,3 +15,7 @@ Thumbs.db
 _vendor_reference/
 /assets/third_party/ninja_adventure/*.png
 /assets/third_party/ninja_adventure/PROVENANCE.json
+
+# Original hero sprites and layered sources can be deterministically regenerated.
+/assets/original/hero/*.png
+/art/source/architecture/*.ora
