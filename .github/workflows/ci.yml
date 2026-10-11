@@ -82,25 +82,27 @@ jobs:
           set -euo pipefail
           mkdir -p artifacts/screenshots
           # Same camera/art at 16:9 and 21:9, with both proposed sprite sizes.
-          while read -r width height mode scale seconds; do
+          while read -r width height mode scale seconds zoom; do
             [ -z "$width" ] && continue
-            stem="${width}x${height}-${mode}-scale${scale}"
+            stem="${width}x${height}-${mode}-scale${scale}-zoom${zoom:-1}"
             output="artifacts/screenshots/${stem}.png"
             timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
               godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
-              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$mode" "$scale" "$seconds" \
+              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$mode" "$scale" "$seconds" "${zoom:-1}" \
               2>&1 | tee "artifacts/logs/render-${stem}.log"
             python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
             python3 tools/ci/verify_png.py "$output" "$width" "$height"
           done <<'CAPTURES'
-          1440 810 village 1 12
-          1920 1080 village 0 5
-          1920 1080 village 1 18
-          2560 1440 village 1 20
-          3440 1440 village 0 5
-          3440 1440 village 1 18
-          1920 1080 cave 1 8
-          3440 1440 cave 1 8
+          1440 810 village 1 12 1
+          1920 1080 village 0 5 1
+          1920 1080 village 1 18 1
+          2560 1440 village 1 20 1
+          3440 1440 village 0 5 1
+          3440 1440 village 1 18 1
+          1920 1080 cave 1 8 1
+          3440 1440 cave 1 8 1
+          1920 1080 village 1 18 2
+          3440 1440 cave 1 8 2
           CAPTURES
 
       - name: Summary

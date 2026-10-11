@@ -36,6 +36,15 @@
 
 Flexible work priorities and eventual specialization, simple food/health/rest, possible Pause/1×/2×/4× simulation speed, a few meaningful equipment slots, forgiving injury/recovery before any permadeath decision, and stock targets only when the work becomes repetitive. The general direction was endorsed, but these exact algorithms, stats and difficulty settings are **not finalized**.
 
+## Art Direction v1.0: explicit 2026-10-11 decisions
+
+| ID | Decision | Rationale |
+| --- | --- | --- |
+| D-026 | **Necesse** is the primary production/legibility benchmark; **Graveyard Keeper** a secondary mood/material/lighting influence; **Stardew Valley** a secondary character-charm influence | Owner confirmed order; all output must be original PixelTown art, not copied assets |
+| D-027 | Move art from giant code-drawn scene rectangles to **editable PNG sheets/tilesets with documented reusable templates and equipment alignment** | Sustainable production pipeline for many inhabitants/buildings |
+| D-028 | Compare **20×30 and 24×32** character candidates within a common 24×32 cell grid | 24×32 preferred initially, but exact size remains subject to in-engine visual review |
+| D-029 | **Prototype 00B art must pass owner screenshot review before art is marked approved or PR merged**; CI success does not qualify | Strong art-quality gate without blocking working simulation |
+
 ## Strong design intentions, pending prototype evidence
 
 - Villagers should visibly carry resources, craft, farm and build independently.
@@ -85,7 +94,7 @@ These are design goals and should be tested; don't claim an algorithm is chosen 
 ## Change policy
 
 When accepting a new decision:
-- assign ID D-026 onward;
+- assign ID D-030 onward;
 - note date and underlying player choice;
 - identify superseded example or previous decision explicitly;
 - update relevant design chapter and prototype acceptance;

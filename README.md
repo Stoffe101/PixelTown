@@ -2,7 +2,7 @@
 
 > **A living fantasy village that supports autonomous adventurers exploring an increasingly dangerous underground world.** A cozy 2D pixel-art simulation with crafting, settlement development, equipment, expeditions, meaningful choices, and gradually expanding automation.
 
-**Status:** Prototype 00 art/camera experiment in progress. **PixelTown is a temporary repo name, not the final game title.** A minimal running Godot **art/activity proof** is being developed. It is not a finished game, approved art pack, expedition system or complete simulation.
+**Status:** **Prototype 00B** original sprite/tileset pipeline on a draft PR, awaiting visual approval. **PixelTown is a temporary repo name, not the final game title.** A minimal running Godot **art/activity proof** is being developed. It is not a finished game, approved art pack, expedition system or complete simulation.
 
 ## License and public visibility
 
@@ -48,6 +48,15 @@ This repository tracks the design discussion through October 2026. Gameplay deci
 ## First technical foundation
 
 A provisional Godot 4.7.2 display probe and CI pipeline now live in this repository. They are NOT the visual prototype or gameplay. CI checks Linux + Windows startup and captures 1920×1080, 2560×1440 and 3440×1440 diagnostics with real Godot rendering. See [CI & display](docs/07_CI_AND_DISPLAY.md) for evidence and limits.
+
+## Art Direction v1.0: original modular pixel art
+
+The current art master is `tools/art/build_art.py`, which produces PNG terrain, object, character and independently aligned gear sheets and `atlas.json`. Run the generator once before opening the project locally; CI also runs it. See [00B development log](docs/09_PROTOTYPE_00B.md) and [editable art documentation](assets/README.md). The new source-driven asset system replaces runtime rectangle painting while preserving the demonstration simulation. **The visual style has not yet been approved by the owner.**
+
+```sh
+python tools/art/build_art.py
+python tools/art/validate_assets.py
+```
 
 ## Run the current art experiment
 

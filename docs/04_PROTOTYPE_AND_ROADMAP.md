@@ -6,6 +6,10 @@
 
 In the older NODE//ZERO project we spent substantial effort on large features, visual polish and CI before proving that the essential player experience was enjoyable and original. This time, the first gate is a **small but complete playable loop**. No ambitious multi-year roadmap should be treated as approval to build everything at once.
 
+## Prototype 00B: Asset-production proof, before interactive blueprints
+
+Work in **draft PR** with original modular PNG atlases, source-editable master, Godot TileMapLayer, bottom-anchored y-sorted objects, two character sizes and aligned gear sheets. Preserve the old working wood/cave demo. Compare real normal-scale village and cave screenshots, both scales and multiple display sizes/zoom levels against Prototype 00. **Do not mark Art Gate A accepted or merge without owner review.** See [Prototype 00B log](09_PROTOTYPE_00B.md).
+
 ## Prototype 00: Visual identity and technical feasibility
 
 **Pass 1: Art and camera experiment.** Make a tiny Godot village with grass, two simple buildings, one villager, one armored guard and a cave entrance. Use slightly angled-looking top-down art on a normal square grid, **not isometric pathfinding**. Compare two sprite sizes at real gameplay zoom. Capture real engine visuals at 1920×1080, 2560×1440 and 3440×1440 before committing to an art standard.

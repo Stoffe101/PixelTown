@@ -23,6 +23,10 @@
 
 Security and cost: read-only token permissions, SHA-pinned checkout/artifact actions, no secrets for PR code, no commits or automatic screenshot baseline updates, per-job time limits, branch-specific concurrency and minimal dependencies.
 
+## Prototype 00B sprite validation
+
+CI creates four original PNG sprite/tileset sheets + JSON from a source-editable, dependency-free Python master before Godot import. An asset validator checks PNG integrity, exact pixel sizes, metadata region bounds, and presence of drawable frames and aligned guard equipment. Linux CI renders actual village/cave atlas scenes, Windows imports and runs deterministic tests, and review PNG + source atlases are uploaded. This never constitutes automatic visual sign-off.
+
 ## Limits and forthcoming quality gates
 
 - There are **no approved visual comparison baselines** yet. We need real gameplay art, in-engine screenshots and explicit user review first. Never silently auto-update baselines.
