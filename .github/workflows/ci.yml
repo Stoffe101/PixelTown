@@ -127,6 +127,35 @@ jobs:
           3440 1440 cave 1 8 2
           CAPTURES
 
+      - name: Pixel-density A/B visual experiment (2× physical pixels)
+        shell: bash
+        run: |
+          # Isolated throwaway comparison. Keep the canonical 640×360
+          # configuration until actual gameplay screenshot approval.
+          cp project.godot artifacts/logs/project-before-density-experiment.godot
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('project.godot')
+          t=p.read_text()
+          assert 'window/size/viewport_width=640' in t
+          assert 'window/size/viewport_height=360' in t
+          p.write_text(t.replace('window/size/viewport_width=640','window/size/viewport_width=960')
+                       .replace('window/size/viewport_height=360','window/size/viewport_height=540'))
+          PY
+          for dims in '1920 1080' '3440 1440'; do
+            read -r width height <<< "$dims"
+            for view in village cave; do
+              output="artifacts/screenshots/${width}x${height}-${view}-density2x.png"
+              timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+                godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
+                --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$view" 1 18 1 \
+                2>&1 | tee "artifacts/logs/density-${width}x${height}-${view}.log"
+              python3 tools/ci/verify_png.py "$output" "$width" "$height"
+              python3 tools/ci/check_engine_log.py "artifacts/logs/density-${width}x${height}-${view}.log"
+            done
+          done
+          cp artifacts/logs/project-before-density-experiment.godot project.godot
+
       - name: Summary
         if: always()
         shell: bash

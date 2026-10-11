@@ -50,7 +50,9 @@ func _capture() -> void:
 		printerr("No rendered frame available")
 		quit(1)
 		return
-	var base_size := Vector2i(640,360)
+	var base_size := Vector2i(
+		int(ProjectSettings.get_setting("display/window/size/viewport_width",640)),
+		int(ProjectSettings.get_setting("display/window/size/viewport_height",360)))
 	var pixel_scale := mini(expected_size.x / base_size.x, expected_size.y / base_size.y)
 	if pixel_scale < 1:
 		printerr("Pixel scale less than one")
@@ -62,7 +64,7 @@ func _capture() -> void:
 		printerr("Unexpected logical viewport: ",actual_logical," instead of ",expected_viewport," or ",base_size)
 		quit(1)
 		return
-	# Godot can preserve the 640x360 base canvas in smaller integer-scaled
+	# Godot can preserve its configured base canvas in smaller integer-scaled
 	# windows. Capture the genuine base render with centered integer bars.
 	if actual_logical == base_size and expected_viewport != base_size:
 		var scaled := result_image.duplicate()

@@ -145,8 +145,10 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 	ground.tile_set = set
 	ground.z_index = -10
 	parent.add_child(ground)
-	for y in range(HEIGHT):
-		for x in range(WIDTH):
+	# Extend painted terrain beyond the authoring stage so ultrawide at a
+	# finer two-pixel display scale never reveals a blank canvas edge.
+	for y in range(-8,66):
+		for x in range(-25,101):
 			var variant: int = _hash(x,y,1 if underground else 0)
 			var atlas_coord: Vector2i
 			var source_id: int = grass_id
