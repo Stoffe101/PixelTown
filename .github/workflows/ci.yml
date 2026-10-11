@@ -41,6 +41,10 @@ jobs:
       - name: Verify and import selected CC0 environment textures
         run: python3 tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
 
+      - name: Verify temporary CC0 house atlas PNG
+        shell: bash
+        run: python3 tools/art/repair_curated_png.py
+
       - name: Build original PNG sprites and verify art contracts
         shell: bash
         run: |
@@ -182,6 +186,12 @@ jobs:
         run: |
           python tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
           if ($LASTEXITCODE -ne 0) { throw 'CC0 source asset validation failed' }
+
+      - name: Verify temporary CC0 house atlas PNG on Windows
+        shell: pwsh
+        run: |
+          python tools/art/repair_curated_png.py
+          if ($LASTEXITCODE -ne 0) { throw 'CC0 house atlas integrity failed' }
 
       - name: Build and validate original art on Windows
         shell: pwsh
