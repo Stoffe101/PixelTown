@@ -11,12 +11,12 @@ func run() -> Array[String]:
 	var cave := Cave.instantiate()
 	if village == null or cave == null:
 		return ["Editable scenes failed to instantiate"]
-	for path in ["Objects/Cottage", "Objects/Storehouse", "Objects/Smithy",
+	for path in ["EditorBackdrop", "PaintedTerrain", "Objects/Cottage", "Objects/Storehouse", "Objects/Smithy",
 			"Objects/CaveEntrance", "Objects/ConstructionSite", "Markers/Storage",
 			"Markers/CaveEntranceSpot", "Markers/GuardPost"]:
 		if village.get_node_or_null(path) == null:
 			issues.append("Village is missing editable node: " + path)
-	for path in ["Objects/MineralShrine", "Objects/Guard", "Objects/Slime",
+	for path in ["EditorBackdrop", "PaintedTerrain", "Objects/MineralShrine", "Objects/Guard", "Objects/Slime",
 			"Markers/GuardPost", "Markers/EnemySpawn"]:
 		if cave.get_node_or_null(path) == null:
 			issues.append("Cave is missing editable node: " + path)
@@ -35,6 +35,22 @@ func run() -> Array[String]:
 			state.advance(0.1)
 		if not state.building_complete or not state.resources_conserved():
 			issues.append("Moving a site broke resource conservation or construction completion")
+	# Godot editor prop templates must be instantiable without crop bleed.
+	var prefab_files := DirAccess.get_files_at("res://scenes/props")
+	if prefab_files.size() < 20:
+		issues.append("Reusable prop palette is incomplete")
+	for name in prefab_files:
+		if not name.ends_with(".tscn"):
+			continue
+		var scene := load("res://scenes/props/" + name) as PackedScene
+		if scene == null:
+			issues.append("Could not load prop " + name)
+			continue
+		var item := scene.instantiate() as Sprite2D
+		if item == null or item.texture == null or item.centered:
+			issues.append("Prop has missing art or wrong anchor: " + name)
+		if item != null:
+			item.free()
 	village.free()
 	cave.free()
 	return issues

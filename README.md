@@ -81,3 +81,7 @@ The first and second source-atlas trials **did not pass the desired visual bar**
 ## Art Pass 01 status
 
 [Art Pass 01 implementation, evidence and failed visual gate](docs/13_ART_PASS_01.md) includes original isolated smithy/cottage/storage/cave artwork, original trees, layered character/equipment masters and a source-driven construction-stage visualization. [Display-density experiment](docs/14_DISPLAY_DENSITY_EXPERIMENT.md) compares 2×-physical-pixel captures against the canonical viewport. **The latest technical checks pass; the art is still awaiting substantial hand-polish and owner approval.**
+
+## Edit the village and cave in Godot (artist workflow)
+
+[**Editable village, cave, terrain painting and prefab guide**](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md). Switch to draft feature branch `prototype/art-direction-v1-00b` (not `main`) and run `setup-pixeltown.ps1` once with the legally cleared CC0 Godot V4 source pack. In Godot, open `scenes/levels/village_layout.tscn` or `cave_layout.tscn`. Drag prefabs from `scenes/props/`, move/duplicate scenery under `Objects`, paint optional terrain under `PaintedTerrain`, and place the simulation's locations with `Markers`. Scene changes persist on disk and the demonstration logic reads their positions. Art sign-off is still pending.

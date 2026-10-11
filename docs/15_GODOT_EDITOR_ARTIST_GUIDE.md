@@ -17,7 +17,7 @@
 
 ## Place and reposition artwork visually
 
-In the 2D scene viewport, turn on visible guides/grid as needed. Expand **Objects** in the Scene tree. Click `Cottage`, `Smithy`, `Storehouse`, `Tree01`, `MineralShrine` and move them with **W (Move tool)** or drag the move gizmo. The positions in the Inspector are saved in the scene file, not recreated from a list of hard-coded locations. Press **Ctrl+S** and **F6 (Run Current Scene)** to look at the placement alone, or **F5 (Run Project)** to see it with the dynamic background, active characters and HUD.
+You can also expand **FileSystem → scenes → props** and drag any of the 21 prepared `.tscn` **prefabs** into the **Objects** node or viewport. They include the correct 1:1 texture, foot anchor and nearest-pixel filtering, so no atlas cropping is needed. Choose the cottage, storehouse, smithy, tree, cave wall or smaller props there. In the 2D scene viewport, turn on visible guides/grid as needed. Expand **Objects** in the Scene tree. Click `Cottage`, `Smithy`, `Storehouse`, `Tree01`, `MineralShrine` and move them with **W (Move tool)** or drag the move gizmo. The positions in the Inspector are saved in the scene file, not recreated from a list of hard-coded locations. Press **Ctrl+S** and **F6 (Run Current Scene)** to look at the placement alone, or **F5 (Run Project)** to see it with the dynamic background, active characters and HUD.
 
 - **Duplicate a prop** by selecting a Sprite2D and pressing **Ctrl+D**. Rename it descriptively, then position it. The scene keeps instances independent; shared PNG art does not get duplicated in storage.
 - **Replace a sprite's artwork** by selecting it, then in **Inspector → Texture** drag a replacement PNG from FileSystem. Original edited art should live at `assets/handmade/` so Git tracks it. Keep **Filter = Nearest** and **Scale = (1,1)**. Aesprite exports should retain transparent pixels, no smoothing or trimming.
@@ -38,7 +38,7 @@ Expand **Markers**. These are *placement handles*, not visible props. Moving the
 | `CaveLayout/Markers/GuardPost` | Expedition guard position |
 | `CaveLayout/Markers/EnemySpawn` | Slime encounter position |
 
-**Do not move the worker or equipment nodes as if they were static decorations**. Their transforms are updated by game simulation on Play. Move the appropriate Marker2D instead, or the construction site itself. The code reads these markers at scene startup, including when restarting/replaying a screenshot. The cave/guard equipment slots stay aligned.
+**Character previews:** `Objects/Guard` starts on the guard body sheet’s south-facing row and `Objects/GuardEquipment` is an aligned helmet/shield/sword overlay. They are two Sprite2D nodes and must share the same in-game position. **Do not move the worker or equipment nodes as if they were static decorations**. Their transforms are updated by game simulation on Play. Move the appropriate Marker2D instead, or the construction site itself. The code reads these markers at scene startup, including when restarting/replaying a screenshot. The cave/guard equipment slots stay aligned.
 
 ### The best division of work
 
@@ -53,3 +53,7 @@ Suggested first pass: arrange **the cottage, storehouse and smithy** into a plau
 The unused legacy `art/world_canvas.gd` has been removed from the feature branch (it produced the integer-division/unused-parameter warnings in your screenshot). After switching branches and letting Godot reimport, the old script should no longer load. If Godot still shows old warnings, close Godot and reopen the project from the feature branch; confirm the script path shown in the individual error.
 
 This is a practical authoring workflow, not permanent locking of camera scale or production art style. No major art change will be merged without your approval.
+
+## Troubleshooting: where are my art assets?
+
+The GitHub branch tracks the **source generators and level files**, but to keep generated preview files from flooding GitHub Desktop the generated `assets/original/hero/*.png` and `art/source/architecture/*.ora` are temporarily ignored. **Run `setup-pixeltown.ps1` once before opening the editor scenes.** If Godot reports missing textures after switching branches, close the editor, run setup and reopen the project so import can complete. To make permanent original work, save a **new source** under `art/handmade/` and PNG export under `assets/handmade/`; these directories are intentionally NOT ignored and should be committed alongside scene changes. The setup script must never be rerun over those handmade paths.

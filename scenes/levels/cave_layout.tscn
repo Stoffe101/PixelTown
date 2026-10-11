@@ -174,7 +174,7 @@ texture = ExtResource("tinhabitants")
 centered = false
 offset = Vector2(-12, -31)
 region_enabled = true
-region_rect = Rect2(0, 0, 24, 32)
+region_rect = Rect2(0, 128, 24, 32)
 
 [node name="GuardEquipment" type="Sprite2D" parent="Objects"]
 position = Vector2(607, 395)
