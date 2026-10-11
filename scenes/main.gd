@@ -51,6 +51,8 @@ func _input(event: InputEvent) -> void:
 		match event.keycode:
 			KEY_TAB:
 				_switch_view()
+			KEY_F1:
+				hud_footer.get_parent().visible = not hud_footer.get_parent().visible
 			KEY_ESCAPE:
 				selected_view = "village"
 			KEY_1:
@@ -96,13 +98,13 @@ func _create_hud() -> void:
 	var header := PanelContainer.new()
 	header.name = "Header"
 	header.position = Vector2(12, 12)
-	header.custom_minimum_size = Vector2(230, 55)
+	header.custom_minimum_size = Vector2(225, 49)
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#17232ae9")
-	style.border_color = Color("#b5ab7d")
+	style.bg_color = Color("#172b2ccf")
+	style.border_color = Color("#d1ba83")
 	style.set_border_width_all(1)
 	style.set_corner_radius_all(2)
-	style.set_content_margin_all(10)
+	style.set_content_margin_all(8)
 	header.add_theme_stylebox_override("panel",style)
 	root.add_child(header)
 	var stack := VBoxContainer.new()
@@ -123,9 +125,10 @@ func _create_hud() -> void:
 	footer_box.offset_top = -35
 	footer_box.offset_bottom = -10
 	footer_box.offset_left = 12
-	footer_box.offset_right = 555
+	footer_box.offset_right = 425
 	footer_box.add_theme_stylebox_override("panel",style.duplicate())
 	root.add_child(footer_box)
+	footer_box.visible = false # F1 opens controls; let the world own the screen.
 	hud_footer = Label.new()
 	hud_footer.add_theme_font_size_override("font_size", 10)
 	hud_footer.add_theme_color_override("font_color",Color("#f2dfba"))
@@ -142,4 +145,4 @@ func _update_presentation() -> void:
 	else:
 		hud_title.text = "CAVE  /  ART PROTOTYPE 00B"
 		hud_detail.text = "Guard vs cavern slime  |  Slime vitality: %d/5  |  Demo encounters: %d" % [sim.enemy_hp, sim.expedition_loot]
-	hud_footer.text = "TAB views   1/2 character (%s)   SPACE pause   R reset   MMB pan   wheel zoom" % label_size
+	hud_footer.text = "TAB views  |  1/2 sprite (%s)  |  SPACE pause  |  R reset  |  MMB pan  |  wheel zoom" % label_size
