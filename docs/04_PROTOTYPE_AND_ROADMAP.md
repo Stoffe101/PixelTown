@@ -1,12 +1,17 @@
 # First Playable Prototype and Development Roadmap v0.1
 
-**Current state:** design-only repository. Do not claim that any mechanics or art below are implemented.
+**Current state:** design/pre-production with a tested Godot CI/display-probe foundation, not yet a real game-art or gameplay prototype.
 
 ## The mistake we refuse to repeat
 
 In the older NODE//ZERO project we spent substantial effort on large features, visual polish and CI before proving that the essential player experience was enjoyable and original. This time, the first gate is a **small but complete playable loop**. No ambitious multi-year roadmap should be treated as approval to build everything at once.
 
 ## Prototype 00: Visual identity and technical feasibility
+
+**Pass 1: Art and camera experiment.** Make a tiny Godot village with grass, two simple buildings, one villager, one armored guard and a cave entrance. Use slightly angled-looking top-down art on a normal square grid, **not isometric pathfinding**. Compare two sprite sizes at real gameplay zoom. Capture real engine visuals at 1920×1080, 2560×1440 and 3440×1440 before committing to an art standard.
+
+**Pass 2: Make one villager's construction journey real.** Place a blueprint, fetch material, carry it to the plot and finish a visibly changing building. Check that every animation represents actual resource and construction state. Keep the simulation intentionally tiny.
+
 
 **Goal:** prove that original pixel art is cohesive and realistically extensible.
 
@@ -37,7 +42,8 @@ Starting scenario (adjustable):
 - basic gathering, storage, hauling and a single crafting workshop/smithy;
 - ability to craft/equip essential gear for **two adventurers**;
 - one nearby cave with **three selectable danger/depth levels**;
-- advisory recommended GS per level with warnings, but **no entry lock**;
+- advisory recommended GS per level with warnings, but **no gear-score entry lock**;
+- **all three prototype floors are selectable immediately**; later, clearing floor 3 unlocks the entire 4–7 group regardless of equipment;
 - one or two enemies and basic autonomous positioning/attacks;
 - optional **Retreat, Defend, Focus Target** during the live expedition;
 - material and/or discovery recovered through a genuine return-trip result;
@@ -58,7 +64,7 @@ Starting scenario (adjustable):
 - Player understands **what to do next** without reading a design document.
 - Crafting a sword visibly connects resource gathering, labor, inventory and party gear.
 - Party equipment and chosen floor **actually affect** encounters, not just labels.
-- Warnings are advisory. A player can attempt an under-geared floor.
+- Warnings are advisory. A player can attempt **any unlocked floor** while under-geared; progression-group locks are separate from GS.
 - Optional commands change real party behavior without constant micro.
 - Expedition loot has a meaningful village consequence.
 - At least two preparations or floor choices feel genuinely different.
@@ -69,6 +75,9 @@ Starting scenario (adjustable):
 An important anti-criterion: **the prototype is a failure if it is only pretty and technically functioning, but boring to replay**. Don't mask that with more menus, equipment tiers or effects.
 
 ## Suggested implementation sequence (gates, not promises)
+
+After art/camera, construction is the first interaction test, followed by two adventurers fighting one enemy and returning with a resource, then that resource unlocking one visible village capability. Delay extra dungeons, professions and broad automation until the loop feels rewarding.
+
 
 ### Phase 0: Pre-production
 Canonical design docs, temporary repository name, ARR license, agreed input/gameplay boundaries, a narrow art pipeline and clean Godot project.

@@ -26,6 +26,20 @@ Both village and cave simulation should continue when the player switches betwee
 
 **Illustrative values only, not final difficulty balance:** Floor 1 recommended GS 10; floor 5 GS 35; floor 10 GS 70; floor 20 GS 140. These were examples in a discussion widget, not locked numbers or a promise of 20 floors.
 
+## Milestone-gated groups versus gear-score recommendations (accepted)
+
+**Progression controls which groups are available; equipment only informs readiness for floors already available.** Never confuse these two concepts.
+
+- **Floors 1–3:** available to select from the beginning, in any order and at any gear score.
+- **Floors 4–7:** initially progression-locked. **Successfully completing floor 3 unlocks all of 4–7 together.** No requirement to complete floors 4–6 before selecting floor 7.
+- **Later groups:** boundaries, objectives and milestones beyond 4–7 remain undecided.
+
+Once a group is unlocked, **any floor in that group can be attempted even with a severely under-geared party**. Recommended GS must stay visible, but it can only advise and warn, never block or override a completed milestone. The floor picker should clearly distinguish milestone-locked, unlocked-but-dangerous and previously completed floors without depending solely on color.
+
+Completing floor 3 means a **genuine successful clear**, not merely entering, failing or retreating. Define the exact clear objective when we implement that system; do not silently invent a boss requirement.
+
+The initial First Descent slice still needs only floors 1–3 as actual playable content. The 4–7 rule is a **confirmed progression design**, not an instruction to implement seven floors before gameplay is proven.
+
 ## Meaningful floor variation
 
 The cave must be more than increasing enemy HP and loot amounts. Later floors can introduce stronger or different enemies, hazards, environmental conditions, valuable resources, optional discoveries and specialized encounter demands. The first prototype only needs **three floor choices** and evidence that a deeper floor feels riskier and more rewarding.
@@ -58,5 +72,7 @@ Two guards equipped with basic gear attempt floor 2. Their gear score is slightl
 One cave, three selectable floor difficulties, two adventurers, one or two basic enemy types, initial formation/equipment/supplies, the three commands, risk and rewards tied to depth, and one resource/discovery that changes village production. Authored chambers are acceptable: procedural generation, large boss sets and a giant combat class system are explicitly future scope.
 
 ## Open questions
+
+The 1–3 available / 4–7 unlocked together after clearing floor 3 rule is **decided**. The exact definition of a successful clear and subsequent floor-group boundaries remain open.
 
 Party size beyond first slice, exact gear-score formula and equipment slots, floor traversal structure, death/injury/recovery severity, simultaneous parties, procedural cave generation, pathfinding, boss design, loot tables, offline expedition behavior, difficulty modes and rescue mechanics. Do not treat any of these as established.

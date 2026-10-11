@@ -23,7 +23,18 @@
 | D-015 | Avoid uncanny/overly exaggerated character proportions and random inconsistent AI assets | Player disliked earlier character references |
 | D-016 | **Prove pixel-art pipeline in an actual Godot prototype** before creating large asset catalogs | Feasibility and consistency |
 | D-017 | **Prototype first**, notably The First Descent: tiny village, workshop, two adventurers, three floor difficulties, one meaningful discovery | Prevent long work on unproven gameplay |
-| D-019 | **3440×1440 ultrawide monitor is a required supported resolution** alongside conventional 16:9 desktop targets | Real user display; include in QA from the beginning; exact presentation/scaling remains a prototype question |\n| D-018 | Original code/art/docs are **All Rights Reserved**, even though the repo is public | Public access is for review and CI, not reuse permission |
+| D-018 | Original code/art/docs are **All Rights Reserved**, even though the repo is public | Public access is for review and CI, not reuse permission |
+| D-019 | **3440×1440 ultrawide monitor is a required supported resolution** alongside conventional 16:9 desktop targets | Real user display; include in QA from the beginning; exact presentation/scaling remains a prototype question |
+| D-020 | **Angled-looking top-down pixel art on a square tile grid**, not true isometric, with four-direction navigation | Charming visible building fronts without complicating navigation |
+| D-021 | **Mouse-first management without mandatory player-controlled avatar** | A living village/guild simulation, not an action RPG |
+| D-022 | **Player places building blueprints, villagers collect materials and visibly construct them autonomously** | Construction is a genuine world interaction |
+| D-023 | **Initially floors 1–3 available; clearing floor 3 unlocks all of 4–7 together. Any unlocked floor can be attempted regardless of gear score** | Progression milestone gating is separate from advisory equipment readiness; refines D-007 and D-008 |
+| D-024 | **Compare two original pixel-sprite scales in real Godot scenes** at gameplay zoom and 16:9/3440×1440 | Prove an extensible, readable art style before bulk asset production |
+| D-025 | **Every major activity should create anticipation and visible payoff** between village crafting, expeditions, discoveries and construction | Sustain motivation without arbitrary timers |
+
+## Proposed prototype defaults that remain flexible
+
+Flexible work priorities and eventual specialization, simple food/health/rest, possible Pause/1×/2×/4× simulation speed, a few meaningful equipment slots, forgiving injury/recovery before any permadeath decision, and stock targets only when the work becomes repetitive. The general direction was endorsed, but these exact algorithms, stats and difficulty settings are **not finalized**.
 
 ## Strong design intentions, pending prototype evidence
 
@@ -53,11 +64,11 @@ These are design goals and should be tested; don't claim an algorithm is chosen 
 ## Open questions with high design impact
 
 ### Important soon
-1. **Presentation:** exact top-down orientation, tile size, character sprite scale and camera zoom after comparing actual art.
-2. **Construction:** direct placement of buildings versus designated plots built autonomously by villagers.
+1. **Presentation:** actual tile size, character sprite scale and camera zoom after comparing real art; square-grid angled-looking top-down was chosen.
+2. **Construction:** blueprint placement constraints, work allocation and cancellation behavior; blueprint-based autonomous construction is chosen.
 3. **Agent simulation:** simple priorities/needs and occupations; how much detail matters to gameplay?
 4. **Combat:** base decision loop, movement and hit feedback, whether three commands are sufficient and their actual effects.
-5. **Cave progression:** can you select any floor in a cave or must parties traverse earlier floors first? User wants **no gear-score lock**, but floor discovery/unlock rules are undecided.
+5. **Cave progression:** exact clear condition for floor 3 and later group boundaries after floors 4–7; initial group rules are chosen, and gear score never gates available floors.
 6. **Failure:** retreat, wounds, rescue and death penalties. Permadeath **not decided**; not default by assumption.
 7. **Crafting:** slots/stats, gear score calculation, actual resources and economy.
 8. **Core fun:** whether one returning party and meaningful village upgrade is enough to make the player voluntarily repeat.
@@ -74,7 +85,7 @@ These are design goals and should be tested; don't claim an algorithm is chosen 
 ## Change policy
 
 When accepting a new decision:
-- assign ID D-019 onward;
+- assign ID D-026 onward;
 - note date and underlying player choice;
 - identify superseded example or previous decision explicitly;
 - update relevant design chapter and prototype acceptance;
