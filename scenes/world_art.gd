@@ -106,6 +106,12 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 		for x in range(0,16):
 			outdoors.create_tile(Vector2i(x,y))
 	var grass_id: int = set.add_source(outdoors)
+	var meadow := TileSetAtlasSource.new()
+	meadow.texture = TERRAIN
+	meadow.texture_region_size = TILE
+	for x in range(16):
+		meadow.create_tile(Vector2i(x,0))
+	var meadow_id: int = set.add_source(meadow)
 
 	var chamber := TileSetAtlasSource.new()
 	chamber.texture = CC0_INTERIOR
@@ -152,9 +158,11 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 				if x >= 35 and x <= 38 and y >= 21 and y <= 24:
 					atlas_coord = Vector2i(16 + variant % 2, 8)
 			else:
-				# Quiet foliage tones; avoid full-screen chartreuse noise.
-				atlas_coord = Vector2i(11 + (variant % 3 if variant < 20 else 1),12)
+				# Calm original meadow cells replace dense repeating tufts.
+				source_id = meadow_id
+				atlas_coord = Vector2i(variant % 16,0)
 				if _is_road(x,y):
+					source_id = grass_id
 					var top_open: bool = not _is_road(x,y-1)
 					var bottom_open: bool = not _is_road(x,y+1)
 					var left_open: bool = not _is_road(x-1,y)

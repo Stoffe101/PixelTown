@@ -100,43 +100,42 @@ def leaves(c,cx,cy,rx,ry,salt):
             c.rect(x,y,2,2,r.choice(["#457653","#91b877","#aad087"]))
 
 def ground():
+    """Sixteen original quiet-grass variants; retain water/cave support tiles.
+
+    Sparse clusters prevent the 16px tuft wallpaper revealed in real screenshots.
+    """
     c=Canvas(256,64)
+    grass=["#74965b","#729458","#719355","#75965b",
+           "#729457","#719456","#73945a","#729358"]
     for row in range(4):
         for tile in range(16):
             x,y=tile*16,row*16
             r=random.Random(tile*73+row*3301)
-            if row==0:col=["#789f60","#75a05b","#83aa66","#72995b"][tile%4]
-            elif row==1:col=("#a98257" if tile<8 else "#538b9c")
-            elif row==2:col=(["#344351","#405060","#4d5c6a"][tile%3] if tile<8 else "#65737b")
-            else:col=("#50606c" if tile<8 else "#3d5364")
-            c.rect(x,y,16,16,col)
-            if row == 0 and tile >= 8:
-                # 16x16 dirt-road transitions: center / sides / corners.
-                for py in range(16):
-                    for px in range(16):
-                        rag = ((px*7+py*13+tile*5)%7)-3
-                        edge = rag//3
-                        dirt = (tile==8 or
-                                (tile==9 and py>=3+edge) or
-                                (tile==10 and py<=12+edge) or
-                                (tile==11 and px>=3+edge) or
-                                (tile==12 and px<=12+edge) or
-                                (tile==13 and py>=3+edge and px>=3+edge) or
-                                (tile==14 and py>=3+edge and px<=12+edge) or
-                                (tile==15 and py<=12+edge and px<=12+edge))
-                        if dirt:
-                            c.pixel(x+px,y+py,("#b28d5b" if (px*3+py*11+tile)%9>1 else "#a47d51"))
-            for _ in range(13):
-                xx=x+r.randrange(16);yy=y+r.randrange(16)
-                if row==0 and tile<8:
-                    c.rect(xx,yy,1,2,r.choice(["#a0b879","#4c8354","#6c9e60"]))
-                elif row==0 and tile>=8:
-                    if c.b[(yy*c.w+xx)*4+3]:
-                        c.rect(xx,yy,2,1,r.choice(["#c3a473","#926e4b"]))
-                elif row==1 and tile>=8:
-                    c.rect(xx,yy,4,1,r.choice(["#6ea5ae","#a6c8c5"]))
-                else:
-                    c.rect(xx,yy,2,1,("#d0ac77" if row<2 else "#7b8992") if r.random()<.45 else ("#8a6b4c" if row<2 else "#293e4b"))
+            if row==0:
+                c.rect(x,y,16,16,grass[(tile*5+tile//3)%len(grass)])
+                for _ in range(1+int(tile%3==0)):
+                    xx=x+3+r.randrange(10)
+                    yy=y+3+r.randrange(10)
+                    c.rect(xx,yy,1,3,"#537f50")
+                    c.rect(xx+2,yy+1,1,2,"#5d8754")
+                    c.rect(xx+1,yy+1,1,1,"#a7bd78")
+                if tile in (3,11):
+                    c.rect(x+6,y+11,2,2,"#d6c38e")
+                    c.rect(x+7,y+10,1,1,"#efdfa7")
+            elif row==1:
+                c.rect(x,y,16,16,"#a98257" if tile<8 else "#54899b")
+                for _ in range(6):
+                    xx=x+r.randrange(16);yy=y+r.randrange(16)
+                    c.rect(xx,yy,3 if tile>=8 else 2,1,
+                           "#91b8b3" if tile>=8 else "#c7a16a")
+            elif row==2:
+                c.rect(x,y,16,16,["#354452","#415161","#4b5e6b"][tile%3])
+                for _ in range(5):
+                    c.rect(x+r.randrange(16),y+r.randrange(16),3,1,"#536979")
+            else:
+                c.rect(x,y,16,16,"#65717d" if tile<8 else "#3c4a57")
+                for _ in range(4):
+                    c.rect(x+r.randrange(16),y+r.randrange(16),2,2,"#718392")
     c.save(ASSETS/"terrain.png")
 
 def objects():
