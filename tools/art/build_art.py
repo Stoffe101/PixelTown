@@ -250,6 +250,14 @@ def objects():
         c.rect(472+dx,176+dy,2,9,"#457d55")
         c.ell(472+dx,176+dy,3,3,["#f4d594","#e6adb3","#d7bfdf"][i%3])
         c.rect(472+dx,176+dy,1,1,"#fff2cf")
+    # Real carried wood has a small, purpose-made frame. One consistent object
+    # is reused in hands and at the actual construction site.
+    c.rect(1,225,20,4,"#544135")
+    c.rect(2,221,17,6,"#946947")
+    c.rect(4,219,15,5,"#bd9568")
+    c.rect(5,220,4,2,"#e0bc8b")
+    c.rect(11,222,4,1,"#ddba82")
+    c.rect(3,226,16,1,"#d8ae73")
     c.save(ASSETS/"objects.png")
 
 def character_sheets():
@@ -303,6 +311,7 @@ atlas = {"version":1,"tile":[16,16],
  "bush":[280,96,32,32],"crate":[320,96,32,32],
  "torch":[360,96,24,40],"mushrooms":[392,96,32,32],
  "crystal":[432,96,48,48],"slime":[0,176,40,32],
+ "wood_bundle":[0,218,22,13],
  "farm":[80,176,96,64],"wagon":[184,176,64,48],
  "fence":[256,176,64,32],"bridge":[328,176,80,64],
  "rocks":[416,176,48,40],"flowers":[472,176,32,32]},

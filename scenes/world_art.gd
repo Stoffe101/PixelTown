@@ -28,6 +28,7 @@ const OBJECT_FRAMES = {
 	"mushrooms": Rect2(392, 96, 32, 32),
 	"crystal": Rect2(432, 96, 48, 48),
 	"slime": Rect2(0, 176, 40, 32),
+	"wood_bundle": Rect2(0,218,22,13),
 	"farm": Rect2(80, 176, 96, 64),
 	"wagon": Rect2(184, 176, 64, 48),
 	"fence": Rect2(256, 176, 64, 32),
@@ -50,7 +51,8 @@ var dungeon_guard: Sprite2D
 var dungeon_gear: Sprite2D
 var enemy: Sprite2D
 var plot: Sprite2D
-var material_icon: Sprite2D
+var carried_wood_icon: Sprite2D
+var delivered_wood_icons: Array[Sprite2D] = []
 var _last_completed: bool = false
 var _world_seed: int = 1729
 
@@ -263,8 +265,13 @@ func _make_village_objects() -> void:
 	for p in [Vector2(546,373),Vector2(858,386)]:
 		_object(village,"torch",p)
 
-	plot = _object(village,"blueprint",Vector2(730,397))
-	material_icon = _object(village,"crate",Vector2(692,388))
+	plot = _object(village,"blueprint",Vector2(731,370))
+	carried_wood_icon = _object(village,"wood_bundle",Vector2(0,0))
+	carried_wood_icon.visible = false
+	for i in range(3):
+		var delivered := _object(village,"wood_bundle",Vector2(705+i*19,368))
+		delivered.visible = false
+		delivered_wood_icons.append(delivered)
 	worker = _character(village, "Worker")
 	guard = _character(village, "Guard")
 	guard_gear = _gear(village, "GuardEquipment")
@@ -329,7 +336,12 @@ func update_art(sim, show_cave: bool, size_choice: int) -> void:
 	_frame(dungeon_gear,0,attack_frame,size_choice)
 	enemy.modulate = Color("#f4b2ae") if sim.combat_elapsed < 0.22 else Color.WHITE
 	enemy.position.y = 395.0 + sin(sim.elapsed * 3.0) * 2.0
-	material_icon.visible = sim.delivered_wood > 0 and not sim.building_complete
+	# The visual cargo is not a looping animation: it follows the actual
+	# conserved material ledger in the demonstration simulation.
+	carried_wood_icon.visible = sim.carried_wood > 0
+	carried_wood_icon.position = sim.worker_pos + Vector2(0,-18)
+	for i in range(delivered_wood_icons.size()):
+		delivered_wood_icons[i].visible = i < sim.delivered_wood and not sim.building_complete
 	if sim.building_complete != _last_completed:
 		plot.texture = _atlas_region(OBJECTS,OBJECT_FRAMES["built_hut"] if sim.building_complete else OBJECT_FRAMES["blueprint"])
 		_last_completed = sim.building_complete
