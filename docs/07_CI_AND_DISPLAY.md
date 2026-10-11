@@ -8,7 +8,7 @@
 - Starting hypothesis: **640×360 logical pixels**, viewport stretch, expanding aspect and integer scaling, following Godot's pixel-art recommendations. This is provisional pending art and Windows testing.
 - 3440×1440 should expose **more horizontal world**, rather than stretch sprites or force 16:9 pillarboxing. Important UI should use safe-area anchors, not float to the extreme edges without thought.
 - Check actual camera composition, inventory placement, mouse targeting, pixel crispness and UI readability on the Windows ultrawide monitor. Linux virtual-display screenshots cannot certify physical DPI, refresh rate or how the game feels.
-- Screenshots currently show a **display-probe shell** only: no village, cave, combat or approved art has been implemented.
+- The original CI display probe has been replaced by **an unapproved original pixel-art Prototype 00 scene**: a village, cave, people, and demonstration activity. This is not finished gameplay or approved game art.
 
 ## CI workflow
 
@@ -18,7 +18,7 @@
 2. Godot **4.7.2-stable**, downloaded directly from official release URLs with pinned SHA-256 verification, imports the project on Linux and Windows.
 3. GDScript runner discovers `tests/unit/*_test.gd`; each suite returns `Array[String]` failures and an empty list is a pass.
 4. Both operating systems run headless startup checks. Reported engine/script errors fail CI even when Godot exits with status zero.
-5. Linux uses **real non-headless rendering under Xvfb**, generating PNG captures at 1920×1080, 2560×1440, 3440×1440. Godot renders each frame at its actual integer-scaled logical viewport, then the capture script scales the frame using nearest-neighbor pixels to the target physical image size. The verifier checks PNG integrity and exact output dimensions. These are representative pixel-art output captures, not raw monitor screenshots.
+5. Linux uses **real non-headless rendering under Xvfb**, generating actual Godot art-review PNG captures at 1920×1080, 2560×1440, 3440×1440, including village and cave views and **both candidate character sprite scales**. Godot renders each frame at its actual integer-scaled logical viewport, then the capture script scales the frame using nearest-neighbor pixels to the target physical image size. The verifier checks PNG integrity and exact output dimensions. These are representative pixel-art output captures, not raw monitor screenshots.
 6. Available logs and captures are uploaded after failures as independent 7-day artifacts. The run summary lists which resolutions produced files.
 
 Security and cost: read-only token permissions, SHA-pinned checkout/artifact actions, no secrets for PR code, no commits or automatic screenshot baseline updates, per-job time limits, branch-specific concurrency and minimal dependencies.
@@ -26,7 +26,7 @@ Security and cost: read-only token permissions, SHA-pinned checkout/artifact act
 ## Limits and forthcoming quality gates
 
 - There are **no approved visual comparison baselines** yet. We need real gameplay art, in-engine screenshots and explicit user review first. Never silently auto-update baselines.
-- There are **no gameplay, crafting, expedition or economy tests** yet, because those features do not exist. Add deterministic tests as systems are implemented.
+- The **tiny Prototype 00 demonstration state** has a deterministic no-wood-duplication, building-completion and background cave-tick unit test. There are still **no full crafting, expedition, equipment, or economy features/tests**. Add appropriate deterministic tests with each real system.
 - We have **no meaningful performance benchmark or 60 FPS claim** while the scene is still a diagnostic shell. Profile rendered gameplay on real Windows hardware once it exists.
 - Export, installer and packaging workflows are deferred until actual game distribution is being tested.
 
@@ -51,4 +51,4 @@ func run() -> Array[String]:
     return failures
 ```
 
-Current `scenes/main.tscn` is expressly **not final game art**. Later passes must capture actual village and cave scenes and add interaction, UI overflow and visual-regression tests for all target resolutions.
+Current `scenes/main.tscn` contains an early **in-engine village/cave art experiment**, not final approved game art. CI captures it but performs **no pixel-perfect comparison** until real human-reviewed baselines are approved. Later passes should add input/UI overflow and interaction visual QA once appropriate.

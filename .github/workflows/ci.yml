@@ -75,32 +75,37 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/screenshots
-          for size in '1920 1080' '2560 1440' '3440 1440'; do
-            read -r width height <<< "$size"
-            stem="${width}x${height}"
-            output="artifacts/screenshots/display-probe-${stem}.png"
+          # Same camera/art at 16:9 and 21:9, with both proposed sprite sizes.
+          while read -r width height mode scale seconds; do
+            [ -z "$width" ] && continue
+            stem="${width}x${height}-${mode}-scale${scale}"
+            output="artifacts/screenshots/${stem}.png"
             timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
-              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${stem}" --windowed \
-              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" \
+              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
+              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$mode" "$scale" "$seconds" \
               2>&1 | tee "artifacts/logs/render-${stem}.log"
             python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
             python3 tools/ci/verify_png.py "$output" "$width" "$height"
-          done
+          done <<'CAPTURES'
+          1920 1080 village 0 4
+          1920 1080 village 1 18
+          2560 1440 village 0 32
+          3440 1440 village 0 4
+          3440 1440 village 1 18
+          1920 1080 cave 0 5
+          3440 1440 cave 1 8
+          CAPTURES
 
       - name: Summary
         if: always()
         shell: bash
         run: |
-          echo '## PixelTown Linux CI' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Godot 4.7.2; unit tests, engine smoke, and actual rendered display-probe captures.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Requested resolutions: 1920x1080, 2560x1440, **3440x1440**.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'These are **display diagnostics, not final game-art screenshots or approved baselines**.' >> "$GITHUB_STEP_SUMMARY"
-          for size in 1920x1080 2560x1440 3440x1440; do
-            if test -s "artifacts/screenshots/display-probe-${size}.png"; then
-              echo "- Captured: ${size}" >> "$GITHUB_STEP_SUMMARY"
-            else
-              echo "- Missing: ${size}" >> "$GITHUB_STEP_SUMMARY"
-            fi
+          echo '## PixelTown Prototype 00 art review' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Godot 4.7.2; Linux + Windows checks, deterministic worker test, and actual Godot village/cave renders.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Resolution coverage: 1920x1080, 2560x1440, 3440x1440.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
+          for capture in artifacts/screenshots/*.png; do
+            if test -f "$capture"; then echo "- $(basename "$capture")" >> "$GITHUB_STEP_SUMMARY"; fi
           done
 
       - name: Attach render evidence and failure logs (no baseline updates)
