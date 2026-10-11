@@ -126,6 +126,10 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 	water.texture_region_size = TILE
 	for x in range(8,16):
 		water.create_tile(Vector2i(x,1))
+	for x in range(8):
+		water.create_tile(Vector2i(x,2))
+	for x in range(8,16):
+		water.create_tile(Vector2i(x,3))
 	var water_id: int = set.add_source(water)
 
 	var ground := TileMapLayer.new()
@@ -139,24 +143,20 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 			var atlas_coord: Vector2i
 			var source_id: int = grass_id
 			if underground:
-				source_id = cave_id
-				# Chamber boundaries are spatially intentional: a low maze of
-				# shadowed stone alcoves surrounds one uncluttered central room.
-				var side: bool = x < 9 or x > 61
-				var top: bool = y < 10 + _hash(int(x/5),2,10) % 3
-				var bottom: bool = y > 34 - _hash(int(x/7),3,12) % 3
+				# Dim slate stone, with an irregular cave-edge silhouette
+				# instead of full-screen repeated blockwork.
+				var side: bool = x < 8 or x > 63
+				var top: bool = y < 11 + _hash(int(x/6),2,10)%3
+				var bottom: bool = y > 33 - _hash(int(x/7),3,12)%3
 				var wall: bool = side or top or bottom
-				if wall:
-					atlas_coord = Vector2i(12 + variant % 3,12)
-				else:
-					atlas_coord = Vector2i(12 + (variant % 4), 13)
-				# A deliberately paved encounter island, not a random room-wide
-				# stripe; darker bounds and a simple middle medallion.
-				var center: bool = x >= 29 and x <= 45 and y >= 18 and y <= 27
-				if center:
-					atlas_coord = Vector2i(14 + variant % 3, 8)
-				if x >= 35 and x <= 38 and y >= 21 and y <= 24:
-					atlas_coord = Vector2i(16 + variant % 2, 8)
+				source_id = water_id
+				atlas_coord = Vector2i(8+variant%8,3) if wall else Vector2i(variant%8,2)
+				# Rare weathered architectural remains, not a decorative carpet.
+				var fragment: bool = ((x >= 17 and x <= 19 and y >= 18 and y <= 21)
+					or (x >= 54 and x <= 57 and y >= 28 and y <= 30))
+				if fragment:
+					source_id = cave_id
+					atlas_coord = Vector2i(12+variant%3,13)
 			else:
 				# Calm original meadow cells replace dense repeating tufts.
 				source_id = meadow_id
@@ -183,18 +183,17 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 			ground.set_cell(Vector2i(x,y),source_id,atlas_coord)
 
 func _is_road(x: int,y: int) -> bool:
-	# A winding path with three short building-spur connections and a lower
-	# garden walk. No straight full-width 48px brick strip.
-	var main_y: int = 24 + roundi(sin(float(x)*0.17)*1.2)
-	if x >= 8 and x <= 67 and abs(y-main_y) <= 1:
+	# Narrow routes approaching building fronts, not a flat three-tile-wide
+	# band that continues *behind* the buildings.
+	var main_y: int = 25 + roundi(sin(float(x)*0.17)*1.2)
+	if x >= 8 and x <= 67 and y >= main_y and y <= main_y+1:
 		return true
 	for branch_x in [14,24,39,58]:
-		if abs(x-branch_x) <= 1 and y >= 18 and y <= main_y:
+		var start_y: int = 21 if branch_x == 24 else 22
+		if x == branch_x and y >= start_y and y <= main_y:
 			return true
-	var south_walk: int = 30 + roundi(sin(float(x)*0.15)*0.9)
-	if x >= 9 and x <= 51 and abs(y-south_walk) <= 0:
-		return true
-	if x >= 33 and x <= 36 and y >= main_y and y <= 35:
+	# Connect the bridge without detached dead-end road rectangles.
+	if x >= 33 and x <= 35 and y >= main_y and y <= 36:
 		return true
 	return false
 
