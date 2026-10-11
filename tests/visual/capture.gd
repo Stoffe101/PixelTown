@@ -34,14 +34,21 @@ func _capture() -> void:
 		printerr("No rendered frame available")
 		quit(1)
 		return
-	if image.get_size() != expected_size:
-		printerr("Unexpected actual image size: ", image.get_size(), " instead of ", expected_size)
+	# Viewport pixel-art mode renders at logical resolution. Validate its actual
+	# expanded aspect and reproduce the integer-scaled display frame.
+	var base_size := Vector2i(640, 360)
+	var pixel_scale := mini(expected_size.x / base_size.x, expected_size.y / base_size.y)
+	var expected_viewport := Vector2i(expected_size.x / pixel_scale, expected_size.y / pixel_scale)
+	var rendered_size := image.get_size()
+	if pixel_scale < 1 or rendered_size != expected_viewport:
+		printerr("Logical viewport mismatch: got ", rendered_size, ", expected ", expected_viewport, " for ", expected_size)
 		quit(1)
 		return
+	image.resize(expected_size.x, expected_size.y, Image.INTERPOLATE_NEAREST)
 	var result := image.save_png(args[2])
 	if result != OK:
 		printerr("PNG save failed: ", result)
 		quit(1)
 		return
-	print("CAPTURE PASS: ", args[2], " size=", image.get_width(), "x", image.get_height())
+	print("CAPTURE PASS: ", args[2], " viewport=", rendered_size, " integer_scale=", pixel_scale, " PNG=", image.get_width(), "x", image.get_height())
 	quit(0)

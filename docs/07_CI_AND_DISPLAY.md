@@ -18,7 +18,7 @@
 2. Godot **4.7.2-stable**, downloaded directly from official release URLs with pinned SHA-256 verification, imports the project on Linux and Windows.
 3. GDScript runner discovers `tests/unit/*_test.gd`; each suite returns `Array[String]` failures and an empty list is a pass.
 4. Both operating systems run headless startup checks. Reported engine/script errors fail CI even when Godot exits with status zero.
-5. Linux uses **real non-headless rendering under Xvfb**, generating PNG captures at 1920×1080, 2560×1440, 3440×1440. The verifier checks PNG integrity and exact physical dimensions.
+5. Linux uses **real non-headless rendering under Xvfb**, generating PNG captures at 1920×1080, 2560×1440, 3440×1440. Godot renders each frame at its actual integer-scaled logical viewport, then the capture script scales the frame using nearest-neighbor pixels to the target physical image size. The verifier checks PNG integrity and exact output dimensions. These are representative pixel-art output captures, not raw monitor screenshots.
 6. Available logs and captures are uploaded after failures as independent 7-day artifacts. The run summary lists which resolutions produced files.
 
 Security and cost: read-only token permissions, SHA-pinned checkout/artifact actions, no secrets for PR code, no commits or automatic screenshot baseline updates, per-job time limits, branch-specific concurrency and minimal dependencies.

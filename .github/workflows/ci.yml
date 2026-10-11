@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout, without persisted credentials
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
 
@@ -80,7 +80,7 @@ jobs:
             stem="${width}x${height}"
             output="artifacts/screenshots/display-probe-${stem}.png"
             timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
-              godot --path . --rendering-method gl_compatibility --resolution "${stem}" --windowed \
+              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${stem}" --windowed \
               --script res://tests/visual/capture.gd -- "$width" "$height" "$output" \
               2>&1 | tee "artifacts/logs/render-${stem}.log"
             python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
@@ -105,7 +105,7 @@ jobs:
 
       - name: Attach render evidence and failure logs (no baseline updates)
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: linux-godot-evidence
           path: artifacts/
@@ -118,7 +118,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout, without persisted credentials
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
 
@@ -135,8 +135,8 @@ jobs:
           }
           $dest = Join-Path $env:RUNNER_TEMP 'godot'
           Expand-Archive -Path $zip -DestinationPath $dest
-          $exe = Get-ChildItem $dest -Recurse -Filter '*win64.exe' | Select-Object -First 1
-          if ($null -eq $exe) { throw 'Godot executable not found' }
+          $exe = Get-ChildItem $dest -Recurse -Filter '*win64_console.exe' | Select-Object -First 1
+          if ($null -eq $exe) { throw 'Godot console executable not found' }
           Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
 
       - name: Project import, unit tests and boot on Windows
@@ -146,11 +146,11 @@ jobs:
           New-Item -ItemType Directory -Force artifacts/logs | Out-Null
           & $env:GODOT_EXE --version
           & $env:GODOT_EXE --headless --editor --import --path . --log-file artifacts/logs/windows-import.log
-          if ($LASTEXITCODE -ne 0) { throw 'Windows import failed' }
+          if ($LASTEXITCODE -ne 0) { Get-Content artifacts/logs/windows-import.log -ErrorAction SilentlyContinue; throw "Windows import failed, exit code $LASTEXITCODE" }
           python tools/ci/check_engine_log.py artifacts/logs/windows-import.log
           if ($LASTEXITCODE -ne 0) { throw 'Windows import log contains errors' }
           & $env:GODOT_EXE --headless --path . --script res://tests/ci_runner.gd --log-file artifacts/logs/windows-unit.log
-          if ($LASTEXITCODE -ne 0) { throw 'Windows unit tests failed' }
+          if ($LASTEXITCODE -ne 0) { Get-Content artifacts/logs/windows-unit.log -ErrorAction SilentlyContinue; throw 'Windows unit tests failed' }
           python tools/ci/check_engine_log.py artifacts/logs/windows-unit.log
           if ($LASTEXITCODE -ne 0) { throw 'Windows test log contains errors' }
           & $env:GODOT_EXE --headless --path . --quit-after 12 --log-file artifacts/logs/windows-smoke.log
@@ -160,7 +160,7 @@ jobs:
 
       - name: Attach Windows failure logs
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: windows-godot-logs
           path: artifacts/logs/
