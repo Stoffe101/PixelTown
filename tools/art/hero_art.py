@@ -35,6 +35,8 @@ def poly(im,pts,c):ImageDraw.Draw(im).polygon(pts,fill=c)
 def specks(im,box,seed,colors,n,inside=None):
     rng=random.Random(seed)
     x0,y0,x1,y1=box
+    if x1<x0 or y1<y0:
+        return
     for j in range(n):
         x=rng.randint(x0,x1);y=rng.randint(y0,y1)
         if inside and im.getpixel((x,y))[3]==0:continue
