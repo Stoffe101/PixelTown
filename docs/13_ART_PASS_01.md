@@ -31,3 +31,15 @@ Real captures continue to cover **1920×1080, 2560×1440, 3440×1440** plus 1440
 **Work still required, not falsely considered complete:** fine Aseprite hand polish for face/clothing/personality; proper path/shore autotiles, nonrepetitive terrain; cave-room structure and light hierarchy; real directional motion feel; collision/pathing; master source editability in Aseprite; visual sign-off on actual Windows 3440×1440 monitor. Full blueprint placement and expedition progression are deferred.
 
 Art Gate A must fail if any of those visual fundamentals still look cheap. Do not merge PR #4 until the owner specifically approves actual gameplay-resolution captures.
+
+## Subsequent real-engine findings
+
+**First original-layered-art capture:** [run 38159824141](https://github.com/Stoffe101/PixelTown/actions/runs/38159824141), green on Linux and Windows. Original distinct smithy, cottage, storehouse, cave gate, mature trees and cliff modules visibly eliminate the previous collage of arbitrary unrelated atlas slices. **They are still a hand-polish starting point, not approved commercial art.** Even improved buildings sit in a sparse grass/road clearing, and the first chamber wall repeated too obviously.
+
+**Character pass:** original guard/villager 4-direction frames and matching separate helmet/shield/sword overlays were added, plus automatically verified editable sources. The completed hero-art generator and validation passed [CI run 38160328776](https://github.com/Stoffe101/PixelTown/actions/runs/38160328776). Their faces, poses and animations remain candidate quality; being nonempty and correctly anchored is not artistic approval.
+
+**Pixel-density evidence:** see [14_DISPLAY_DENSITY_EXPERIMENT.md](14_DISPLAY_DENSITY_EXPERIMENT.md). The 2×-physical-pixel 1080p capture looks less toy-like, but a universal 2× ultrawide capture leaves acres of empty meadow. No final display-scale rule selected.
+
+**Latest visual-specific work:** a purpose-authored half-built scaffold and a completed community hut replace the earlier X-marked crossed-square placeholder; three real delivered wood bundles remain tied to the demo's material ledger. A cave mineral shrine adds a deliberate focal landmark. These are isolated original PNGs with layered editable masters. Review them only using CI evidence from commits after this paragraph; don't claim the latest revisions look finished before inspecting those images.
+
+**Art Gate A remains open.** Next artistic problem is environmental composition and character charm, not additional code-generated roof styles.
