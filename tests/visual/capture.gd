@@ -58,11 +58,22 @@ func _capture() -> void:
 		return
 	var expected_viewport := Vector2i(expected_size.x / pixel_scale, expected_size.y / pixel_scale)
 	var actual_logical := result_image.get_size()
-	if actual_logical != expected_viewport:
-		printerr("Unexpected logical viewport: ",actual_logical," instead of ",expected_viewport)
+	if actual_logical != expected_viewport and actual_logical != base_size:
+		printerr("Unexpected logical viewport: ",actual_logical," instead of ",expected_viewport," or ",base_size)
 		quit(1)
 		return
-	result_image.resize(expected_size.x,expected_size.y,Image.INTERPOLATE_NEAREST)
+	# Godot can preserve the 640x360 base canvas in smaller integer-scaled
+	# windows. Capture the genuine base render with centered integer bars.
+	if actual_logical == base_size and expected_viewport != base_size:
+		var scaled := result_image.duplicate()
+		scaled.resize(base_size.x*pixel_scale,base_size.y*pixel_scale,Image.INTERPOLATE_NEAREST)
+		var framed := Image.create(expected_size.x,expected_size.y,false,Image.FORMAT_RGBA8)
+		framed.fill(Color("#18252f"))
+		var target := Vector2i((expected_size.x-scaled.get_width())/2,(expected_size.y-scaled.get_height())/2)
+		framed.blit_rect(scaled,Rect2i(Vector2i.ZERO,scaled.get_size()),target)
+		result_image=framed
+	else:
+		result_image.resize(expected_size.x,expected_size.y,Image.INTERPOLATE_NEAREST)
 	var result := result_image.save_png(args[2])
 	if result != OK:
 		printerr("PNG save failed: ",result)
