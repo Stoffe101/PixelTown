@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "tile": [
+    16,
+    16
+  ],
+  "frames": {
+    "cottage": [
+      0,
+      0,
+      88,
+      80
+    ],
+    "storage": [
+      96,
+      0,
+      80,
+      80
+    ],
+    "forge": [
+      192,
+      0,
+      112,
+      80
+    ],
+    "cave_mouth": [
+      320,
+      0,
+      96,
+      80
+    ],
+    "tree": [
+      432,
+      0,
+      64,
+      80
+    ],
+    "blueprint": [
+      0,
+      96,
+      96,
+      64
+    ],
+    "built_hut": [
+      112,
+      96,
+      96,
+      64
+    ],
+    "well": [
+      224,
+      96,
+      48,
+      48
+    ],
+    "bush": [
+      280,
+      96,
+      32,
+      32
+    ],
+    "crate": [
+      320,
+      96,
+      32,
+      32
+    ],
+    "torch": [
+      360,
+      96,
+      24,
+      40
+    ],
+    "mushrooms": [
+      392,
+      96,
+      32,
+      32
+    ],
+    "crystal": [
+      432,
+      96,
+      48,
+      48
+    ],
+    "slime": [
+      0,
+      176,
+      40,
+      32
+    ],
+    "wood_bundle": [
+      0,
+      218,
+      22,
+      13
+    ],
+    "farm": [
+      80,
+      176,
+      96,
+      64
+    ],
+    "wagon": [
+      184,
+      176,
+      64,
+      48
+    ],
+    "fence": [
+      256,
+      176,
+      64,
+      32
+    ],
+    "bridge": [
+      328,
+      176,
+      80,
+      64
+    ],
+    "rocks": [
+      416,
+      176,
+      48,
+      40
+    ],
+    "flowers": [
+      472,
+      176,
+      32,
+      32
+    ]
+  },
+  "characters": {
+    "cell": [
+      24,
+      32
+    ],
+    "size_candidates": [
+      "20x30",
+      "24x32"
+    ],
+    "directions": [
+      "south",
+      "north",
+      "west",
+      "east"
+    ],
+    "frames": [
+      "idle",
+      "walk1",
+      "idle2",
+      "walk2",
+      "work1",
+      "work2",
+      "attack1",
+      "attack2"
+    ],
+    "rows": [
+      "villager south",
+      "villager north",
+      "villager west",
+      "villager east",
+      "guard south",
+      "guard north",
+      "guard west",
+      "guard east"
+    ],
+    "equipment": "aligned 1:1 to guard frames, independent atlas"
+  }
+}
