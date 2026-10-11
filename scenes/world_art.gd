@@ -22,6 +22,12 @@ const OBJECT_FRAMES = {
 	"mushrooms": Rect2(392, 96, 32, 32),
 	"crystal": Rect2(432, 96, 48, 48),
 	"slime": Rect2(0, 176, 40, 32),
+	"farm": Rect2(80, 176, 96, 64),
+	"wagon": Rect2(184, 176, 64, 48),
+	"fence": Rect2(256, 176, 64, 32),
+	"bridge": Rect2(328, 176, 80, 64),
+	"rocks": Rect2(416, 176, 48, 40),
+	"flowers": Rect2(472, 176, 32, 32),
 }
 const TILE := Vector2i(16, 16)
 const WIDTH := 72
@@ -99,34 +105,71 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 			var seed: int = _hash(x,y,1 if underground else 0)
 			var cell: Vector2i
 			if underground:
-				cell = Vector2i(seed % 8,2)
-				if x < 3 or x > WIDTH - 4 or y < 3 or y > HEIGHT - 4:
-					cell = Vector2i(seed % 8,3)
-				if y == 19 and x > 18 and x < 53:
-					cell = Vector2i(8 + seed % 4,2)
+				# Irregular exposed rock on both cavern sides, with a clear
+				# central floor where the actual encounter happens.
+				var north: int = 13 + _hash(x,3,45) % 3
+				var south: int = 33 - _hash(x,9,51) % 3
+				var wall: bool = (y < north or y > south or x < 3 or x > WIDTH-4)
+				cell = Vector2i(seed % 8,3 if wall else 2)
+				if not wall and x > 19 and x < 53 and abs(y-22) < 3:
+					cell = Vector2i(8 + seed % 8,2)
 			else:
 				cell = Vector2i(seed % 8,0)
-				if (y >= 21 and y <= 24) or (x >= 24 and x <= 27 and y >= 14 and y <= 25):
-					cell = Vector2i(8 + seed % 8,0)
-				if x >= 34 and x <= 37 and y >= 15 and y <= 25:
-					cell = Vector2i(8 + seed % 8,0)
-				if x >= 46 and x <= 49 and y >= 14 and y <= 25:
-					cell = Vector2i(8 + seed % 8,0)
+				if _is_road(x,y):
+					var up: bool = _is_road(x,y-1)
+					var down: bool = _is_road(x,y+1)
+					var left: bool = _is_road(x-1,y)
+					var right: bool = _is_road(x+1,y)
+					if not up and not left:
+						cell = Vector2i(13,0)
+					elif not up and not right:
+						cell = Vector2i(14,0)
+					elif not down and not right:
+						cell = Vector2i(15,0)
+					elif not up:
+						cell = Vector2i(9,0)
+					elif not down:
+						cell = Vector2i(10,0)
+					elif not left:
+						cell = Vector2i(11,0)
+					elif not right:
+						cell = Vector2i(12,0)
+					else:
+						cell = Vector2i(8,0)
 				if y >= 30 and y <= 36:
 					cell = Vector2i(8 + seed % 8,1)
-				if y >= 30 and y <= 36 and x >= 33 and x <= 36:
+				if y >= 30 and y <= 36 and x >= 32 and x <= 36:
 					cell = Vector2i(seed % 8,1)
 			ground.set_cell(Vector2i(x,y), source_id, cell)
 
+func _is_road(x:int,y:int) -> bool:
+	var lane: int = 22 + roundi(sin(float(x) * 0.16) * 0.8)
+	if abs(y-lane) <= 1:
+		return true
+	for branch_x in [13,24,38,58]:
+		if abs(x-branch_x) <= 1 and y >= 16 and y <= lane:
+			return true
+	return false
+
 func _make_village_objects() -> void:
 	# Props are actual reuse of a single sprite atlas, not rect commands.
-	for point in [Vector2(92,265),Vector2(274,207),Vector2(492,191),Vector2(800,205),Vector2(1045,284),Vector2(125,442),Vector2(1033,449)]:
+	for point in [Vector2(73,309),Vector2(278,270),Vector2(499,271),Vector2(800,267),Vector2(1050,298),Vector2(124,443),Vector2(1033,451)]:
 		_object(village,"tree",point)
 	_object(village,"cottage",Vector2(207,335))
 	_object(village,"storage",Vector2(386,334))
 	_object(village,"forge",Vector2(613,336))
 	_object(village,"cave_mouth",Vector2(935,343))
-	_object(village,"well",Vector2(486,344))
+	_object(village,"well",Vector2(489,433))
+	_object(village,"farm",Vector2(230,459))
+	_object(village,"farm",Vector2(954,455))
+	_object(village,"wagon",Vector2(529,377))
+	_object(village,"bridge",Vector2(550,565))
+	for p in [Vector2(302,463),Vector2(855,458)]:
+		_object(village,"fence",p)
+	for p in [Vector2(672,443),Vector2(1034,403)]:
+		_object(village,"rocks",p)
+	for p in [Vector2(162,430),Vector2(293,420),Vector2(777,443)]:
+		_object(village,"flowers",p)
 	for p in [Vector2(286,430),Vector2(309,451),Vector2(844,429),Vector2(866,440),Vector2(985,440)]:
 		_object(village,"bush",p)
 	for p in [Vector2(336,357),Vector2(348,359),Vector2(644,345)]:
@@ -144,15 +187,17 @@ func _make_village_objects() -> void:
 func _make_cave_objects() -> void:
 	for p in [Vector2(219,330),Vector2(455,276),Vector2(902,340),Vector2(980,451)]:
 		_object(cave,"crystal",p)
-	for p in [Vector2(307,438),Vector2(392,289),Vector2(796,448)]:
+	for p in [Vector2(307,438),Vector2(392,289),Vector2(796,448),Vector2(871,366)]:
 		_object(cave,"mushrooms",p)
-	for p in [Vector2(312,249),Vector2(490,247),Vector2(860,244),Vector2(956,335)]:
+	for p in [Vector2(312,289),Vector2(490,267),Vector2(860,271),Vector2(956,335)]:
 		_object(cave,"torch",p)
+	for p in [Vector2(291,322),Vector2(467,318),Vector2(823,331),Vector2(1012,445)]:
+		_object(cave,"rocks",p)
 	dungeon_guard = _character(cave, "ExpeditionGuard")
 	dungeon_gear = _gear(cave, "ExpeditionEquipment")
-	dungeon_guard.position = Vector2(569,368)
+	dungeon_guard.position = Vector2(606,371)
 	dungeon_gear.position = dungeon_guard.position
-	enemy = _object(cave,"slime",Vector2(705,368))
+	enemy = _object(cave,"slime",Vector2(697,371))
 
 func _character(parent: Node2D, node_name: String) -> Sprite2D:
 	var s := Sprite2D.new()
@@ -191,7 +236,7 @@ func update_art(sim, show_cave: bool, size_choice: int) -> void:
 	_frame(dungeon_guard,4,attack_frame,size_choice)
 	_frame(dungeon_gear,0,attack_frame,size_choice)
 	enemy.modulate = Color("#f4b2ae") if sim.combat_elapsed < 0.22 else Color.WHITE
-	enemy.position.y = 368.0 + sin(sim.elapsed * 3.0) * 2.0
+	enemy.position.y = 371.0 + sin(sim.elapsed * 3.0) * 2.0
 	material_icon.visible = sim.delivered_wood > 0 and not sim.building_complete
 	if sim.building_complete != _last_completed:
 		plot.texture = _atlas_region(OBJECTS,OBJECT_FRAMES["built_hut"] if sim.building_complete else OBJECT_FRAMES["blueprint"])

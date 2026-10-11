@@ -105,15 +105,34 @@ def ground():
         for tile in range(16):
             x,y=tile*16,row*16
             r=random.Random(tile*73+row*3301)
-            if row==0:col=(["#789f60","#75a05b","#83aa66","#72995b"][tile%4] if tile<8 else "#ac8658")
+            if row==0:col=["#789f60","#75a05b","#83aa66","#72995b"][tile%4]
             elif row==1:col=("#a98257" if tile<8 else "#538b9c")
             elif row==2:col=(["#344351","#405060","#4d5c6a"][tile%3] if tile<8 else "#65737b")
             else:col=("#50606c" if tile<8 else "#3d5364")
             c.rect(x,y,16,16,col)
+            if row == 0 and tile >= 8:
+                # 16x16 dirt-road transitions: center / sides / corners.
+                for py in range(16):
+                    for px in range(16):
+                        rag = ((px*7+py*13+tile*5)%7)-3
+                        edge = rag//3
+                        dirt = (tile==8 or
+                                (tile==9 and py>=3+edge) or
+                                (tile==10 and py<=12+edge) or
+                                (tile==11 and px>=3+edge) or
+                                (tile==12 and px<=12+edge) or
+                                (tile==13 and py>=3+edge and px>=3+edge) or
+                                (tile==14 and py>=3+edge and px<=12+edge) or
+                                (tile==15 and py<=12+edge and px<=12+edge))
+                        if dirt:
+                            c.pixel(x+px,y+py,("#b28d5b" if (px*3+py*11+tile)%9>1 else "#a47d51"))
             for _ in range(13):
                 xx=x+r.randrange(16);yy=y+r.randrange(16)
                 if row==0 and tile<8:
                     c.rect(xx,yy,1,2,r.choice(["#a0b879","#4c8354","#6c9e60"]))
+                elif row==0 and tile>=8:
+                    if c.b[(yy*c.w+xx)*4+3]:
+                        c.rect(xx,yy,2,1,r.choice(["#c3a473","#926e4b"]))
                 elif row==1 and tile>=8:
                     c.rect(xx,yy,4,1,r.choice(["#6ea5ae","#a6c8c5"]))
                 else:
@@ -186,6 +205,52 @@ def objects():
     c.ell(15,186,8,5,"#89cfb5")
     c.rect(12,192,4,4,P["ink"]);c.rect(26,192,4,4,P["ink"])
     c.rect(17,198,10,2,"#e5ecc8")
+    # Reusable extra atlas objects, all editable in the pixel master:
+    # crop rows 80,176 96x64
+    c.rect(81,183,95,51,"#5d7b4f")
+    c.rect(84,185,89,46,"#866649")
+    for row in range(4):
+        c.rect(86,190+row*10,84,4,"#b38c5b")
+        for col in range(9):
+            x=88+col*9+(row%2)*2;y=185+row*10
+            c.rect(x,y+5,2,8,"#47794d")
+            c.rect(x-2,y+4,4,4,"#6ba362")
+            c.rect(x+2,y+2,5,4,"#9ec275")
+    c.rect(82,234,91,2,"#d2ac77")
+    # stocked timber wagon 184,176 64x48
+    c.rect(187,198,52,19,"#654935")
+    c.rect(190,194,46,20,"#b38354")
+    for xx in range(193,232,8):c.rect(xx,197,2,16,"#e1b477")
+    for xx in (191,225):
+        c.ell(xx+5,216,7,7,"#2e3940")
+        c.ell(xx+5,216,3,3,"#d4b27b")
+    c.rect(198,188,16,8,"#c7af7c")
+    c.rect(213,187,14,8,"#748d58")
+    c.rect(237,205,12,3,P["wood"])
+    # modular fence 256,176 64x32
+    c.rect(257,189,62,3,"#ab8251");c.rect(257,199,62,3,"#d2a26e")
+    for xx in range(258,320,15):
+        c.rect(xx,180,5,30,"#674d38")
+        c.rect(xx+1,179,3,29,"#c18f5d")
+        c.rect(xx+1,177,3,3,"#e6c184")
+    # river timber bridge 328,176 80x64
+    c.rect(335,181,67,54,"#67513f")
+    for xx in range(339,400,9):
+        c.rect(xx,182,7,51,"#c49d6e")
+        c.rect(xx+5,182,1,50,"#896748")
+    c.rect(330,185,5,53,"#684b35")
+    c.rect(403,185,5,53,"#684b35")
+    for yy in (189,217):c.rect(329,yy,80,4,"#dfb67e")
+    # natural rock cluster 416,176 48x40
+    for dx,dy,w,h in [(1,13,22,18),(17,5,23,26),(32,16,16,18)]:
+        c.ell(416+dx+w//2,176+dy+h//2,w//2,h//2,P["ink"])
+        c.ell(416+dx+w//2,176+dy+h//2-2,max(3,w//2-3),max(3,h//2-4),"#72868b")
+        c.rect(416+dx+5,176+dy+4,7,2,"#acb9b1")
+    # flowerbed 472,176 32x32
+    for i,(dx,dy) in enumerate([(5,14),(15,9),(24,18),(9,24),(21,26)]):
+        c.rect(472+dx,176+dy,2,9,"#457d55")
+        c.ell(472+dx,176+dy,3,3,["#f4d594","#e6adb3","#d7bfdf"][i%3])
+        c.rect(472+dx,176+dy,1,1,"#fff2cf")
     c.save(ASSETS/"objects.png")
 
 def character_sheets():
@@ -238,7 +303,10 @@ atlas = {"version":1,"tile":[16,16],
  "built_hut":[112,96,96,64],"well":[224,96,48,48],
  "bush":[280,96,32,32],"crate":[320,96,32,32],
  "torch":[360,96,24,40],"mushrooms":[392,96,32,32],
- "crystal":[432,96,48,48],"slime":[0,176,40,32]},
+ "crystal":[432,96,48,48],"slime":[0,176,40,32],
+ "farm":[80,176,96,64],"wagon":[184,176,64,48],
+ "fence":[256,176,64,32],"bridge":[328,176,80,64],
+ "rocks":[416,176,48,40],"flowers":[472,176,32,32]},
  "characters":{"cell":[24,32],"size_candidates":["20x30","24x32"],
  "directions":["south","north","west","east"],"frames":["idle","walk1","idle2","walk2","work1","work2","attack1","attack2"],
  "rows":["villager south","villager north","villager west","villager east","guard south","guard north","guard west","guard east"],
