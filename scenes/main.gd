@@ -1,76 +1,153 @@
-extends Control
-## Technical viewport and layout diagnostic. NOT actual game art or gameplay.
+extends Node2D
+## First ART/CAMERA/ACTIVITY prototype. Neither a released game nor final art.
+const DemoState = preload("res://scripts/demo_simulation.gd")
+const Painter = preload("res://art/world_canvas.gd")
 
-const BACKGROUND := Color("1b2525")
-const PANEL := Color("364c43")
-const ACCENT := Color("e8c983")
-const TEXT := Color("f4eed8")
+var sim
+var world
+var cam: Camera2D
+var selected_view: String = "village"
+var art_scale: int = 0
+var paused: bool = false
+var speed: float = 1.0
+var hud_title: Label
+var hud_detail: Label
+var hud_footer: Label
+var last_camera_position: Vector2 = Vector2(565, 351)
 
 func _ready() -> void:
-	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sim = DemoState.new()
+	world = Painter.new()
+	world.name = "ProceduralPixelArt"
+	add_child(world)
+	cam = Camera2D.new()
+	cam.name = "WorldCamera"
+	add_child(cam)
+	cam.position = last_camera_position
+	cam.make_current()
+	_create_hud()
+	_update_presentation()
 
-	var backdrop := ColorRect.new()
-	backdrop.name = "Backdrop"
-	backdrop.color = BACKGROUND
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(backdrop)
+func _process(delta: float) -> void:
+	if not paused:
+		sim.advance(minf(delta, 0.1) * speed)
+	world.tick_time = sim.elapsed
+	world.worker_pos = sim.worker_pos
+	world.carrying = sim.carried_wood > 0
+	world.delivered = sim.delivered_wood
+	world.completed = sim.building_complete
+	world.enemy_hp = sim.enemy_hp
+	world.enemy_hits = sim.enemy_hits
+	world.queue_redraw()
+	_update_presentation()
 
-	var frame := Panel.new()
-	frame.name = "SafeArea"
-	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	frame.offset_left = 12.0
-	frame.offset_top = 12.0
-	frame.offset_right = -12.0
-	frame.offset_bottom = -12.0
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = PANEL
-	panel_style.border_color = ACCENT
-	panel_style.set_border_width_all(1)
-	panel_style.set_content_margin_all(12.0)
-	frame.add_theme_stylebox_override("panel", panel_style)
-	add_child(frame)
+func configure_capture(mode: String, scale_choice: int, seconds: float) -> void:
+	# Called by visual test capture to produce repeatable art states.
+	selected_view = "cave" if mode == "cave" else "village"
+	art_scale = clampi(scale_choice, 0, 1)
+	sim = DemoState.new()
+	var t: float = maxf(0.0, minf(seconds, 90.0))
+	while t > 0.0:
+		var step: float = minf(0.05,t)
+		sim.advance(step)
+		t -= step
+	_update_presentation()
 
-	var heading := Label.new()
-	heading.name = "Heading"
-	heading.text = "PIXELTOWN / DISPLAY PROBE"
-	heading.add_theme_color_override("font_color", TEXT)
-	heading.position = Vector2(26, 25)
-	heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(heading)
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.keycode:
+			KEY_TAB:
+				_switch_view()
+			KEY_ESCAPE:
+				selected_view = "village"
+			KEY_1:
+				art_scale = 0
+			KEY_2:
+				art_scale = 1
+			KEY_SPACE:
+				paused = not paused
+			KEY_R:
+				sim = DemoState.new()
+			KEY_EQUAL, KEY_KP_ADD:
+				cam.zoom = (cam.zoom + Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
+			KEY_MINUS, KEY_KP_SUBTRACT:
+				cam.zoom = (cam.zoom - Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
+	elif event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			cam.zoom = (cam.zoom + Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			cam.zoom = (cam.zoom - Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
+		elif event.button_index == MOUSE_BUTTON_LEFT:
+			var click: Vector2 = get_global_mouse_position()
+			if selected_view == "village" and click.distance_to(Vector2(930,288)) < 100:
+				selected_view = "cave"
+			elif selected_view == "cave" and click.x < 320:
+				selected_view = "village"
+	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		cam.position -= event.relative / cam.zoom
+		cam.position.x = clampf(cam.position.x,300,820)
+		cam.position.y = clampf(cam.position.y,175,480)
 
-	var subheading := Label.new()
-	subheading.name = "Status"
-	subheading.text = "CI FOUNDATION ONLY - NO GAME ART OR GAMEPLAY YET"
-	subheading.add_theme_color_override("font_color", ACCENT)
-	subheading.position = Vector2(26, 55)
-	subheading.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(subheading)
+func _switch_view() -> void:
+	selected_view = "village" if selected_view == "cave" else "cave"
 
-	var left_marker := ColorRect.new()
-	left_marker.name = "BottomLeftMarker"
-	left_marker.color = ACCENT
-	left_marker.position = Vector2(25, 0)
-	left_marker.size = Vector2(14, 14)
-	left_marker.anchor_top = 1.0
-	left_marker.anchor_bottom = 1.0
-	left_marker.offset_top = -37.0
-	left_marker.offset_bottom = -23.0
-	left_marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(left_marker)
+func _create_hud() -> void:
+	var ui_layer := CanvasLayer.new()
+	ui_layer.name = "HUD"
+	add_child(ui_layer)
+	var root := Control.new()
+	root.name = "Layout"
+	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui_layer.add_child(root)
+	var header := PanelContainer.new()
+	header.name = "Header"
+	header.position = Vector2(12, 12)
+	header.custom_minimum_size = Vector2(270, 55)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("#17232ae9")
+	style.border_color = Color("#b5ab7d")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(2)
+	style.set_content_margin_all(10)
+	header.add_theme_stylebox_override("panel",style)
+	root.add_child(header)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation",3)
+	header.add_child(stack)
+	hud_title = Label.new()
+	hud_title.add_theme_color_override("font_color", Color("#f3e6bb"))
+	hud_title.add_theme_font_size_override("font_size", 13)
+	stack.add_child(hud_title)
+	hud_detail = Label.new()
+	hud_detail.add_theme_color_override("font_color", Color("#b7d7c9"))
+	hud_detail.add_theme_font_size_override("font_size", 10)
+	stack.add_child(hud_detail)
+	var footer_box := PanelContainer.new()
+	footer_box.name = "Help"
+	footer_box.anchor_top = 1
+	footer_box.anchor_bottom = 1
+	footer_box.offset_top = -35
+	footer_box.offset_bottom = -10
+	footer_box.offset_left = 12
+	footer_box.offset_right = 555
+	footer_box.add_theme_stylebox_override("panel",style.duplicate())
+	root.add_child(footer_box)
+	hud_footer = Label.new()
+	hud_footer.add_theme_font_size_override("font_size", 10)
+	hud_footer.add_theme_color_override("font_color",Color("#f2dfba"))
+	footer_box.add_child(hud_footer)
 
-	var right_marker := ColorRect.new()
-	right_marker.name = "BottomRightMarker"
-	right_marker.color = ACCENT
-	right_marker.anchor_left = 1.0
-	right_marker.anchor_right = 1.0
-	right_marker.anchor_top = 1.0
-	right_marker.anchor_bottom = 1.0
-	right_marker.offset_left = -39.0
-	right_marker.offset_right = -25.0
-	right_marker.offset_top = -37.0
-	right_marker.offset_bottom = -23.0
-	right_marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(right_marker)
+func _update_presentation() -> void:
+	if world == null:
+		return
+	world.view = selected_view
+	world.art_scale = art_scale
+	var label_size := "16 x 24" if art_scale == 0 else "20 x 30"
+	if selected_view == "village":
+		hud_title.text = "THE LITTLE SETTLEMENT  /  ART PROTOTYPE 00"
+		hud_detail.text = "Wood: %d  |  At plot: %d/3  |  %s" % [sim.storage_wood,sim.delivered_wood,sim.status()]
+	else:
+		hud_title.text = "UNDER THE HILL  /  CAVE ART PROTOTYPE"
+		hud_detail.text = "Guard vs cavern slime  |  Slime vitality: %d/5  |  Demo encounters: %d" % [sim.enemy_hp, sim.expedition_loot]
+	hud_footer.text = "TAB village/cave   1/2 sprite scale (%s)   SPACE pause   R restart   MMB pan   wheel zoom" % label_size

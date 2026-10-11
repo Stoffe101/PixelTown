@@ -2,7 +2,7 @@
 
 > **A living fantasy village that supports autonomous adventurers exploring an increasingly dangerous underground world.** A cozy 2D pixel-art simulation with crafting, settlement development, equipment, expeditions, meaningful choices, and gradually expanding automation.
 
-**Status:** pre-production / design documentation. **PixelTown is a temporary repo name, not the final game title.** No playable game, approved art pack, or implemented systems are implied by these documents.
+**Status:** Prototype 00 art/camera experiment in progress. **PixelTown is a temporary repo name, not the final game title.** A minimal running Godot **art/activity proof** is being developed. It is not a finished game, approved art pack, expedition system or complete simulation.
 
 ## License and public visibility
 
@@ -39,7 +39,7 @@ The settlement should feel comfortable, charming and autonomous; going undergrou
 
 **Prototype the smallest complete and fun loop before building the whole game.** One village, one workshop, a couple of adventurers, a cave with a few selectable floors, a return trip with loot, and one village improvement unlocked by that loot. Test playability and real in-engine pixel art, not just attractive concept descriptions.
 
-All mechanics are **design only** until implemented and tested. The older NODE//ZERO game is a separate project and must not be assumed to define this game's codebase, visual language, economy or architecture.
+**Only a tiny experimental wood-delivery and repeating cave encounter are implemented.** The actual full crafting, dungeon progression, equipment and economy mechanics remain design-only. The older NODE//ZERO game is a separate project and must not be assumed to define this game's codebase, visual language, economy or architecture.
 
 ## Source of truth
 
@@ -48,3 +48,7 @@ This repository tracks the design discussion through October 2026. Gameplay deci
 ## First technical foundation
 
 A provisional Godot 4.7.2 display probe and CI pipeline now live in this repository. They are NOT the visual prototype or gameplay. CI checks Linux + Windows startup and captures 1920×1080, 2560×1440 and 3440×1440 diagnostics with real Godot rendering. See [CI & display](docs/07_CI_AND_DISPLAY.md) for evidence and limits.
+
+## Run the current art experiment
+
+Open `project.godot` with **Godot 4.7.2** and press Play. `Tab` toggles village/cave, `1`/`2` compare character scales, `Space` pauses the shared demonstration simulation, `R` resets it, mouse wheel changes zoom, middle mouse drag pans. Click near the cave entrance to inspect the cave. The worker will eventually deliver three wood units and reveal a small hut; the cave guard's encounter is just an autonomous animation/health feedback test. **No finished expedition or crafting loop exists.** See [Prototype 00 art log](docs/08_PROTOTYPE_00_ART_LOG.md) and CI screenshot artifacts for review evidence.
