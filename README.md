@@ -71,3 +71,9 @@ python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"
 ```
 
 Then open Godot 4.7.2. CI imports the **same SHA256-verified source PNGs** from a pinned official creator repository checkout. See [Aseprite workflow](docs/11_ASEPRITE_WORKFLOW.md) for the team's sprite/animation/master standards.
+
+## Visual Quality Gate (still open)
+
+The first and second source-atlas trials **did not pass the desired visual bar**. The current screenshots are technical experiments. See [review checklist, current problems and required hero art](docs/12_VISUAL_QUALITY_GATE.md). No finalized proprietary production sprites or approved visual regression baselines exist yet.
+
+**Local build order:** run `python -m pip install pillow==11.3.0`, then `python tools/art/build_art.py`, then `python tools/art/import_ninja_cc0.py --zip "/local/path/Godot Project V4.zip"`, then `python tools/art/curate_v4_houses.py`, then open Godot. CI automatically does these source steps.

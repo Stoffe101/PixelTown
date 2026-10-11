@@ -23,5 +23,10 @@ for name,(rect,dest,points) in spec.items():
     tile.putalpha(ImageChops.multiply(tile.getchannel("A"),mask))
     out.alpha_composite(tile,dest)
 target=PATH/"curated_houses.png"
+# Guard against atlas bleed / crop mistakes before CI accepts this art.
+for label, (_, (px,py), _) in spec.items():
+    tile = out.crop((px,py,px+(65 if label!="storage" else 51),py+(81 if label=="cottage" else 48 if label=="storage" else 75)))
+    if tile.getchannel("A").getbbox() is None:
+        raise ValueError(f"Empty building crop: {label}")
 out.save(target,format="PNG",optimize=True)
 print(f"CURATED CC0 BUILDING PASS: {target}, {out.size}, source: pinned Ninja Adventure V4")
