@@ -506,6 +506,43 @@ def make_construction_site():
         rect(fin,(x,61,x+2,69),P["wood_dark"])
     export("watch_hut",complete,(W,H))
 
+
+def make_ancient_altar():
+    W,H=132,108
+    parts=[(n,layer(W,H)) for n in ["shadow","stone raised steps",
+        "weathered carved pillar","mineral veins","ritual accents"]]
+    sh,stone,carved,gem,acc=[i[1] for i in parts]
+    ImageDraw.Draw(sh).ellipse((4,90,127,107),fill="#182d334f")
+    masonry(stone,9,78,121,97)
+    rect(stone,(14,72,116,81),P["stone_dark"])
+    rect(stone,(21,65,109,74),P["stone"])
+    rect(stone,(29,60,100,67),P["stone_light"])
+    for x in (25,96):
+        rect(carved,(x-9,35,x+10,67),P["outline"])
+        rect(carved,(x-7,33,x+8,63),P["stone_dark"])
+        rect(carved,(x-5,35,x+6,59),P["stone"])
+        for y in (39,49,56):
+            rect(carved,(x-4,y,x+3,y+2),P["stone_light"])
+        rect(carved,(x-10,30,x+11,36),P["stone_dark"])
+        rect(carved,(x-9,28,x+10,31),P["stone_light"])
+        rect(carved,(x-11,62,x+10,65),P["outline"])
+    # Separate striking central crystal; non-fake gameplay effects.
+    poly(gem,[(67,14),(79,31),(73,53),(61,62),(51,48),(54,29)],"#294e5a")
+    poly(gem,[(67,17),(77,34),(71,49),(62,57),(57,42),(59,29)],"#599fa2")
+    poly(gem,[(66,20),(71,34),(67,47),(63,56),(59,40)],"#a3d3ba")
+    poly(gem,[(66,20),(72,33),(69,38),(64,30)],"#def2d0")
+    line(gem,[(67,19),(66,47)],"#d5ebdb")
+    rect(acc,(48,62,83,66),P["outline"])
+    rect(acc,(53,65,78,73),P["stone_light"])
+    rect(acc,(60,69,72,73),P["glow"])
+    for x,y in [(11,73),(109,68),(26,64),(92,64)]:
+        rect(acc,(x,y,x+10,y+4),"#47685d")
+        rect(acc,(x+2,y-2,x+6,y),P["moss"])
+    for x,y in [(32,77),(84,78)]:
+        rect(acc,(x,y,x+13,y+3),P["wood_dark"])
+        rect(acc,(x+4,y-3,x+7,y+4),P["glow"])
+    export("ancient_altar",parts,(W,H))
+
 if __name__=="__main__":
     make_smithy()
     make_cottage()
@@ -515,3 +552,4 @@ if __name__=="__main__":
     make_cave_wall()
     make_inhabitants()
     make_construction_site()
+    make_ancient_altar()

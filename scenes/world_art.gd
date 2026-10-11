@@ -18,6 +18,7 @@ const HERO_TREE = preload("res://assets/original/hero/mature_tree.png")
 const HERO_CAVE_WALL = preload("res://assets/original/hero/cave_wall.png")
 const HERO_BUILD_SITE = preload("res://assets/original/hero/construction_site.png")
 const HERO_WATCH_HUT = preload("res://assets/original/hero/watch_hut.png")
+const HERO_ALTAR = preload("res://assets/original/hero/ancient_altar.png")
 const BODIES = preload("res://assets/original/hero/inhabitants.png")
 const EQUIPMENT = preload("res://assets/original/hero/guard_equipment.png")
 
@@ -309,6 +310,7 @@ func _make_cave_objects() -> void:
 		var rock := _hero(cave,"Weathered Cave Cliff",HERO_CAVE_WALL,p)
 		rock.flip_h = int(p.x) % 2 == 1
 	_hero(cave,"Deep Chamber Threshold",HERO_CAVE_GATE,Vector2(531,290))
+	_hero(cave,"Mineral Shrine",HERO_ALTAR,Vector2(792,337))
 	# A protected encounter floor surrounded by connected rockwork. Subtle
 	# environmental clusters on the perimeter preserve enemy readability.
 	for p in [Vector2(182,305),Vector2(287,360),Vector2(875,330),

@@ -10,7 +10,8 @@ EXPECTED={
 "smithy":(164,126),"cottage":(138,113),"storehouse":(124,108),
 "cave_gate":(130,110),"mature_tree":(86,112),"cave_wall":(150,106),
 "inhabitants":(384,256),"guard_equipment":(384,128),
-"construction_site":(118,94),"watch_hut":(118,94)
+"construction_site":(118,94),"watch_hut":(118,94),
+"ancient_altar":(132,108)
 }
 def validate(name,size):
     path=TARGET/f"{name}.png"
