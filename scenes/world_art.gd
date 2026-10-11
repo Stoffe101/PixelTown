@@ -226,9 +226,9 @@ func _make_village_objects() -> void:
 	# CC0 environment atlas. Source coordinates are not enlarged or traced.
 	# Use distinct ground positions so this reads as a settlement rather than
 	# identically sized items on one display shelf.
-	_curated_house(village,"Timber Cottage",Rect2(0, 0, 67, 76),Vector2(250,365))
-	_curated_house(village,"Village Storehouse",Rect2(80, 12, 64, 57),Vector2(409,331))
-	_curated_house(village,"Village Smithy",Rect2(160, 12, 64, 57),Vector2(621,357))
+	_curated_house(village,"Timber Cottage",Rect2(0, 0, 65, 81),Vector2(250,365))
+	_curated_house(village,"Village Storehouse",Rect2(80, 12, 51, 48),Vector2(409,331))
+	_curated_house(village,"Village Smithy",Rect2(160, 0, 65, 75),Vector2(621,357))
 	_cc0_object(village,"Cave Gate",Rect2(0,0,64,52),Vector2(949,342))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.

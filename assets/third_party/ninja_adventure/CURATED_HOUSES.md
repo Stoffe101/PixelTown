@@ -1,19 +1,16 @@
-# Curated building sprite sheet (CC0 third-party art)
+# Derived, unapproved CC0 village facade assets
 
-`curated_houses.png`, 240×96 indexed PNG, was prepared from the **user-supplied Ninja Adventure Asset Pack**, by Pixel-boy and AAA. The source is `Backgrounds/Tilesets/TilesetHouse.png` (528×368 pixels). It is **not original PixelTown artwork**.
+The file `curated_houses.png` is generated reproducibly by `tools/art/curate_v4_houses.py` from Pixel-boy and AAA's **Ninja Adventure** official Godot V4 example atlas (`tileset_village_abandoned.png`).
 
-Creator: https://pixel-boy.itch.io/ninja-adventure-asset-pack
+**License:** CC0 1.0 (commercial use, adaptation and public redistribution permitted). Source and pinned upstream commit are recorded in `README.md` and `PROVENANCE.json` in this directory. **This is third-party CC0 artwork, not proprietary original PixelTown art.**
 
-License: **CC0 1.0**. Commercial use, adaptation and raw public redistribution are permitted. This file remains identified as CC0 third-party material in the publicly readable repository and is not governed by our original-code/art All Rights Reserved terms.
+Three individual 16px-density architecture samples share one 240×96 sprite sheet: cottage (0,0,65×81), storage (80,12,51×48) and smithy shell (160,0,65×75). Their crop polygons remove neighboring tiles without leaving opaque atlas backgrounds. The source file and script are editable; output PNGs are not committed because they are always built from the pinned verified input.
 
-Source regions (pixel coordinates in the creator's TilesetHouse.png) and export positions in the curated 240×96 PNG:
+Run after `python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"`:
 
-- Timber cottage: source (399,229)–(467,307); output (0,0), 68×78 candidate with transparent masked edges.
-- Storage hut: source (128,0)–(192,57); output (80,12), 64×57.
-- Workshop/shop shell: source (254,0)–(318,57); output (160,12), 64×57.
+```bash
+python -m pip install pillow==11.3.0
+python tools/art/curate_v4_houses.py
+```
 
-The source regions were isolated by a polygon cutout and removal of tiny disconnected neighbor artifacts, with a color-limited lossless pixel placement export. This is a **visual placeholder from a coherent CC0 family**, not the final PixelTown-owned Aseprite building set. In particular, the shop shell needs distinctive smithy props, furnace and occupation animation before artistic approval.
-
-PNG SHA-256: `eb259222f17ba77f81759b2b29d7684e9b13a759ccdd86538d099b53119fafd3`
-
-Avoid editing upstream artwork in-place. Future original buildings should be authored as layered masters in `art/source/architecture` and exported independently.
+These facades are **temporary layout assets** used to test the environment's density and proportions. A proper Aseprite source library and distinct functional details are still required before Art Gate A can be marked approved.

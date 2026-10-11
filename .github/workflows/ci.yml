@@ -41,9 +41,11 @@ jobs:
       - name: Verify and import selected CC0 environment textures
         run: python3 tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
 
-      - name: Verify temporary CC0 house atlas PNG
+      - name: Generate clean isolated CC0 building candidates
         shell: bash
-        run: python3 tools/art/repair_curated_png.py
+        run: |
+          python3 -m pip install --disable-pip-version-check pillow==11.3.0
+          python3 tools/art/curate_v4_houses.py
 
       - name: Build original PNG sprites and verify art contracts
         shell: bash
@@ -187,11 +189,13 @@ jobs:
           python tools/art/import_ninja_cc0.py --source _vendor_reference/ninja
           if ($LASTEXITCODE -ne 0) { throw 'CC0 source asset validation failed' }
 
-      - name: Verify temporary CC0 house atlas PNG on Windows
+      - name: Generate clean CC0 building candidates on Windows
         shell: pwsh
         run: |
-          python tools/art/repair_curated_png.py
-          if ($LASTEXITCODE -ne 0) { throw 'CC0 house atlas integrity failed' }
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned art dependency install failed' }
+          python tools/art/curate_v4_houses.py
+          if ($LASTEXITCODE -ne 0) { throw 'CC0 building generation failed' }
 
       - name: Build and validate original art on Windows
         shell: pwsh
