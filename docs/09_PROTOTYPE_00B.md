@@ -56,3 +56,11 @@ Seven supplied ZIP archives were inventoried, including original art, format/ani
 **Do not represent technical green as release readiness.** Our current cottage/storage/forge remain original modular candidates but visibly less detailed than CC0 environment plants. The hero body/equipment silhouettes and cave room composition still need design review. Art Gate A remains **open**, PR stays **draft** and no major new gameplay systems were implemented in this pack audit.
 
 **Production-size suggestion, not yet canonical:** the 16px ecosystem suggests adding a smaller **16×24** character candidate inside the existing 24×32 cell, rather than prematurely locking 24×32 as full-body size. Review at actual normal play zoom.
+
+### Final asset-audit CI / visual verification
+
+[Follow-up final CI run: 38153596007](https://github.com/Stoffe101/PixelTown/actions/runs/38153596007): **both Linux and Windows succeeded**. Real Godot screenshots include 1920×1080, 2560×1440, 3440×1440, a small 1440×810 window and zoom variants. The selected four Pixel-boy/AAA PNGs were SHA256-verified before use.
+
+**Review result: Art Gate A still NOT PASSED.** Village foliage/terrain has stronger pixel craft than the current simplistic cottages and workshop. Bright grassy fields look repetitive/too yellow, and major paths read as a regular tiled strip rather than organic terrain. Cave floor/wall contrast recovered from the previous blank/misaligned selection, but the encounter space is still too empty and geometric. Current character/helmet silhouettes are functional and aligned but far from an approved warm, expressive PixelTown cast.
+
+**Next art-only actions:** redraw the main cottage, storage and forge in layered Aseprite masters against the selected terrain palette; replace repeating center road/grass fills with coherent edge/corner variants; create a bounded cave chamber with walls, corners, transitions and a more readable encounter centerpiece, preferably testing the 0x72 CC0 material as its own coherent alternate before mixing it. Compare two character silhouettes and equipment during motion. Until that happens, don't lock a production tile/character style and don't merge art as final.
