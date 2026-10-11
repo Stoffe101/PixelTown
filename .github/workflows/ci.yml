@@ -112,6 +112,27 @@ jobs:
           3440 1440 cave 1 8 2
           CAPTURES
 
+      - name: Shared source image reimport across five placed oaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Only mutate a temporary CI checkout. Never commit the test recolor.
+          cp assets/sprites/environment/oak_tree.png artifacts/logs/oak-before-probe.png
+          trap 'cp artifacts/logs/oak-before-probe.png assets/sprites/environment/oak_tree.png' EXIT
+          python3 tools/art_export/shared_source_probe.py tint
+          timeout 120s godot --headless --editor --import --path . >/dev/null
+          timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+            godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution '1920x1080' --windowed \
+            --script res://tests/visual/capture.gd -- 1920 1080 artifacts/screenshots/1920x1080-showcase-oak-recolor.png showcase 1 0 1 \
+            2>&1 | tee artifacts/logs/shared-oak-probe.log
+          python3 tools/ci/check_engine_log.py artifacts/logs/shared-oak-probe.log
+          python3 tools/art_export/shared_source_probe.py verify \
+            artifacts/screenshots/1920x1080-showcase-scale1-zoom1.png \
+            artifacts/screenshots/1920x1080-showcase-oak-recolor.png
+          cp artifacts/logs/oak-before-probe.png assets/sprites/environment/oak_tree.png
+          trap - EXIT
+          timeout 120s godot --headless --editor --import --path . >/dev/null
+
       - name: Pixel-density A/B visual experiment (2x physical pixels)
         shell: bash
         run: |
