@@ -1,7 +1,7 @@
 extends Node2D
 ## First ART/CAMERA/ACTIVITY prototype. Neither a released game nor final art.
 const DemoState = preload("res://scripts/demo_simulation.gd")
-const Painter = preload("res://art/world_canvas.gd")
+const Painter = preload("res://scenes/world_art.gd")
 
 var sim
 var world
@@ -31,14 +31,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not paused:
 		sim.advance(minf(delta, 0.1) * speed)
-	world.tick_time = sim.elapsed
-	world.worker_pos = sim.worker_pos
-	world.carrying = sim.carried_wood > 0
-	world.delivered = sim.delivered_wood
-	world.completed = sim.building_complete
-	world.enemy_hp = sim.enemy_hp
-	world.enemy_hits = sim.enemy_hits
-	world.queue_redraw()
+	world.update_art(sim, selected_view == "cave", art_scale)
 	_update_presentation()
 
 func configure_capture(mode: String, scale_choice: int, seconds: float) -> void:
@@ -141,13 +134,12 @@ func _create_hud() -> void:
 func _update_presentation() -> void:
 	if world == null:
 		return
-	world.view = selected_view
-	world.art_scale = art_scale
+	world.update_art(sim, selected_view == "cave", art_scale)
 	var label_size := "16 x 24" if art_scale == 0 else "20 x 30"
 	if selected_view == "village":
-		hud_title.text = "THE LITTLE SETTLEMENT  /  ART PROTOTYPE 00"
+		hud_title.text = "THE LITTLE SETTLEMENT  /  ART PROTOTYPE 00B"
 		hud_detail.text = "Wood: %d  |  At plot: %d/3  |  %s" % [sim.storage_wood,sim.delivered_wood,sim.status()]
 	else:
-		hud_title.text = "UNDER THE HILL  /  CAVE ART PROTOTYPE"
+		hud_title.text = "UNDER THE HILL  /  CAVE ART PROTOTYPE 00B"
 		hud_detail.text = "Guard vs cavern slime  |  Slime vitality: %d/5  |  Demo encounters: %d" % [sim.enemy_hp, sim.expedition_loot]
-	hud_footer.text = "TAB village/cave   1/2 sprite scale (%s)   SPACE pause   R restart   MMB pan   wheel zoom" % label_size
+	hud_footer.text = "TAB views   1/2 character (%s)   SPACE pause   R reset   MMB pan   wheel zoom" % label_size

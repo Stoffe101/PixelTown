@@ -7,8 +7,8 @@ func _initialize() -> void:
 
 func _capture() -> void:
 	var args := OS.get_cmdline_user_args()
-	if args.size() < 3 or args.size() > 6:
-		printerr("Usage: capture.gd -- WIDTH HEIGHT OUTPUT_PNG [village|cave] [0|1 art scale] [sim seconds]")
+	if args.size() < 3 or args.size() > 7:
+		printerr("Usage: capture.gd -- WIDTH HEIGHT OUTPUT_PNG [village|cave] [0|1 art scale] [sim seconds] [camera zoom]")
 		quit(2)
 		return
 	var expected_size := Vector2i(int(args[0]), int(args[1]))
@@ -19,6 +19,7 @@ func _capture() -> void:
 	var mode := args[3] if args.size() > 3 else "village"
 	var scale_choice := int(args[4]) if args.size() > 4 else 0
 	var seconds := float(args[5]) if args.size() > 5 else 0.0
+	var camera_zoom := float(args[6]) if args.size() > 6 else 1.0
 	if mode != "village" and mode != "cave":
 		printerr("Unknown capture mode ",mode)
 		quit(2)
@@ -37,6 +38,10 @@ func _capture() -> void:
 		quit(1)
 		return
 	scene.call("configure_capture",mode,scale_choice,seconds)
+	if camera_zoom != 1.0:
+		var camera: Camera2D = scene.get_node_or_null("WorldCamera")
+		if camera != null:
+			camera.zoom = Vector2.ONE * camera_zoom
 	for i in range(6):
 		await process_frame
 	await RenderingServer.frame_post_draw

@@ -30,6 +30,12 @@ jobs:
       - name: Check repository and licensing contracts
         run: python3 tools/ci/check_repo.py
 
+      - name: Build original PNG sprites and verify art contracts
+        shell: bash
+        run: |
+          python3 tools/art/build_art.py
+          python3 tools/art/validate_assets.py
+
       - name: Install pinned Godot and verify release hash
         shell: bash
         run: |
@@ -87,12 +93,13 @@ jobs:
             python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
             python3 tools/ci/verify_png.py "$output" "$width" "$height"
           done <<'CAPTURES'
-          1920 1080 village 0 4
+          1440 810 village 1 12
+          1920 1080 village 0 5
           1920 1080 village 1 18
-          2560 1440 village 0 32
-          3440 1440 village 0 4
+          2560 1440 village 1 20
+          3440 1440 village 0 5
           3440 1440 village 1 18
-          1920 1080 cave 0 5
+          1920 1080 cave 1 8
           3440 1440 cave 1 8
           CAPTURES
 
@@ -103,7 +110,9 @@ jobs:
           echo '## PixelTown Prototype 00 art review' >> "$GITHUB_STEP_SUMMARY"
           echo 'Godot 4.7.2; Linux + Windows checks, deterministic worker test, and actual Godot village/cave renders.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Resolution coverage: 1920x1080, 2560x1440, 3440x1440.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
+          echo 'All output atlases are attached as PNG and JSON artifacts. Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p artifacts/atlases
+          cp assets/*.png assets/atlas.json artifacts/atlases/
           for capture in artifacts/screenshots/*.png; do
             if test -f "$capture"; then echo "- $(basename "$capture")" >> "$GITHUB_STEP_SUMMARY"; fi
           done
@@ -143,6 +152,14 @@ jobs:
           $exe = Get-ChildItem $dest -Recurse -Filter '*win64_console.exe' | Select-Object -First 1
           if ($null -eq $exe) { throw 'Godot console executable not found' }
           Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
+
+      - name: Build and validate original art on Windows
+        shell: pwsh
+        run: |
+          python tools/art/build_art.py
+          if ($LASTEXITCODE -ne 0) { throw 'Art generation failed' }
+          python tools/art/validate_assets.py
+          if ($LASTEXITCODE -ne 0) { throw 'Art validation failed' }
 
       - name: Project import, unit tests and boot on Windows
         shell: pwsh

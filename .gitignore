@@ -1,11 +1,11 @@
-# Godot 4 generated import data and editor state.
+# Godot caches / editor state
 .godot/
 
-# Local CI and diagnostic outputs; GitHub Actions stores review screenshots as artifacts.
+# Build artifacts and generated sprite binaries (reproducible master in tools/art).
 artifacts/
+/assets/*.png
+/assets/atlas.json
 *.log
-
-# Local editor/OS files.
 .DS_Store
 Thumbs.db
 .vscode/
