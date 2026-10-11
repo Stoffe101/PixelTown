@@ -16,6 +16,8 @@ const HERO_STORE = preload("res://assets/original/hero/storehouse.png")
 const HERO_CAVE_GATE = preload("res://assets/original/hero/cave_gate.png")
 const HERO_TREE = preload("res://assets/original/hero/mature_tree.png")
 const HERO_CAVE_WALL = preload("res://assets/original/hero/cave_wall.png")
+const HERO_BUILD_SITE = preload("res://assets/original/hero/construction_site.png")
+const HERO_WATCH_HUT = preload("res://assets/original/hero/watch_hut.png")
 const BODIES = preload("res://assets/original/hero/inhabitants.png")
 const EQUIPMENT = preload("res://assets/original/hero/guard_equipment.png")
 
@@ -251,15 +253,17 @@ func _make_village_objects() -> void:
 	_hero(village,"Cottage",HERO_COTTAGE,Vector2(309,365))
 	_hero(village,"Storehouse",HERO_STORE,Vector2(432,334))
 	_hero(village,"Working Smithy",HERO_SMITHY,Vector2(604,358))
-	_hero(village,"Cave Entrance",HERO_CAVE_GATE,Vector2(797,350))
+	_hero(village,"Cave Entrance",HERO_CAVE_GATE,Vector2(797,306))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.
 	# The 64x48 crop contains a complete canopy, unlike the old cropped tree.
 	# Deliberately clustered trees around clearing edges, with a single
 	# recognizable mature-tree source and no neighboring atlas debris.
-	for p in [Vector2(115,318),Vector2(172,278),Vector2(480,267),
+	for p in [Vector2(-205,355),Vector2(-157,327),Vector2(-84,430),
+			Vector2(115,318),Vector2(172,278),Vector2(480,267),
 			Vector2(741,273),Vector2(1014,307),Vector2(1059,362),
-			Vector2(101,479),Vector2(1041,490)]:
+			Vector2(101,479),Vector2(1041,490),Vector2(1210,330),
+			Vector2(1268,374),Vector2(1350,412)]:
 		var tree := _hero(village,"Mature Tree",HERO_TREE,p)
 		tree.flip_h = _hash(int(p.x),int(p.y)) % 2 == 0
 
@@ -280,16 +284,16 @@ func _make_village_objects() -> void:
 	for p in [Vector2(270,483),Vector2(320,496),Vector2(817,469),
 			Vector2(906,481),Vector2(1038,486)]:
 		_object(village,"bush",p)
-	for p in [Vector2(354,369),Vector2(382,375),Vector2(595,368)]:
-		_object(village,"crate",p)
+	for p in [Vector2(351,368),Vector2(375,369),Vector2(591,378)]:
+		_object(village,"wood_bundle",p)
 	for p in [Vector2(546,373),Vector2(858,386)]:
 		_object(village,"torch",p)
 
-	plot = _object(village,"blueprint",Vector2(731,370))
+	plot = _hero(village,"Constructing Community Hut",HERO_BUILD_SITE,Vector2(731,370))
 	carried_wood_icon = _object(village,"wood_bundle",Vector2(0,0))
 	carried_wood_icon.visible = false
 	for i in range(3):
-		var delivered := _object(village,"wood_bundle",Vector2(705+i*19,368))
+		var delivered := _object(village,"wood_bundle",Vector2(702+i*19,375))
 		delivered.visible = false
 		delivered_wood_icons.append(delivered)
 	worker = _character(village, "Worker")
@@ -369,5 +373,5 @@ func update_art(sim, show_cave: bool, size_choice: int) -> void:
 	for i in range(delivered_wood_icons.size()):
 		delivered_wood_icons[i].visible = i < sim.delivered_wood and not sim.building_complete
 	if sim.building_complete != _last_completed:
-		plot.texture = _atlas_region(OBJECTS,OBJECT_FRAMES["built_hut"] if sim.building_complete else OBJECT_FRAMES["blueprint"])
+		plot.texture = HERO_WATCH_HUT if sim.building_complete else HERO_BUILD_SITE
 		_last_completed = sim.building_complete

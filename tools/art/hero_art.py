@@ -456,6 +456,54 @@ def make_inhabitants():
     export("inhabitants",layers,(W,H))
     export("guard_equipment",ge,(384,128))
 
+
+def make_construction_site():
+    W,H=118,94
+    # In-progress building with physical foundations, supports, a saw bench
+    # and half-constructed timber. No giant square crossed blueprint plane.
+    parts=[(n,layer(W,H)) for n in ["site shadow","stone footing",
+            "staged timber walls","posts and joists","builder details"]]
+    sh,stone,frame,joists,fin=[x[1] for x in parts]
+    ImageDraw.Draw(sh).ellipse((6,76,111,91),fill="#243d365c")
+    masonry(stone,12,66,107,83)
+    rect(frame,(19,44,102,67),P["wood_dark"])
+    rect(frame,(22,46,95,66),P["wall_sh"])
+    for yy in range(48,65,6):
+        rect(frame,(23,yy,95,yy+2),"#ba956e")
+        line(frame,[(31,yy),(87,yy)],P["wood_hl"])
+    for x in [17,41,85,103]:
+        rect(joists,(x,28,x+5,79),P["wood_dark"])
+        rect(joists,(x+1,28,x+2,78),P["wood_hl"])
+        rect(joists,(x-2,26,x+9,30),P["wood_lit"])
+    line(joists,[(19,30),(64,16),(105,30)],P["wood_dark"],4)
+    line(joists,[(24,31),(64,21),(100,31)],P["wood_hl"],2)
+    line(joists,[(17,31),(17,75)],P["outline"])
+    # A reusable sawhorse and two cut boards on the ground at the front.
+    rect(fin,(23,81,92,85),P["wood_dark"])
+    rect(fin,(26,80,90,82),P["wood_lit"])
+    rect(fin,(18,84,48,87),P["wood"])
+    rect(fin,(65,86,101,89),P["wood_hl"])
+    rect(fin,(23,88,26,92),P["stone"])
+    for p in [(49,75),(58,80),(107,72)]:
+        rect(fin,(p[0],p[1],p[0]+4,p[1]+2),P["stone_light"])
+    export("construction_site",parts,(W,H))
+    # Finished small community watch hut uses the SAME foot/plot footprint.
+    complete=[(n,layer(W,H)) for n in ["contact and stone footing",
+             "finished walls","timber joinery","wood roof","door and trim"]]
+    sh,wall,timber,roof_layer,fin=[x[1] for x in complete]
+    ImageDraw.Draw(sh).ellipse((4,80,113,92),fill="#243d365c")
+    masonry(sh,10,74,109,84)
+    rect(wall,(15,37,103,75),P["wall_sh"])
+    rect(wall,(19,39,99,75),P["wall_hl"])
+    timbers(timber,15,40,104,78)
+    roof(roof_layer,5,10,114,45,"slate")
+    door(fin,50,53,18,23)
+    framed_window(fin,25,53,False)
+    rect(fin,(81,67,99,73),P["wood_lit"])
+    for x in [86,92,97]:
+        rect(fin,(x,61,x+2,69),P["wood_dark"])
+    export("watch_hut",complete,(W,H))
+
 if __name__=="__main__":
     make_smithy()
     make_cottage()
@@ -464,3 +512,4 @@ if __name__=="__main__":
     make_tree()
     make_cave_wall()
     make_inhabitants()
+    make_construction_site()

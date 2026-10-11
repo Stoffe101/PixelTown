@@ -74,7 +74,7 @@ func _input(event: InputEvent) -> void:
 			cam.zoom = (cam.zoom - Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			var click: Vector2 = get_global_mouse_position()
-			if selected_view == "village" and click.distance_to(Vector2(816,317)) < 65:
+			if selected_view == "village" and click.distance_to(Vector2(797,275)) < 65:
 				selected_view = "cave"
 			elif selected_view == "cave" and click.x < 320:
 				selected_view = "village"
