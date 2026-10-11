@@ -15,8 +15,8 @@ def main():
  for rel, size in ASSETS.items():
   with Image.open(ROOT/rel) as im:
    im.load()
-   assert im.mode == "RGBA" and im.size == size, (rel, im.mode, im.size)
-   alpha=im.getchannel("A")
+   assert im.size == size and (im.mode == "RGBA" or (im.mode == "P" and "transparency" in im.info)), (rel, im.mode, im.size)
+   alpha=im.convert("RGBA").getchannel("A")
    lo,hi=alpha.getextrema()
    assert hi==255,(rel,"not rendered")
    if "sprites/" in rel:
