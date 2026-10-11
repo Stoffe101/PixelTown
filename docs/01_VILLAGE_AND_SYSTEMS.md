@@ -17,6 +17,12 @@ Potential occupations and activities include:
 
 Villagers may develop skills, experience and individual strengths over time. A woodcutter could become a blacksmith or guard, subject to the eventual profession system. Individuality is important for attachment but a deep social simulator, relationships and dozens of stats are not early-scope requirements. The player should set **jobs, work orders and priorities**, not individually steer each tiny inhabitant all day.
 
+## Blueprints and autonomous construction
+
+**Chosen starting interaction:** the player places a construction blueprint using mouse-first controls, while villagers independently collect actual materials from storage, carry them to the building site, and construct it over visible stages. The final building must exist in village state, not merely in an animation. The smallest construction test is one blueprint, one worker, one actual material delivery, and a visibly completed structure.
+
+Blueprint placement rules, multiple builders, priorities, cancellation/refunds and broader construction UX will be determined after testing the narrow interaction.
+
 ## Workshop/smithy gameplay
 
 A workshop starts with useful tools and can grow into a forge or smithy. The intended production chain is visible and economically grounded:
@@ -61,6 +67,10 @@ The player may eventually set:
 
 Automation replaces chores but preserves the strategic choice of priorities and objectives. Do not build complex policy editors until an actual repetitive problem warrants them.
 
+## Candidate prototype defaults, not finalized mechanics
+
+Flexible work priorities and eventual experience/specialization; initially simple food/health/rest instead of complex happiness; stock targets only after repeated work becomes tedious; and a possible pause/1×/2×/4× time selector when a real simulation clock exists. These are working options to test, not permanently approved algorithms or shipped systems.
+
 ## User experience
 
 The player should see what villagers are doing, why a forge stopped, what material is missing, which items are ready, and how new resources affect future possibilities. Contextual inspection is better than a permanently crowded dashboard. Keep the miniature world central to the view.
@@ -71,4 +81,4 @@ One small village, four inhabitants, basic gathering and hauling, storage, one w
 
 ## Open questions
 
-Direct building placement versus designations and autonomous construction; resident attributes; food/needs severity; labor allocation; progression pace; housing growth; climate, seasons and day/night significance; multiple facilities and deeper settlement management. Decide using playable evidence.
+Blueprint-placement validation, autonomous builder priority and cancellation policies; resident attributes; food/needs severity; labor allocation; progression pace; housing growth; climate, seasons and day/night significance; multiple facilities and deeper settlement management. Decide using playable evidence.

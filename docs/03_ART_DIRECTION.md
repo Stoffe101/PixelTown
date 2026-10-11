@@ -20,7 +20,7 @@ These are examples to STUDY, not games to copy. Do not lift their copyrighted sp
 
 | Item | Starting hypothesis | Status |
 | --- | --- | --- |
-| World perspective | top-down with readable small building fronts | to test |
+| World perspective | slightly angled-looking top-down art with visible building fronts on a **normal square tile grid**, four-direction movement; **not true isometric** | direction chosen; actual camera and proportions to test |
 | Terrain tiles | 16×16 logical pixels | to test |
 | Character sprite | around 16×24 logical pixels | to test |
 | Structures | modular buildings roughly 3–6 tiles wide | to test |
@@ -29,7 +29,7 @@ These are examples to STUDY, not games to copy. Do not lift their copyrighted sp
 | Village palette | friendly moss greens, earth browns, cream stone, blue water, amber forge light | direction |
 | Dungeon palette | desaturated rock, torch amber, fungus/cave crystal accents and clear combat effects | direction |
 
-Do not declare these dimensions final until characters, equipment and animations are readable at expected Windows screen sizes and actual Godot camera zoom.
+Compare **two candidate sprite scales** in a real Godot scene before fixing dimensions. Do not build large animation frame sets before the base characters look convincing. Keep scale, overlays and palette consistent across village and caves.
 
 ## Artwork production strategy
 
@@ -40,7 +40,7 @@ Do not declare these dimensions final until characters, equipment and animations
 5. Compare sprites in an actual living scene, not only on a concept sheet or heavily enlarged preview.
 6. Reuse modular parts, recolors and procedural details where those genuinely preserve style.
 7. Fix inconsistencies by adjusting original sprite pixels/templates. Never bulk-generate dozens of unrelated AI characters and assume they'll match.
-8. Test for readability at 1920×1080 and other supported resolutions with multiple zoom factors.
+8. Test at **1920×1080, 2560×1440 and 3440×1440**, with the two candidate character scales and realistic zoom. Verify ultrawide camera composition and sprite readability, not merely PNG dimensions.
 
 **Production honesty:** terrain, simple buildings and effects are relatively feasible; unique animated characters and visible equipment variants require more effort; hundreds of monsters, elaborate directional combat animations and unrestricted equipment appearance permutations are NOT responsible first goals.
 
@@ -66,4 +66,4 @@ The repository is public but its **original art, code and documentation are All 
 
 ## Remaining art decisions
 
-Final camera style, actual tile dimensions, villager facial details, combat sprite resolution, character equipment layers, outdoor/dungeon contrast, lighting system and sprite creation tool. These require working prototypes and user approval.
+Exact camera framing/zoom (the square-grid angled-looking top-down direction is chosen), actual tile dimensions, villager facial details, combat sprite resolution, character equipment layers, outdoor/dungeon contrast, lighting system and sprite creation tool. These require working prototypes and user approval.

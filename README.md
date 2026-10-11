@@ -28,11 +28,14 @@ The settlement should feel comfortable, charming and autonomous; going undergrou
 | [First prototype & roadmap](docs/04_PROTOTYPE_AND_ROADMAP.md) | The First Descent vertical slice, acceptance gates, future phases and boundaries |
 | [Decisions & open questions](docs/05_DECISIONS_AND_OPEN_QUESTIONS.md) | Agreed ideas versus illustrative examples and unresolved design decisions |
 | [Technical approach & QA](docs/06_TECHNICAL_AND_QA.md) | Proposed engine, modular simulation, evidence, testing and documentation rules |
-| [CI and ultrawide display](docs/07_CI_AND_DISPLAY.md) | Implemented initial CI checks, diagnostic rendering evidence and 3440×1440 support target |\n| [New-chat handoff](docs/START_HERE_NEXT_CHAT.md) | Self-contained prompt to give a fresh ChatGPT conversation |
+| [CI and ultrawide display](docs/07_CI_AND_DISPLAY.md) | Implemented initial CI checks, diagnostic rendering evidence and 3440×1440 support target |
+| [New-chat handoff](docs/START_HERE_NEXT_CHAT.md) | Self-contained prompt to give a fresh ChatGPT conversation |
 
 **Start with the vision, decisions log and first prototype** before implementing features.
 
 ## Current development rule
+
+**Approved direction (2026-10-11):** pixel art appears slightly angled top-down on a normal square grid, mouse-first management, and blueprints built by autonomous villagers. Cave floors **1–3** are open immediately; clearing **floor 3** unlocks **4–7** together, even for under-geared parties. Further floor groups are undecided. See [design decisions](docs/05_DECISIONS_AND_OPEN_QUESTIONS.md).
 
 **Prototype the smallest complete and fun loop before building the whole game.** One village, one workshop, a couple of adventurers, a cave with a few selectable floors, a return trip with loot, and one village improvement unlocked by that loot. Test playability and real in-engine pixel art, not just attractive concept descriptions.
 

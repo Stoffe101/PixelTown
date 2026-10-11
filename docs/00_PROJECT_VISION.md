@@ -22,12 +22,15 @@ Build and sustain a charming, autonomous fantasy village. Develop farms, logisti
 
 ## The dual reinforcing loop
 
+The player manages through mouse-first world interaction, without a mandatory controllable avatar. Buildings begin as player-placed blueprints and become real through autonomous villagers fetching materials and constructing them. Visually, the world has a slightly angled-looking top-down style on a **normal square tile grid**, not an isometric projection.
+
 Village production → workshop and smithy → gear and supplies → adventuring party → selected cave depth → autonomous exploration/combat → rare loot and discoveries → new recipes, upgrades, infrastructure and automation → stronger village production and expedition options.
 
 The first player's journey should be understandable without studying a huge manual. A core principle is **there should usually be an exciting next achievable goal**, not just waiting for the next larger number.
 
 ## Game pillars
 
+- **Anticipation and payoff:** every major activity should lead to an interesting next possibility: a construction order enables crafting; crafting prepares a risky expedition; a discovery unlocks a visible village improvement. Do not replace this with artificial wait timers.
 - **Living and visible:** work has meaningful animation and actual consequences. A blacksmith retrieves materials, works a forge and produces usable gear. Villagers transport loot and tend fields. The world changes.
 - **Village/dungeon interdependence:** what the village produces supplies expeditions; what expeditions discover upgrades the village. Dungeon loot must go beyond Sword +2 replacing Sword +1.
 - **Autonomous adventuring with preparation and tactical agency:** no mandatory click-by-click combat or direct player-controlled action character.

@@ -33,7 +33,7 @@ Start simple: four villagers with a few work intents and visible task states, pl
 ## Quality gates
 
 ### Art/UX
-- Real Godot village and cave screenshots at supported resolutions, not concept-art stand-ins.
+- Real Godot village and cave screenshots at supported resolutions, not concept-art stand-ins; compare two sprite scales at real zoom and 3440×1440 as well as 16:9.
 - Character equipment overlays stay aligned during movement and combat.
 - Pixel grid stays crisp, with no texture bleeding or mixed pixel scales.
 - The player can clearly see building work, item transport, expedition departure/return and loot effects.
@@ -46,7 +46,8 @@ Start simple: four villagers with a few work intents and visible task states, pl
 - A cave run consumes expected supplies and returns only collected loot.
 - Changing village/cave tabs doesn't reset or suspend the other simulation.
 - Party assembly prevents duplicate simultaneous use of one person or piece of gear.
-- Undergeared floor access remains available, with truthful warnings.
+- Undergeared floor access remains available on **every unlocked floor**, with truthful warnings.
+- Test initial floors 1–3 open, floor 3 successful completion unlocking 4–7 together, failure/retreat leaving 4–7 locked, and no sequential 4→5→6 requirement after unlock.
 - Commands affect actual AI behavior and do not fabricate results.
 - Failure/retreat/return correctly handles roster, injuries and inventory.
 - Deterministic tests check that equipment/floor/formation have causal effects.
