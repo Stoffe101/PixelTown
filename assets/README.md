@@ -31,3 +31,9 @@ Review normal-scale Godot captures before choosing the permanent sprite size. Ma
 ## License and sources
 
 All source art made for this pass is original to PixelTown and subject to the repository's All Rights Reserved LICENSE. Third-party art dependencies: **none**. General readability, atmosphere and character warmth were studied in official press/reference material only. Those copyrighted reference images are **not included in this repository**.
+
+## CC0 environment trial setup
+
+After creating original sprite sheets, run `python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"` to import four pinned, SHA256-verified creator PNGs into `assets/third_party/ninja_adventure/`. These remain third-party CC0 artwork even though PixelTown's original source remains ARR. No project code from the third-party Godot example is used. Build CI fetches the same pinned source; **a local editor checkout needs this step before import**.
+
+Read [asset-pack audit](../docs/10_ASSET_PACK_AUDIT.md) and [Aseprite workflow](../docs/11_ASEPRITE_WORKFLOW.md).

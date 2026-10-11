@@ -61,3 +61,13 @@ python tools/art/validate_assets.py
 ## Run the current art experiment
 
 Open `project.godot` with **Godot 4.7.2** and press Play. `Tab` toggles village/cave, `1`/`2` compare character scales, `Space` pauses the shared demonstration simulation, `R` resets it, mouse wheel changes zoom, middle mouse drag pans. Click near the cave entrance to inspect the cave. The worker will eventually deliver three wood units and reveal a small hut; the cave guard's encounter is just an autonomous animation/health feedback test. **No finished expedition or crafting loop exists.** See [Prototype 00 art log](docs/08_PROTOTYPE_00_ART_LOG.md) and CI screenshot artifacts for review evidence.
+
+## Third-party asset trial, October 2026
+
+The full seven-pack audit is in [docs/10_ASSET_PACK_AUDIT.md](docs/10_ASSET_PACK_AUDIT.md). A **restricted CC0 Ninja Adventure original art subset** is being tested in Prototype 00B, not merged or approved as the final style. The license is separate from PixelTown's ARR code and original art. Local setup also requires:
+
+```sh
+python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"
+```
+
+Then open Godot 4.7.2. CI imports the **same SHA256-verified source PNGs** from a pinned official creator repository checkout. See [Aseprite workflow](docs/11_ASEPRITE_WORKFLOW.md) for the team's sprite/animation/master standards.

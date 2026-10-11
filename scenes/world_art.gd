@@ -108,6 +108,10 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 	water_tiles.texture_region_size = TILE
 	for x in range(8,16):
 		water_tiles.create_tile(Vector2i(x,1))
+	for x in range(0,8):
+		water_tiles.create_tile(Vector2i(x,2))
+	for x in range(8,16):
+		water_tiles.create_tile(Vector2i(x,3))
 	var water_id: int = set.add_source(water_tiles)
 	var ground := TileMapLayer.new()
 	ground.name = "CaveTiles" if underground else "VillageTiles"
@@ -125,9 +129,15 @@ func _make_tiles(parent: Node2D, underground: bool) -> void:
 				var north: int = 13 + _hash(x,3,45) % 3
 				var south: int = 33 - _hash(x,9,51) % 3
 				var wall: bool = y < north or y > south or x < 3 or x > WIDTH-4
-				cell = Vector2i(13 + seed % 2, 13 if wall else 10)
-				if not wall and x > 19 and x < 53 and abs(y-22) < 3:
-					cell = Vector2i(12 + seed % 2, 7)
+				if wall:
+					cell = Vector2i(13 + seed % 2, 13)
+				else:
+					# Restored authored cold-stone floor: avoid empty/misjoined
+					# interior-atlas cells until a coherent cave autotile set exists.
+					source_id = water_id
+					cell = Vector2i(seed % 6,2)
+					if x > 19 and x < 53 and abs(y-22) < 3:
+						cell = Vector2i(8 + seed % 6,3)
 			else:
 				cell = Vector2i(2 + seed % 2, 12)
 				if _is_road(x,y):

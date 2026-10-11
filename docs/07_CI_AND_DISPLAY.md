@@ -56,3 +56,7 @@ func run() -> Array[String]:
 ```
 
 Current `scenes/main.tscn` contains an early **in-engine village/cave art experiment**, not final approved game art. CI captures it but performs **no pixel-perfect comparison** until real human-reviewed baselines are approved. Later passes should add input/UI overflow and interaction visual QA once appropriate.
+
+## Third-party pinned CC0 artwork trial
+
+CI checks out `pixel-boy/NinjaAdventure` at pinned commit `6ac78232d5aedcc85ce5f27d060ea92366f7c24a`, **read-only and without stored checkout credentials**. `tools/art/import_ninja_cc0.py` selects four specified CC0 PNG artwork files only, validates SHA256 before use, and writes a machine-readable provenance manifest. No upstream project scripts, binaries, shaders or paid assets are copied. Generated/imported image evidence is attached with the Godot renders and logs. This deliberately avoids bundling the original full archive into the repository.
