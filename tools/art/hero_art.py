@@ -26,7 +26,10 @@ P={
  "metal":"#98b0b3","metal_hl":"#d2d6c7","iron":"#3b5359"}
 
 def layer(w,h):return Image.new("RGBA",(w,h))
-def rect(im,xy,c):ImageDraw.Draw(im).rectangle(xy,fill=c)
+def rect(im,xy,c):
+    # Normalize painter-authored corners (top/left and bottom/right).
+    x0,y0,x1,y1=xy
+    ImageDraw.Draw(im).rectangle((min(x0,x1),min(y0,y1),max(x0,x1),max(y0,y1)),fill=c)
 def line(im,points,c,width=1):ImageDraw.Draw(im).line(points,fill=c,width=width,joint="curve")
 def poly(im,pts,c):ImageDraw.Draw(im).polygon(pts,fill=c)
 def specks(im,box,seed,colors,n,inside=None):
