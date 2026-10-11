@@ -1,0 +1,185 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/original/hero/cave_gate.png" id="tcave_gate"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/ancient_altar.png" id="tancient_altar"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/cave_wall.png" id="tcave_wall"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="tguard_equipment"]
+[ext_resource type="Texture2D" path="res://assets/objects.png" id="tobj"]
+
+[sub_resource type="AtlasTexture" id="atlas1"]
+atlas = ExtResource("tobj")
+region = Rect2(416, 176, 48, 40)
+
+[sub_resource type="AtlasTexture" id="atlas2"]
+atlas = ExtResource("tobj")
+region = Rect2(392, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas3"]
+atlas = ExtResource("tobj")
+region = Rect2(360, 96, 24, 40)
+
+[sub_resource type="AtlasTexture" id="atlas4"]
+atlas = ExtResource("tobj")
+region = Rect2(432, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="atlas5"]
+atlas = ExtResource("tobj")
+region = Rect2(0, 176, 40, 32)
+
+[node name="CaveLayout" type="Node2D"]
+texture_filter = 1
+
+[node name="Objects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Threshold" type="Sprite2D" parent="Objects"]
+position = Vector2(531, 290)
+texture = ExtResource("tcave_gate")
+centered = false
+offset = Vector2(-65, -110)
+
+[node name="MineralShrine" type="Sprite2D" parent="Objects"]
+position = Vector2(792, 337)
+texture = ExtResource("tancient_altar")
+centered = false
+offset = Vector2(-66, -108)
+
+[node name="Cliff01" type="Sprite2D" parent="Objects"]
+position = Vector2(317, 278)
+texture = ExtResource("tcave_wall")
+centered = false
+offset = Vector2(-75, -106)
+
+[node name="Cliff02" type="Sprite2D" parent="Objects"]
+position = Vector2(721, 273)
+texture = ExtResource("tcave_wall")
+centered = false
+offset = Vector2(-75, -106)
+
+[node name="Cliff03" type="Sprite2D" parent="Objects"]
+position = Vector2(920, 297)
+texture = ExtResource("tcave_wall")
+centered = false
+offset = Vector2(-75, -106)
+
+[node name="Rock01" type="Sprite2D" parent="Objects"]
+position = Vector2(182, 305)
+texture = SubResource("atlas1")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Rock02" type="Sprite2D" parent="Objects"]
+position = Vector2(287, 360)
+texture = SubResource("atlas1")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Rock03" type="Sprite2D" parent="Objects"]
+position = Vector2(875, 330)
+texture = SubResource("atlas1")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Rock04" type="Sprite2D" parent="Objects"]
+position = Vector2(1019, 415)
+texture = SubResource("atlas1")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Mushroom01" type="Sprite2D" parent="Objects"]
+position = Vector2(265, 421)
+texture = SubResource("atlas2")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Mushroom02" type="Sprite2D" parent="Objects"]
+position = Vector2(391, 289)
+texture = SubResource("atlas2")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Mushroom03" type="Sprite2D" parent="Objects"]
+position = Vector2(821, 454)
+texture = SubResource("atlas2")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Torch01" type="Sprite2D" parent="Objects"]
+position = Vector2(264, 283)
+texture = SubResource("atlas3")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Torch02" type="Sprite2D" parent="Objects"]
+position = Vector2(468, 284)
+texture = SubResource("atlas3")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Torch03" type="Sprite2D" parent="Objects"]
+position = Vector2(845, 293)
+texture = SubResource("atlas3")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Torch04" type="Sprite2D" parent="Objects"]
+position = Vector2(985, 356)
+texture = SubResource("atlas3")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Crystal01" type="Sprite2D" parent="Objects"]
+position = Vector2(187, 446)
+texture = SubResource("atlas4")
+centered = false
+offset = Vector2(-24, -48)
+
+[node name="Crystal02" type="Sprite2D" parent="Objects"]
+position = Vector2(340, 463)
+texture = SubResource("atlas4")
+centered = false
+offset = Vector2(-24, -48)
+
+[node name="Crystal03" type="Sprite2D" parent="Objects"]
+position = Vector2(901, 474)
+texture = SubResource("atlas4")
+centered = false
+offset = Vector2(-24, -48)
+
+[node name="Crystal04" type="Sprite2D" parent="Objects"]
+position = Vector2(957, 345)
+texture = SubResource("atlas4")
+centered = false
+offset = Vector2(-24, -48)
+
+[node name="Guard" type="Sprite2D" parent="Objects"]
+position = Vector2(607, 395)
+texture = ExtResource("tinhabitants")
+centered = false
+offset = Vector2(-12, -31)
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+
+[node name="GuardEquipment" type="Sprite2D" parent="Objects"]
+position = Vector2(607, 395)
+texture = ExtResource("tguard_equipment")
+centered = false
+offset = Vector2(-12, -31)
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+
+[node name="Slime" type="Sprite2D" parent="Objects"]
+position = Vector2(695, 395)
+texture = SubResource("atlas5")
+centered = false
+offset = Vector2(-20, -32)
+
+[node name="Markers" type="Node2D" parent="."]
+
+[node name="GuardPost" type="Marker2D" parent="Markers"]
+position = Vector2(607, 395)
+
+[node name="EnemySpawn" type="Marker2D" parent="Markers"]
+position = Vector2(695, 395)
+

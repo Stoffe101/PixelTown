@@ -3,11 +3,13 @@ extends RefCounted
 ## This is intentionally NOT the final construction, economy, or combat model.
 
 const WALK_SPEED := 68.0
-const STORAGE := Vector2(362, 352)
-const PLOT := Vector2(731, 370)
+const DEFAULT_STORAGE := Vector2(362, 352)
+const DEFAULT_PLOT := Vector2(731, 370)
+var storage_point: Vector2 = DEFAULT_STORAGE
+var plot_point: Vector2 = DEFAULT_PLOT
 const START_WOOD := 3
 
-var worker_pos: Vector2 = STORAGE
+var worker_pos: Vector2 = DEFAULT_STORAGE
 var worker_state: String = "collect"
 var storage_wood: int = START_WOOD
 var carried_wood: int = 0
@@ -18,6 +20,11 @@ var combat_elapsed: float = 0.0
 var enemy_hp: int = 5
 var enemy_hits: int = 0
 var expedition_loot: int = 0
+
+func configure_locations(new_storage: Vector2, new_plot: Vector2) -> void:
+	storage_point = new_storage
+	plot_point = new_plot
+	worker_pos = storage_point
 
 func advance(delta: float) -> void:
 	if delta <= 0.0:
@@ -33,8 +40,8 @@ func advance(delta: float) -> void:
 			else:
 				worker_state = "idle"
 		elif worker_state == "deliver":
-			worker_pos = worker_pos.move_toward(PLOT, WALK_SPEED * delta)
-			if worker_pos.distance_to(PLOT) < 0.05:
+			worker_pos = worker_pos.move_toward(plot_point, WALK_SPEED * delta)
+			if worker_pos.distance_to(plot_point) < 0.05:
 				delivered_wood += carried_wood
 				carried_wood = 0
 				if delivered_wood >= START_WOOD:
@@ -43,8 +50,8 @@ func advance(delta: float) -> void:
 				else:
 					worker_state = "return"
 		elif worker_state == "return":
-			worker_pos = worker_pos.move_toward(STORAGE, WALK_SPEED * delta)
-			if worker_pos.distance_to(STORAGE) < 0.05:
+			worker_pos = worker_pos.move_toward(storage_point, WALK_SPEED * delta)
+			if worker_pos.distance_to(storage_point) < 0.05:
 				worker_state = "collect"
 	# Cave simulation continues while village is being displayed.
 	combat_elapsed += delta

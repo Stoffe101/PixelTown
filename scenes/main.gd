@@ -20,6 +20,7 @@ func _ready() -> void:
 	world = Painter.new()
 	world.name = "ProceduralPixelArt"
 	add_child(world)
+	world.configure_sim(sim)
 	cam = Camera2D.new()
 	cam.name = "WorldCamera"
 	add_child(cam)
@@ -39,6 +40,7 @@ func configure_capture(mode: String, scale_choice: int, seconds: float) -> void:
 	selected_view = "cave" if mode == "cave" else "village"
 	art_scale = clampi(scale_choice, 0, 1)
 	sim = DemoState.new()
+	world.configure_sim(sim)
 	var t: float = maxf(0.0, minf(seconds, 90.0))
 	while t > 0.0:
 		var step: float = minf(0.05,t)
@@ -63,6 +65,7 @@ func _input(event: InputEvent) -> void:
 				paused = not paused
 			KEY_R:
 				sim = DemoState.new()
+				world.configure_sim(sim)
 			KEY_EQUAL, KEY_KP_ADD:
 				cam.zoom = (cam.zoom + Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
 			KEY_MINUS, KEY_KP_SUBTRACT:
@@ -74,7 +77,7 @@ func _input(event: InputEvent) -> void:
 			cam.zoom = (cam.zoom - Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			var click: Vector2 = get_global_mouse_position()
-			if selected_view == "village" and click.distance_to(Vector2(797,275)) < 65:
+			if selected_view == "village" and click.distance_to(world.get_cave_entrance_position()) < 65:
 				selected_view = "cave"
 			elif selected_view == "cave" and click.x < 320:
 				selected_view = "village"

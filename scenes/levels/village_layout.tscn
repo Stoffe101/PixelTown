@@ -1,0 +1,388 @@
+[gd_scene load_steps=20 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/original/hero/cottage.png" id="tcottage"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="tstorehouse"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/smithy.png" id="tsmithy"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/cave_gate.png" id="tcave_gate"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/construction_site.png" id="tconstruction_site"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/mature_tree.png" id="tmature_tree"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="tguard_equipment"]
+[ext_resource type="Texture2D" path="res://assets/objects.png" id="tobj"]
+
+[sub_resource type="AtlasTexture" id="atlas1"]
+atlas = ExtResource("tobj")
+region = Rect2(224, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="atlas2"]
+atlas = ExtResource("tobj")
+region = Rect2(80, 176, 96, 64)
+
+[sub_resource type="AtlasTexture" id="atlas3"]
+atlas = ExtResource("tobj")
+region = Rect2(184, 176, 64, 48)
+
+[sub_resource type="AtlasTexture" id="atlas4"]
+atlas = ExtResource("tobj")
+region = Rect2(328, 176, 80, 64)
+
+[sub_resource type="AtlasTexture" id="atlas5"]
+atlas = ExtResource("tobj")
+region = Rect2(256, 176, 64, 32)
+
+[sub_resource type="AtlasTexture" id="atlas6"]
+atlas = ExtResource("tobj")
+region = Rect2(416, 176, 48, 40)
+
+[sub_resource type="AtlasTexture" id="atlas7"]
+atlas = ExtResource("tobj")
+region = Rect2(472, 176, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas8"]
+atlas = ExtResource("tobj")
+region = Rect2(280, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="atlas9"]
+atlas = ExtResource("tobj")
+region = Rect2(0, 218, 22, 13)
+
+[sub_resource type="AtlasTexture" id="atlas10"]
+atlas = ExtResource("tobj")
+region = Rect2(360, 96, 24, 40)
+
+[node name="VillageLayout" type="Node2D"]
+texture_filter = 1
+
+[node name="Objects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Cottage" type="Sprite2D" parent="Objects"]
+position = Vector2(309, 365)
+texture = ExtResource("tcottage")
+centered = false
+offset = Vector2(-69, -113)
+
+[node name="Storehouse" type="Sprite2D" parent="Objects"]
+position = Vector2(432, 334)
+texture = ExtResource("tstorehouse")
+centered = false
+offset = Vector2(-62, -108)
+
+[node name="Smithy" type="Sprite2D" parent="Objects"]
+position = Vector2(604, 358)
+texture = ExtResource("tsmithy")
+centered = false
+offset = Vector2(-82, -126)
+
+[node name="CaveEntrance" type="Sprite2D" parent="Objects"]
+position = Vector2(797, 306)
+texture = ExtResource("tcave_gate")
+centered = false
+offset = Vector2(-65, -110)
+
+[node name="ConstructionSite" type="Sprite2D" parent="Objects"]
+position = Vector2(731, 370)
+texture = ExtResource("tconstruction_site")
+centered = false
+offset = Vector2(-59, -94)
+
+[node name="Well" type="Sprite2D" parent="Objects"]
+position = Vector2(492, 450)
+texture = SubResource("atlas1")
+centered = false
+offset = Vector2(-24, -48)
+
+[node name="FarmWest" type="Sprite2D" parent="Objects"]
+position = Vector2(225, 499)
+texture = SubResource("atlas2")
+centered = false
+offset = Vector2(-48, -64)
+
+[node name="FarmEast" type="Sprite2D" parent="Objects"]
+position = Vector2(957, 505)
+texture = SubResource("atlas2")
+centered = false
+offset = Vector2(-48, -64)
+
+[node name="Wagon" type="Sprite2D" parent="Objects"]
+position = Vector2(512, 408)
+texture = SubResource("atlas3")
+centered = false
+offset = Vector2(-32, -48)
+
+[node name="Bridge" type="Sprite2D" parent="Objects"]
+position = Vector2(546, 637)
+texture = SubResource("atlas4")
+centered = false
+offset = Vector2(-40, -64)
+
+[node name="Tree01" type="Sprite2D" parent="Objects"]
+position = Vector2(-205, 355)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree02" type="Sprite2D" parent="Objects"]
+position = Vector2(-157, 327)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree03" type="Sprite2D" parent="Objects"]
+position = Vector2(-84, 430)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree04" type="Sprite2D" parent="Objects"]
+position = Vector2(115, 318)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree05" type="Sprite2D" parent="Objects"]
+position = Vector2(172, 278)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree06" type="Sprite2D" parent="Objects"]
+position = Vector2(480, 267)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree07" type="Sprite2D" parent="Objects"]
+position = Vector2(741, 273)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree08" type="Sprite2D" parent="Objects"]
+position = Vector2(1014, 307)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree09" type="Sprite2D" parent="Objects"]
+position = Vector2(1059, 362)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree10" type="Sprite2D" parent="Objects"]
+position = Vector2(101, 479)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree11" type="Sprite2D" parent="Objects"]
+position = Vector2(1041, 490)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree12" type="Sprite2D" parent="Objects"]
+position = Vector2(1210, 330)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree13" type="Sprite2D" parent="Objects"]
+position = Vector2(1268, 374)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Tree14" type="Sprite2D" parent="Objects"]
+position = Vector2(1350, 412)
+texture = ExtResource("tmature_tree")
+centered = false
+offset = Vector2(-43, -112)
+
+[node name="Fence01" type="Sprite2D" parent="Objects"]
+position = Vector2(306, 512)
+texture = SubResource("atlas5")
+centered = false
+offset = Vector2(-32, -32)
+
+[node name="Fence02" type="Sprite2D" parent="Objects"]
+position = Vector2(844, 516)
+texture = SubResource("atlas5")
+centered = false
+offset = Vector2(-32, -32)
+
+[node name="Rock01" type="Sprite2D" parent="Objects"]
+position = Vector2(684, 500)
+texture = SubResource("atlas6")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Rock02" type="Sprite2D" parent="Objects"]
+position = Vector2(1014, 466)
+texture = SubResource("atlas6")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Rock03" type="Sprite2D" parent="Objects"]
+position = Vector2(176, 461)
+texture = SubResource("atlas6")
+centered = false
+offset = Vector2(-24, -40)
+
+[node name="Flowers01" type="Sprite2D" parent="Objects"]
+position = Vector2(142, 417)
+texture = SubResource("atlas7")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Flowers02" type="Sprite2D" parent="Objects"]
+position = Vector2(298, 480)
+texture = SubResource("atlas7")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Flowers03" type="Sprite2D" parent="Objects"]
+position = Vector2(780, 477)
+texture = SubResource("atlas7")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Flowers04" type="Sprite2D" parent="Objects"]
+position = Vector2(871, 414)
+texture = SubResource("atlas7")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Flowers05" type="Sprite2D" parent="Objects"]
+position = Vector2(1005, 426)
+texture = SubResource("atlas7")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Bush01" type="Sprite2D" parent="Objects"]
+position = Vector2(270, 483)
+texture = SubResource("atlas8")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Bush02" type="Sprite2D" parent="Objects"]
+position = Vector2(320, 496)
+texture = SubResource("atlas8")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Bush03" type="Sprite2D" parent="Objects"]
+position = Vector2(817, 469)
+texture = SubResource("atlas8")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Bush04" type="Sprite2D" parent="Objects"]
+position = Vector2(906, 481)
+texture = SubResource("atlas8")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="Bush05" type="Sprite2D" parent="Objects"]
+position = Vector2(1038, 486)
+texture = SubResource("atlas8")
+centered = false
+offset = Vector2(-16, -32)
+
+[node name="WoodPile01" type="Sprite2D" parent="Objects"]
+position = Vector2(351, 368)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+
+[node name="WoodPile02" type="Sprite2D" parent="Objects"]
+position = Vector2(375, 369)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+
+[node name="WoodPile03" type="Sprite2D" parent="Objects"]
+position = Vector2(591, 378)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+
+[node name="Torch01" type="Sprite2D" parent="Objects"]
+position = Vector2(546, 373)
+texture = SubResource("atlas10")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Torch02" type="Sprite2D" parent="Objects"]
+position = Vector2(858, 386)
+texture = SubResource("atlas10")
+centered = false
+offset = Vector2(-12, -40)
+
+[node name="Worker" type="Sprite2D" parent="Objects"]
+position = Vector2(362, 352)
+texture = ExtResource("tinhabitants")
+centered = false
+offset = Vector2(-12, -31)
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+
+[node name="Guard" type="Sprite2D" parent="Objects"]
+position = Vector2(777, 392)
+texture = ExtResource("tinhabitants")
+centered = false
+offset = Vector2(-12, -31)
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+
+[node name="GuardEquipment" type="Sprite2D" parent="Objects"]
+position = Vector2(777, 392)
+texture = ExtResource("tguard_equipment")
+centered = false
+offset = Vector2(-12, -31)
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+
+[node name="CarriedWood" type="Sprite2D" parent="Objects"]
+position = Vector2(0, 0)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+visible = false
+
+[node name="DeliveredWood1" type="Sprite2D" parent="Objects"]
+position = Vector2(702, 375)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+visible = false
+
+[node name="DeliveredWood2" type="Sprite2D" parent="Objects"]
+position = Vector2(721, 375)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+visible = false
+
+[node name="DeliveredWood3" type="Sprite2D" parent="Objects"]
+position = Vector2(740, 375)
+texture = SubResource("atlas9")
+centered = false
+offset = Vector2(-11, -13)
+visible = false
+
+[node name="Markers" type="Node2D" parent="."]
+
+[node name="Storage" type="Marker2D" parent="Markers"]
+position = Vector2(362, 352)
+
+[node name="Construction" type="Marker2D" parent="Markers"]
+position = Vector2(731, 370)
+
+[node name="GuardPost" type="Marker2D" parent="Markers"]
+position = Vector2(777, 392)
+
+[node name="CaveEntranceSpot" type="Marker2D" parent="Markers"]
+position = Vector2(797, 275)
+
