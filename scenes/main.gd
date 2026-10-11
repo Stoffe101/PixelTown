@@ -13,7 +13,7 @@ var speed: float = 1.0
 var hud_title: Label
 var hud_detail: Label
 var hud_footer: Label
-var last_camera_position: Vector2 = Vector2(565, 351)
+var last_camera_position: Vector2 = Vector2(552, 351)
 
 func _ready() -> void:
 	sim = DemoState.new()
@@ -74,7 +74,7 @@ func _input(event: InputEvent) -> void:
 			cam.zoom = (cam.zoom - Vector2(0.25,0.25)).clamp(Vector2(0.75,0.75),Vector2(2,2))
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			var click: Vector2 = get_global_mouse_position()
-			if selected_view == "village" and click.distance_to(Vector2(930,288)) < 100:
+			if selected_view == "village" and click.distance_to(Vector2(816,317)) < 65:
 				selected_view = "cave"
 			elif selected_view == "cave" and click.x < 320:
 				selected_view = "village"
@@ -98,13 +98,13 @@ func _create_hud() -> void:
 	var header := PanelContainer.new()
 	header.name = "Header"
 	header.position = Vector2(12, 12)
-	header.custom_minimum_size = Vector2(225, 49)
+	header.custom_minimum_size = Vector2(154, 36)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color("#172b2ccf")
 	style.border_color = Color("#d1ba83")
 	style.set_border_width_all(1)
 	style.set_corner_radius_all(2)
-	style.set_content_margin_all(8)
+	style.set_content_margin_all(6)
 	header.add_theme_stylebox_override("panel",style)
 	root.add_child(header)
 	var stack := VBoxContainer.new()
@@ -112,11 +112,11 @@ func _create_hud() -> void:
 	header.add_child(stack)
 	hud_title = Label.new()
 	hud_title.add_theme_color_override("font_color", Color("#f3e6bb"))
-	hud_title.add_theme_font_size_override("font_size", 13)
+	hud_title.add_theme_font_size_override("font_size", 9)
 	stack.add_child(hud_title)
 	hud_detail = Label.new()
 	hud_detail.add_theme_color_override("font_color", Color("#b7d7c9"))
-	hud_detail.add_theme_font_size_override("font_size", 10)
+	hud_detail.add_theme_font_size_override("font_size", 8)
 	stack.add_child(hud_detail)
 	var footer_box := PanelContainer.new()
 	footer_box.name = "Help"
@@ -140,9 +140,9 @@ func _update_presentation() -> void:
 	world.update_art(sim, selected_view == "cave", art_scale)
 	var label_size := "16 x 24" if art_scale == 0 else "20 x 30"
 	if selected_view == "village":
-		hud_title.text = "VILLAGE  /  ART PROTOTYPE 00B"
-		hud_detail.text = "Wood: %d  |  At plot: %d/3  |  %s" % [sim.storage_wood,sim.delivered_wood,sim.status()]
+		hud_title.text = "THE SETTLEMENT"
+		hud_detail.text = "Wood %d    Delivered %d/3" % [sim.storage_wood,sim.delivered_wood]
 	else:
-		hud_title.text = "CAVE  /  ART PROTOTYPE 00B"
-		hud_detail.text = "Guard vs cavern slime  |  Slime vitality: %d/5  |  Demo encounters: %d" % [sim.enemy_hp, sim.expedition_loot]
-	hud_footer.text = "TAB views  |  1/2 sprite (%s)  |  SPACE pause  |  R reset  |  MMB pan  |  wheel zoom" % label_size
+		hud_title.text = "UNDER THE HILL"
+		hud_detail.text = "Enemy %d/5    Loot %d" % [sim.enemy_hp, sim.expedition_loot]
+	hud_footer.text = "TAB views | 1/2 scale (%s) | SPACE pause | R reset | MMB pan | wheel zoom | %s" % [label_size, sim.status()]

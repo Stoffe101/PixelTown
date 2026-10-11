@@ -190,8 +190,8 @@ func _is_road(x: int,y: int) -> bool:
 	var main_y: int = 25 + roundi(sin(float(x)*0.17)*1.2)
 	if x >= 8 and x <= 67 and y >= main_y and y <= main_y+1:
 		return true
-	for branch_x in [14,24,39,58]:
-		var start_y: int = 21 if branch_x == 24 else 22
+	for branch_x in [19,25,37,51]:
+		var start_y: int = 21 if branch_x == 25 else 22
 		if x == branch_x and y >= start_y and y <= main_y:
 			return true
 	# Connect the bridge without detached dead-end road rectangles.
@@ -227,10 +227,10 @@ func _make_village_objects() -> void:
 	# CC0 environment atlas. Source coordinates are not enlarged or traced.
 	# Use distinct ground positions so this reads as a settlement rather than
 	# identically sized items on one display shelf.
-	_curated_house(village,"Timber Cottage",Rect2(0, 0, 65, 81),Vector2(250,365))
-	_curated_house(village,"Village Storehouse",Rect2(80, 12, 51, 48),Vector2(409,331))
-	_curated_house(village,"Village Smithy",Rect2(160, 0, 65, 75),Vector2(621,357))
-	_cc0_object(village,"Cave Gate",Rect2(0,0,64,52),Vector2(949,342))
+	_curated_house(village,"Timber Cottage",Rect2(0, 0, 65, 81),Vector2(298,365))
+	_curated_house(village,"Village Storehouse",Rect2(80, 12, 51, 48),Vector2(401,331))
+	_curated_house(village,"Village Smithy",Rect2(160, 0, 65, 75),Vector2(598,357))
+	_cc0_object(village,"Cave Gate",Rect2(0,0,64,52),Vector2(816,342))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.
 	# The 64x48 crop contains a complete canopy, unlike the old cropped tree.
@@ -275,7 +275,7 @@ func _make_village_objects() -> void:
 	worker = _character(village, "Worker")
 	guard = _character(village, "Guard")
 	guard_gear = _gear(village, "GuardEquipment")
-	guard.position = Vector2(825,392)
+	guard.position = Vector2(801,392)
 	guard_gear.position = guard.position
 
 func _make_cave_objects() -> void:
