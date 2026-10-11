@@ -13,7 +13,7 @@ var speed: float = 1.0
 var hud_title: Label
 var hud_detail: Label
 var hud_footer: Label
-var last_camera_position: Vector2 = Vector2(565, 329)
+var last_camera_position: Vector2 = Vector2(565, 351)
 
 func _ready() -> void:
 	sim = DemoState.new()

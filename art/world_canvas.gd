@@ -51,9 +51,9 @@ func _draw_village() -> void:
 		for xx in range(0, 1120, 16):
 			var n: int = _hash(xx / 16, yy / 16)
 			var c: Color = Color("#789f5a")
-			if n < 24: c = Color("#80a65e")
-			elif n < 47: c = Color("#749b56")
-			elif n > 92: c = Color("#8bae65")
+			if n < 24: c = Color("#7da35e")
+			elif n < 47: c = Color("#77a05b")
+			elif n > 92: c = Color("#83a965")
 			_box(xx, yy, 16, 16, c)
 			if n % 5 == 0:
 				_box(xx + 3, yy + 8, 1, 3, Color("#4e854f"))
@@ -101,6 +101,14 @@ func _draw_village() -> void:
 	_flowerbed(218,331)
 	_flowerbed(777,348)
 	_flowerbed(1029,360)
+	_vegetable_patch(92,408)
+	_vegetable_patch(924,422)
+	_fence(232,423,5)
+	_fence(813,431,4)
+	_wagon(472,336)
+	_well(444,267)
+	_rocks(1020,361)
+	_flowerbed(463,429)
 
 	# All structures share the same single-square-grid building language.
 	_house(126,236)
@@ -175,6 +183,8 @@ func _house(x:float,y:float) -> void:
 	_box(x+74,y+43,17,26,Color("#946c47"))
 	_box(x+86,y+57,2,2,LIGHT)
 	_box(x+22,y+60,82,3,Color("#e6be89"))
+	_roof_shingles(x+13,y+3,100,19,ROOF_HI)
+	_box(x+51,y+55,3,3,Color("#e9d19b"))
 	_box(x+5,y+62,9,6,Color("#ba8e61"))
 	# Chimney / flowers / a warm little home.
 	_box(x+84,y-13,14,19,INK)
@@ -197,6 +207,7 @@ func _store(x:float,y:float) -> void:
 	_box(x+70,y+39,2,10,Color("#e4dfbb"))
 	_box(x+2,y+58,16,11,WOOD_DARK)
 	_box(x+4,y+55,12,14,Color("#d7c08f"))
+	_roof_shingles(x+14,y+5,80,18,Color("#a9bba6"))
 	_box(x+87,y+58,11,11,WOOD_DARK)
 	_box(x+89,y+54,8,14,Color("#dbbf83"))
 	# Storage resource stack (matches the simulated wood count).
@@ -224,10 +235,87 @@ func _forge(x:float,y:float) -> void:
 	_box(x+74,y+44,24,32,WOOD_DARK)
 	_box(x+77,y+49,18,27,Color("#765842"))
 	_box(x+85,y+60,2,3,LIGHT)
+	_roof_shingles(x+9,y+5,110,20,Color("#afbec2"))
 	_box(x+2,y+69,16,10,Color("#38434a"))
 	_box(x-1,y+67,20,4,Color("#9dabb1"))
 	_box(x+13,y+62,5,6,Color("#bd9b76"))
 	_lantern(x+112,y+51)
+	_box(x+114,y+65,6,12,Color("#4b5659"))
+	_box(x+110,y+63,15,4,Color("#a8bbc0"))
+	_box(x+31+sin(tick_time*3.0)*4.0,y+43,2,2,Color("#ffe7ab"))
+
+func _roof_shingles(x:float,y:float,w:float,h:float,tint:Color) -> void:
+	for row in range(3):
+		for col in range(7):
+			var sx:float=x+col*w/7.0+(row%2)*5
+			var sy:float=y+row*h/3.0
+			_box(sx,sy,4,1,tint)
+			_box(sx+5,sy+2,1,2,Color("#65594e"))
+
+func _vegetable_patch(x:float,y:float) -> void:
+	_box(x-10,y-7,104,43,Color("#64834b"))
+	_box(x-7,y-4,98,36,Color("#856747"))
+	for row in range(3):
+		_box(x-4,y+row*12,94,4,Color("#ac8650"))
+		for col in range(9):
+			var px:float=x+col*10+(row%2)*3
+			var py:float=y+row*12
+			_box(px,py-3,3,8,Color("#41764a"))
+			_box(px-3,py-5,6,4,Color("#669955"))
+			_box(px+2,py-7,6,4,Color("#95b86d"))
+
+func _fence(x:float,y:float,posts:int) -> void:
+	_box(x,y+4,posts*17,3,Color("#8d693d"))
+	_box(x,y+14,posts*17,3,Color("#bc9155"))
+	for i in range(posts+1):
+		_box(x+i*17,y-2,5,25,WOOD_DARK)
+		_box(x+i*17+1,y-3,3,24,Color("#d0a66e"))
+
+func _wagon(x:float,y:float) -> void:
+	_box(x-20,y+12,70,8,Color("#597d4d"))
+	_box(x-18,y-7,57,26,WOOD_DARK)
+	_box(x-15,y-10,53,25,Color("#ad8051"))
+	for i in range(5):
+		_box(x-11+i*10,y-7,2,18,Color("#dfb173"))
+	for ox in [-22,31]:
+		_box(x+ox,y+10,11,11,Color("#383439"))
+		_box(x+ox+3,y+13,5,5,Color("#e0bf81"))
+	_box(x-6,y-18,15,11,Color("#cfb087"))
+	_box(x+11,y-17,17,12,Color("#748b5a"))
+	_box(x+39,y-2,25,3,WOOD_DARK)
+
+func _well(x:float,y:float) -> void:
+	_box(x-18,y+13,42,8,Color("#567b4b"))
+	_box(x-14,y-3,33,20,ROCK_DARK)
+	_box(x-10,y+1,25,12,Color("#6c8082"))
+	_box(x-7,y+4,17,7,Color("#4e8b96"))
+	for ox in [-15,14]:
+		_box(x+ox,y-19,4,19,WOOD_DARK)
+	_box(x-20,y-24,42,6,WOOD_DARK)
+	_box(x-14,y-27,30,4,ROOF)
+
+func _rocks(x:float,y:float) -> void:
+	for i in range(4):
+		var px:float=x+i*10
+		_box(px-8,y+3-i%2*4,17,9,ROCK_DARK)
+		_box(px-6,y+2-i%2*4,12,6,ROCK)
+		_box(px-3,y+3-i%2*4,6,1,Color("#91a2a3"))
+
+func _cave_column(x:float,y:float) -> void:
+	_box(x-9,y+3,23,6,Color("#25323e"))
+	_box(x-7,y-17,17,20,Color("#4f6070"))
+	_box(x-9,y-19,21,4,Color("#85949a"))
+	_box(x-4,y-43,12,24,Color("#647684"))
+	_box(x-7,y-46,19,5,Color("#88999d"))
+	_box(x-2,y-36,2,12,Color("#adb9b1"))
+
+func _cave_mushrooms(x:float,y:float) -> void:
+	for i in range(4):
+		var px:float=x+i*10
+		_box(px,y+1,3,9,Color("#94a49d"))
+		_box(px-3,y-4-(i%2)*5,10,8,Color("#467985"))
+		_box(px-1,y-6-(i%2)*5,7,3,Color("#85c5bc"))
+		_box(px+1,y-5-(i%2)*5,2,2,Color("#d6e9d0"))
 
 func _cave_mouth(x:float,y:float) -> void:
 	_box(x+10,y+76,106,9,Color("#5a784e"))
@@ -295,6 +383,14 @@ func _draw_cave() -> void:
 				_line(xx+11,yy+9,xx+13,yy+12,Color("#23303d"))
 			if n < 8:
 				_box(xx+5,yy+6,2,2,Color("#607183"))
+	# Carved floor makes this a recognizable chamber, not endless stone noise.
+	_box(325,302,515,105,Color("#283642"))
+	_box(338,311,489,84,Color("#435161"))
+	for px in range(349,817,25):
+		_box(px,318,11,2,Color("#687887"))
+		_box(px,389,11,2,Color("#273842"))
+	for px in range(403,820,81):
+		_cave_column(px,273)
 	# Hand-shaped cavern edges and depth.
 	for x in range(0,1120,32):
 		var h: int = 58+_hash(x,5)%36
@@ -304,12 +400,14 @@ func _draw_cave() -> void:
 		var bottom: int = 545+_hash(x,8)%32
 		_box(x,bottom,33,650-bottom,Color("#202a34"))
 		_box(x,bottom-7,31,8,Color("#465666"))
-	for p in [Vector2(290,167),Vector2(493,142),Vector2(825,168),Vector2(990,249)]:
+	for p in [Vector2(290,205),Vector2(493,190),Vector2(825,207),Vector2(990,249)]:
 		_torch(p.x,p.y)
 	for p in [Vector2(184,303),Vector2(385,461),Vector2(845,451),Vector2(956,348)]:
 		_crystals(p.x,p.y)
 	for p in [Vector2(206,410),Vector2(397,201),Vector2(831,246),Vector2(941,485)]:
 		_stalagmite(p.x,p.y)
+	for p in [Vector2(260,346),Vector2(799,429),Vector2(888,324)]:
+		_cave_mushrooms(p.x,p.y)
 	# Centerpiece: an ancient stone threshold and an actual encounter.
 	for x in range(470,810,16):
 		_box(x,309,14,2,Color("#65717b"))

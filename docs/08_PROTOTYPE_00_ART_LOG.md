@@ -24,6 +24,10 @@ First inspect GitHub Actions PNG evidence at 1920×1080 vs 3440×1440, then revi
 
 All artwork is authored as editable deterministic drawing instructions in `art/world_canvas.gd`, and is considered **original prototype art** under the repository's All Rights Reserved policy. No external asset pack, copied reference sprite, copyrighted game screenshot, or third-party font is shipped. The built-in Godot font is used for the temporary diagnostics overlay. Color and motif decisions are **exploratory**, not user-approved production style. If the look passes review, extract a curated sprite atlas and editable layered masters before expanding content.
 
+## Visual review after first green CI run
+
+The first Linux/Windows pipeline passed and produced seven actual rendered view/scale screenshots ([workflow run 38142918828](https://github.com/Stoffe101/PixelTown/actions/runs/38142918828)). Reviewing those images revealed that **the art was too flat**: broad uniform grass tiles, featureless roof faces, a mostly empty cave center and simplistic settlement props. Before asking for style sign-off, the next art revision adds narrower grass tone variation, individual roof shingle highlights, a planted vegetable patch, fences, a handcart, a well, cave stone floor/column definition and small cave plants. These additions are still provisional: **verify with another actual screenshot run and human critique**, not with static source review alone.
+
 ## Known limitations and unfinished goals
 
 - No user-approved art style or decided sprite scale yet. Current art is primitive-coded; editability exists as source code, **not yet pixel-editor sprite sheets or Aseprite/Krita masters**.
