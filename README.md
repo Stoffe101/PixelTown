@@ -51,12 +51,9 @@ A provisional Godot 4.7.2 display probe and CI pipeline now live in this reposit
 
 ## Art Direction v1.0: original modular pixel art
 
-The current art master is `tools/art/build_art.py`, which produces PNG terrain, object, character and independently aligned gear sheets and `atlas.json`. Run the generator once before opening the project locally; CI also runs it. See [00B development log](docs/09_PROTOTYPE_00B.md) and [editable art documentation](assets/README.md). The new source-driven asset system replaces runtime rectangle painting while preserving the demonstration simulation. **The visual style has not yet been approved by the owner.**
+The real PNG textures, sprite sheets, isolated hero art, and layered master files are now committed to Git. A clean checkout works immediately, and the optional `tools/art/` authoring scripts are no longer needed to open Godot. See [00B development log](docs/09_PROTOTYPE_00B.md) and [editable art documentation](assets/README.md). The new source-driven asset system replaces runtime rectangle painting while preserving the demonstration simulation. **The visual style has not yet been approved by the owner.**
 
-```sh
-python tools/art/build_art.py
-python tools/art/validate_assets.py
-```
+`tools/art/build_art.py` is an optional artist-authoring tool, not a prerequisite for loading the game.
 
 ## Run the current art experiment
 
@@ -64,19 +61,13 @@ Open `project.godot` with **Godot 4.7.2** and press Play. `Tab` toggles village/
 
 ## Third-party asset trial, October 2026
 
-The full seven-pack audit is in [docs/10_ASSET_PACK_AUDIT.md](docs/10_ASSET_PACK_AUDIT.md). A **restricted CC0 Ninja Adventure original art subset** is being tested in Prototype 00B, not merged or approved as the final style. The license is separate from PixelTown's ARR code and original art. Local setup also requires:
-
-```sh
-python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"
-```
-
-Then open Godot 4.7.2. CI imports the **same SHA256-verified source PNGs** from a pinned official creator repository checkout. See [Aseprite workflow](docs/11_ASEPRITE_WORKFLOW.md) for the team's sprite/animation/master standards.
+The restricted CC0 Ninja Adventure terrain textures are now committed under `assets/third_party/ninja_adventure/` with license provenance. No source ZIP or external download is required on a fresh clone. [Asset audit](docs/10_ASSET_PACK_AUDIT.md).
 
 ## Visual Quality Gate (still open)
 
 The first and second source-atlas trials **did not pass the desired visual bar**. The current screenshots are technical experiments. See [review checklist, current problems and required hero art](docs/12_VISUAL_QUALITY_GATE.md). No finalized proprietary production sprites or approved visual regression baselines exist yet.
 
-**Local build order:** run `python -m pip install pillow==11.3.0`, then `python tools/art/build_art.py`, then `python tools/art/import_ninja_cc0.py --zip "/local/path/Godot Project V4.zip"`, then `python tools/art/curate_v4_houses.py`, then open Godot. CI automatically does these source steps.
+**Local setup:** Check out the feature branch, open `project.godot`, and edit the levels directly. No generation steps needed.
 
 ## Art Pass 01 status
 
@@ -84,7 +75,7 @@ The first and second source-atlas trials **did not pass the desired visual bar**
 
 ## Edit the village and cave in Godot (artist workflow)
 
-[**Editable village, cave, terrain painting and prefab guide**](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md). Switch to draft feature branch `prototype/art-direction-v1-00b` (not `main`) and run `setup-pixeltown.ps1` once with the legally cleared CC0 Godot V4 source pack. In Godot, open `scenes/levels/village_layout.tscn` or `cave_layout.tscn`. Drag prefabs from `scenes/props/`, move/duplicate scenery under `Objects`, paint optional terrain under `PaintedTerrain`, and place the simulation's locations with `Markers`. Scene changes persist on disk and the demonstration logic reads their positions. Art sign-off is still pending.
+[**Editable village, cave, terrain painting and prefab guide**](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md). Switch to draft feature branch `prototype/art-direction-v1-00b` (not `main`) and simply open Godot; the optional `setup-pixeltown.ps1` only checks for missing committed files. In Godot, open `scenes/levels/village_layout.tscn` or `cave_layout.tscn`. Drag prefabs from `scenes/props/`, move/duplicate scenery under `Objects`, edit already-saved terrain under `PaintedTerrain`, and place the simulation's locations with `Markers`. Scene changes persist on disk and the demonstration logic reads their positions. Art sign-off is still pending.
 
 ## Art assets are real files, not runtime-generated images
 

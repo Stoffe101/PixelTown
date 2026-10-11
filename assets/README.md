@@ -1,41 +1,25 @@
-# PixelTown original art masters: Prototype 00B
+# PixelTown Art Assets: actual files committed to Git
 
-**Status:** Art Direction v1.0 selected; individual sprites and screenshots await owner review. No approved production baseline yet.
+**Status:** The current assets are provisional artistic candidates, not owner-approved release-quality artwork. However, they are **real PNG files version-controlled in this repository**, not content generated when the game starts.
 
-These are actual **RGBA PNG tilesets and sprite sheets** generated deterministically from an editable, original Python pixel-art master, `tools/art/build_art.py`. No game asset is copied from Necesse, Graveyard Keeper or Stardew Valley. A strictly limited **CC0 Ninja Adventure source-credited subset** is now imported separately for art trials; it is not original PixelTown art.
+- `assets/terrain.png` is the original 16×16 tile sheet used by `assets/terrain_paint_tileset.tres`.
+- `assets/objects.png` contains simple starter props; their crop regions are represented by actual Godot `AtlasTexture` resources in scenes and prefabs.
+- `assets/characters.png` and `assets/equipment.png` are older original exploratory sheets (retained for reference).
+- `assets/original/hero/*.png` are separately addressable, original PixelTown building, cave, tree, construction and character textures.
+- `art/source/architecture/*.ora` are committed editable layered OpenRaster masters for the hero PNGs, useful for later hand-polishing.
+- `assets/third_party/ninja_adventure/*.png` contains a small, clearly identified **CC0** artwork subset from Pixel-boy and AAA. The provenance inventory remains in that directory. CC0 artwork is not relicensed as our proprietary work.
+- `scenes/levels/village_layout.tscn`, `cave_layout.tscn` and `assets/terrain_paint_tileset.tres` contain **saved painted terrain and placed sprites**, editable in Godot without any generation step.
 
-Run from the repository root:
+## Getting started
 
-```bash
-python tools/art/build_art.py
-python tools/art/validate_assets.py
-```
+1. Check out `prototype/art-direction-v1-00b` in GitHub Desktop (the work is not yet merged into `main`).
+2. Open `project.godot` with Godot 4.7.2. Do not run a Python generator or download a ZIP.
+3. Edit `scenes/levels/village_layout.tscn` or `cave_layout.tscn`, and save.
+4. Drag reusable prefabs from `scenes/props/` to place assets and paint directly in `PaintedTerrain`.
+5. Hand-drawn originals should be placed under `assets/handmade/` with their `.aseprite` / layered masters under `art/handmade/` and committed normally.
 
-This writes the PNG files and `atlas.json` to this directory. Python standard library only. **Before opening the Godot project locally, run the generator once.** Linux and Windows CI perform this step automatically. The generated PNGs are intentionally not committed at this stage because the master artwork is under owner review; the images are also attached as CI artifacts for examination. Exported PNGs are editable in LibreSprite, Aseprite, Krita and other pixel editors, but changes to the generated files should be reflected in the master source before regeneration.
+For optional troubleshooting, run `powershell -ExecutionPolicy Bypass -File .\\setup-pixeltown.ps1` in the repository. It reports missing files instead of generating substitutes.
 
-## Sprite layout
+The `tools/art/` scripts are optional, **offline art-production/migration tools**. Running them intentionally can modify tracked PNGs and will appear as a real Git diff; their output is never required at runtime. The initial starter terrain was baked once into `.tscn` resources using `bake_starter_layout.gd`. It must not overwrite subsequent hand-painted artwork.
 
-| File | Sheet size | Layout |
-| --- | --- | --- |
-| terrain.png | 256×64 | 16×16 tiles, 16 columns and four rows (grass, path/water, cave floors and walls) |
-| objects.png | 512×256 | Individual building/prop sprites; see `atlas.json` for exact pixel bounds |
-| characters.png | 384×256 | 24×32 cells, 16 columns × 8 rows, 8 frame slots for each size |
-| equipment.png | 384×128 | Overlays matching guard cell coordinates and foot anchors |
-
-Rows 0–3 of character sheet are villager directions south/north/west/east; rows 4–7 are guard directions. Columns 0–7 contain the smaller **20×30** design centered in a 24×32 cell; columns 8–15 contain the **24×32** design. Within each eight-column group: four idle/walk frames, two work frames, two attack frames. Equipment overlays occupy identical 24×32 coordinates and are animated with the same frame index.
-
-Godot texture filtering is nearest-neighbor; characters and equipment share the same pixel anchor `(-12, -31)`. Buildings use a foot-origin y-sorted anchor, and terrain is rendered through `TileMapLayer`.
-
-Review normal-scale Godot captures before choosing the permanent sprite size. Master generator scripts are for **asset authoring**, not frame-by-frame gameplay rendering. No game runtime uses the old code-drawn scene art.
-
-## License and sources
-
-All source art made for this pass is original to PixelTown and subject to the repository's All Rights Reserved LICENSE. Third-party art dependencies: **none**. General readability, atmosphere and character warmth were studied in official press/reference material only. Those copyrighted reference images are **not included in this repository**.
-
-## CC0 environment trial setup
-
-After creating original sprite sheets, run `python tools/art/import_ninja_cc0.py --zip "/path/to/Godot Project V4.zip"` to import four pinned, SHA256-verified creator PNGs into `assets/third_party/ninja_adventure/`. These remain third-party CC0 artwork even though PixelTown's original source remains ARR. No project code from the third-party Godot example is used. Build CI fetches the same pinned source; **a local editor checkout needs this step before import**.
-
-Read [asset-pack audit](../docs/10_ASSET_PACK_AUDIT.md) and [Aseprite workflow](../docs/11_ASEPRITE_WORKFLOW.md).
-
-The retained example buildings in `assets/third_party/ninja_adventure/curated_houses.png` are generated by `tools/art/curate_v4_houses.py` after installing pinned `pillow==11.3.0` and running the pinned-archive import. These are interim third-party CC0 crops, not our own original Aseprite architecture.
+CI verifies that every scene-referenced texture exists **and is tracked in Git**, and renders saved scenes directly on both operating systems. See [artist guide](../docs/15_GODOT_EDITOR_ARTIST_GUIDE.md) and [asset evaluation](../docs/10_ASSET_PACK_AUDIT.md).
