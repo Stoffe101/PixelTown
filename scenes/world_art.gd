@@ -16,8 +16,8 @@ const HERO_STORE = preload("res://assets/original/hero/storehouse.png")
 const HERO_CAVE_GATE = preload("res://assets/original/hero/cave_gate.png")
 const HERO_TREE = preload("res://assets/original/hero/mature_tree.png")
 const HERO_CAVE_WALL = preload("res://assets/original/hero/cave_wall.png")
-const BODIES = preload("res://assets/characters.png")
-const EQUIPMENT = preload("res://assets/equipment.png")
+const BODIES = preload("res://assets/original/hero/inhabitants.png")
+const EQUIPMENT = preload("res://assets/original/hero/guard_equipment.png")
 
 const OBJECT_FRAMES = {
 	"cottage": Rect2(0, 0, 88, 80),
@@ -246,17 +246,17 @@ func _make_village_objects() -> void:
 	# CC0 environment atlas. Source coordinates are not enlarged or traced.
 	# Use distinct ground positions so this reads as a settlement rather than
 	# identically sized items on one display shelf.
-	_hero(village,"Cottage",HERO_COTTAGE,Vector2(292,365))
-	_hero(village,"Storehouse",HERO_STORE,Vector2(405,334))
+	_hero(village,"Cottage",HERO_COTTAGE,Vector2(309,365))
+	_hero(village,"Storehouse",HERO_STORE,Vector2(432,334))
 	_hero(village,"Working Smithy",HERO_SMITHY,Vector2(604,358))
-	_hero(village,"Cave Entrance",HERO_CAVE_GATE,Vector2(825,350))
+	_hero(village,"Cave Entrance",HERO_CAVE_GATE,Vector2(797,350))
 
 	# A quiet canopy frame creates scale/depth without crowding the paths.
 	# The 64x48 crop contains a complete canopy, unlike the old cropped tree.
 	# Deliberately clustered trees around clearing edges, with a single
 	# recognizable mature-tree source and no neighboring atlas debris.
-	for p in [Vector2(110,319),Vector2(157,296),Vector2(480,267),
-			Vector2(756,276),Vector2(1014,307),Vector2(1059,362),
+	for p in [Vector2(115,318),Vector2(172,278),Vector2(480,267),
+			Vector2(741,273),Vector2(1014,307),Vector2(1059,362),
 			Vector2(101,479),Vector2(1041,490)]:
 		var tree := _hero(village,"Mature Tree",HERO_TREE,p)
 		tree.flip_h = _hash(int(p.x),int(p.y)) % 2 == 0
@@ -293,12 +293,16 @@ func _make_village_objects() -> void:
 	worker = _character(village, "Worker")
 	guard = _character(village, "Guard")
 	guard_gear = _gear(village, "GuardEquipment")
-	guard.position = Vector2(801,392)
+	guard.position = Vector2(777,392)
 	guard_gear.position = guard.position
 
 func _make_cave_objects() -> void:
-	for p in [Vector2(208,265),Vector2(353,260),Vector2(500,263),Vector2(652,267),Vector2(799,276),Vector2(947,299)]:
-		_hero(cave,"Layered Cave Cliff",HERO_CAVE_WALL,p)
+	# Three varied rock formations and one deeper arch define an actual
+	# chamber boundary. Six identical wall modules were a repeated wallpaper.
+	for p in [Vector2(317,278),Vector2(721,273),Vector2(920,297)] :
+		var rock := _hero(cave,"Weathered Cave Cliff",HERO_CAVE_WALL,p)
+		rock.flip_h = int(p.x) % 2 == 1
+	_hero(cave,"Deep Chamber Threshold",HERO_CAVE_GATE,Vector2(531,290))
 	# A protected encounter floor surrounded by connected rockwork. Subtle
 	# environmental clusters on the perimeter preserve enemy readability.
 	for p in [Vector2(182,305),Vector2(287,360),Vector2(875,330),

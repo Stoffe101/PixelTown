@@ -335,6 +335,124 @@ def make_cave_wall():
         rect(plants,(x+2,y-2,x+6,y+1),"#658f74")
     export("cave_wall",layers,(W,H))
 
+
+def make_inhabitants():
+    # Tiny narrative-led character designs: coherent body/gear pixel anchors.
+    # Every direction and frame sits in the same 24x32 cell. Exports also ship
+    # as truly layered source masters, not a flattened generated picture.
+    W,H=384,256
+    names=["feet and contact","legs and silhouette","skin and face",
+           "tunic and cloak","hair and trim","occupation detail"]
+    layers=[(name,layer(W,H)) for name in names]
+    feet,body,skin,coat,hair,detail=[l[1] for l in layers]
+    ge=[(name,layer(384,128)) for name in
+        ["metal armor","helmet","shield","drawn weapon"]]
+    armor,helmet,shield,weapon=[a[1] for a in ge]
+    for role in range(2):
+      for direction in range(4):
+        for scale in range(2):
+          for frame in range(8):
+            off_x=24*(scale*8+frame)
+            off_y=32*(role*4+direction)
+            xc=off_x+12
+            fy=off_y+31
+            short=-2 if scale==0 else 0
+            stride=1 if frame in (1,6) else -1 if frame in (3,7) else 0
+            work=frame in (4,5)
+            strike=frame in (6,7)
+            w=7 if scale==0 else 8
+            # Boots overlap at the same foot pivot even when legs stride.
+            rect(feet,(xc-6-stride,fy-5,xc-2-stride,fy),"#344747")
+            rect(feet,(xc+2+stride,fy-5,xc+6+stride,fy),"#344747")
+            rect(feet,(xc-5-stride,fy-4,xc-2-stride,fy-3),"#7d5f48")
+            rect(feet,(xc+2+stride,fy-4,xc+5+stride,fy-3),"#7d5f48")
+            # Irregular tunic apron / armor skirt with small hem trim.
+            poly(body,[(xc-w,fy-15-short),(xc+w,fy-15-short),
+                       (xc+w-1,fy-5),(xc+3,fy-7),(xc,fy-6),
+                       (xc-4,fy-8),(xc-w+1,fy-6)],"#233940")
+            c="#537f83" if role==0 else "#526e7a"
+            poly(coat,[(xc-w+1,fy-19-short),(xc+w-1,fy-19-short),
+                       (xc+w-2,fy-8),(xc-2,fy-7),(xc-w+2,fy-8)],c)
+            rect(coat,(xc-w+1,fy-12,xc+w-2,fy-10),"#b68a60" if role==0 else "#9bb1ae")
+            rect(coat,(xc-2,fy-12,xc+1,fy-9),"#e7cf99")
+            if direction==1:
+                # Back: cloth mantle and hair, not a smiling mask
+                poly(coat,[(xc-6,fy-22-short),(xc+6,fy-22-short),
+                           (xc+8,fy-7),(xc,fy-4),(xc-8,fy-7)],
+                     "#3b655f" if role==0 else "#526372")
+                line(detail,[(xc,fy-20),(xc,fy-7)],"#95a493",2)
+            # Pixel limbs with genuinely different work and attack poses.
+            ly=-24 if work else -21 if strike else -19
+            ry=-22 if strike else -19
+            rect(skin,(xc-w-3,fy+ly-short,xc-w+1,fy-11),
+                 "#c39070")
+            rect(skin,(xc+w-1,fy+ry-short,xc+w+3,fy-11),
+                 "#e1b28a")
+            rect(coat,(xc-w-3,fy+ly-short,xc-w+1,fy+ly+6-short),c)
+            rect(coat,(xc+w-1,fy+ry-short,xc+w+3,fy+ry+6-short),c)
+            # Neck, head and recognizable directional face.
+            rect(skin,(xc-3,fy-25-short,xc+3,fy-21-short),"#c89073")
+            rect(skin,(xc-6,fy-28-short,xc+6,fy-23-short),"#283a3d")
+            rect(skin,(xc-5,fy-31-short,xc+5,fy-24-short),"#e0af86")
+            rect(skin,(xc-4,fy-30-short,xc+3,fy-27-short),"#f3c69a")
+            if direction==0:
+                rect(detail,(xc-3,fy-26-short,xc-2,fy-25-short),"#23383c")
+                rect(detail,(xc+3,fy-26-short,xc+4,fy-25-short),"#23383c")
+                rect(detail,(xc-1,fy-23-short,xc+1,fy-23-short),"#b57862")
+                rect(hair,(xc-7,fy-29-short,xc+5,fy-30-short),"#604736" if role==0 else "#455563")
+                rect(hair,(xc-7,fy-31-short,xc-5,fy-25-short),"#805b43")
+                rect(hair,(xc+1,fy-28-short,xc+4,fy-31-short),"#bd8352" if role==0 else "#7a929b")
+            elif direction==1:
+                rect(hair,(xc-6,fy-29-short,xc+6,fy-23-short),"#725038")
+                rect(hair,(xc-4,fy-28-short,xc+4,fy-31-short),"#b08155")
+            elif direction==2:
+                rect(hair,(xc-7,fy-29-short,xc+4,fy-30-short),"#75533f")
+                rect(hair,(xc-7,fy-31-short,xc-5,fy-25-short),"#604738")
+                rect(detail,(xc-4,fy-26-short,xc-3,fy-25-short),"#23383c")
+                rect(skin,(xc-7,fy-27-short,xc-5,fy-26-short),"#d29a77")
+            else:
+                rect(hair,(xc-4,fy-29-short,xc+7,fy-30-short),"#75533f")
+                rect(hair,(xc+5,fy-31-short,xc+7,fy-25-short),"#604738")
+                rect(detail,(xc+3,fy-26-short,xc+4,fy-25-short),"#23383c")
+                rect(skin,(xc+5,fy-27-short,xc+7,fy-26-short),"#e9b78a")
+            if role==0:
+                # Worker is not an armored fighter: stitched satchel on right.
+                rect(detail,(xc+5,fy-14,xc+9,fy-9),"#795a40")
+                rect(detail,(xc+6,fy-13,xc+8,fy-11),"#c59b61")
+                rect(detail,(xc-5,fy-18,xc-3,fy-16),"#e1bb86")
+                if work:
+                    rect(detail,(xc-9,fy-27-short,xc-8,fy-19-short),"#a48a65")
+            else:
+                ey=32*direction
+                cfy=ey+31
+                # All combat kit is on an independent, matching atlas
+                # with exactly the same cells, feet and animation timing.
+                def ar(im,x1,y1,x2,y2,color):
+                    rect(im,(x1,cfy+y1-short,x2,cfy+y2-short),color)
+                ar(armor,xc-7,-19,xc+7,-12,"#56717c")
+                ar(armor,xc-5,-17,xc+5,-13,"#b7c9c5")
+                ar(armor,xc-1,-17,xc+2,-14,"#f0dfab")
+                ar(helmet,xc-7,-34,xc+7,-29,"#586a70")
+                ar(helmet,xc-6,-35,xc+5,-33,"#b2c2bf")
+                ar(helmet,xc-6,-31,xc-4,-25,"#80969a")
+                ar(helmet,xc+4,-31,xc+6,-25,"#80969a")
+                ar(helmet,xc-2,-36,xc+2,-35,"#d8d1b0")
+                xx=xc-12 if direction != 2 else xc+8
+                # Rounded tiny buckler with amber boss.
+                poly(shield,[(xx,cfy-20-short),(xx+8,cfy-20-short),
+                             (xx+9,cfy-14-short),(xx+5,cfy-7-short),
+                             (xx+1,cfy-12-short)],"#263c43")
+                rect(shield,(xx+1,cfy-19-short,xx+7,cfy-14-short),"#b98453")
+                rect(shield,(xx+3,cfy-17-short,xx+5,cfy-13-short),"#eacb86")
+                xx=xc+11 if direction!=2 else xc-13
+                offset=-7 if strike else 0
+                ar(weapon,xx,-28+offset,xx+2,-10+offset,"#99b6bb")
+                ar(weapon,xx,-29+offset,xx+1,-24+offset,"#d8dfd9")
+                ar(weapon,xx-3,-12+offset,xx+5,-10+offset,"#edc48d")
+                ar(weapon,xx,-9+offset,xx+2,-6+offset,"#785c46")
+    export("inhabitants",layers,(W,H))
+    export("guard_equipment",ge,(384,128))
+
 if __name__=="__main__":
     make_smithy()
     make_cottage()
@@ -342,3 +460,4 @@ if __name__=="__main__":
     make_gate()
     make_tree()
     make_cave_wall()
+    make_inhabitants()

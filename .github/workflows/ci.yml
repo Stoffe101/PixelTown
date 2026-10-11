@@ -50,6 +50,7 @@ jobs:
       - name: Render original layered hero artwork
         run: |
           python3 tools/art/hero_art.py
+          python3 tools/art/validate_hero.py
 
       - name: Build original PNG sprites and verify art contracts
         shell: bash
@@ -209,6 +210,8 @@ jobs:
         run: |
           python tools/art/hero_art.py
           if ($LASTEXITCODE -ne 0) { throw 'Layered hero art generation failed' }
+          python tools/art/validate_hero.py
+          if ($LASTEXITCODE -ne 0) { throw 'Layered hero art validation failed' }
 
       - name: Build and validate original art on Windows
         shell: pwsh
