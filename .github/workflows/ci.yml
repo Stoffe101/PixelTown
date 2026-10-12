@@ -177,6 +177,23 @@ jobs:
             -o "$RUNNER_TEMP/ansimuz-cc0-rpg-town.zip"
           python3 tools/art/inspect_cc0_zip.py "$RUNNER_TEMP/ansimuz-cc0-rpg-town.zip" artifacts/cc0_research
 
+      - name: Audit cohesive CC0 overworld and dungeon sprites by Shade
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/shade_cc0_review
+          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
+            'https://opengameart.org/sites/default/files/punyworld-overworld-tileset_0.png' \
+            -o artifacts/shade_cc0_review/overworld.png
+          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
+            'https://opengameart.org/sites/default/files/punyworld-dungeon-tileset.png' \
+            -o artifacts/shade_cc0_review/dungeon.png
+          python3 tools/art/inspect_cc0_images.py artifacts/shade_cc0_review
+          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
+            'https://opengameart.org/sites/default/files/puny-characters.zip' \
+            -o "$RUNNER_TEMP/puny-characters.zip"
+          python3 tools/art/inspect_cc0_zip.py "$RUNNER_TEMP/puny-characters.zip" artifacts/shade_cc0_characters
+
       - name: Summary
         if: always()
         shell: bash
