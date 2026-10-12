@@ -5,6 +5,8 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = {
  "assets/sprites/buildings/house_small.png": (128,144),
+ "assets/sprites/characters/guard_attack_right.png": (128,72),
+ "assets/sprites/characters/villager_activity_sheet.png": (256,144),
  "assets/sprites/buildings/blacksmith.png": (160,152),
  "assets/sprites/environment/oak_tree.png": (96,112),
  "assets/sprites/environment/large_rock.png": (40,30),

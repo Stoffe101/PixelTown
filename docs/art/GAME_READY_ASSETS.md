@@ -37,3 +37,9 @@ All frame coordinates begin at top-left. Frames advance left to right, shared or
 - Real Aseprite masters should be authored and saved as `art/handmade/<category>/<asset>.aseprite`, then exported onto the existing target PNG path with the canonical exporter. Avoid changing dimensions without also changing the instance offset/collider and `art/production_assets.json` size.
 - The cottage is different: it is the separately user-approved **CC0 Ansimuz adaptation**, not our newly generated concepts; its authorship and rights remain documented in `docs/art/COTTAGE_CC0_TRIAL.md`.
 - Neither passing CI nor having an AnimatedSprite2D node proves polished motion. The concept frames are aligned and animated but still require animator review of foot plants, direction silhouettes and in-game visual consistency. Do not merge draft PR #4 without explicit owner approval.
+
+
+### Action animations used by the live demo (2026-10-12)
+- `villager_activity_sheet.png`: 256×144, native pixel cells **64×72**, four columns, two rows. Row 0 = `gather_down` with moving hoe; row 1 = `work_down` with moving hammer. The main simulation selects these while stationary at storage or the construction site. The separate wood icon follows the worker during carrying. Other directional activity variants still need artist approval/production.
+- `guard_attack_right.png`: indexed PNG 128×72, two **64×72** spear action poses. The guard's nonlooping `attack_right` in `guard_frames.tres` uses idle, two strike frames, idle at 16 fps during the real combat hit window. `defend_right` shows a stationary stance between strikes. This prototype does not yet include directional attacks, deaths, or complete combat gameplay.
+- Both files are artist-review candidates assembled at native sprite resolution from the approved concept characters and native-pixel tools. They are not layered Aseprite masters. No gameplay code contains generated pixel art.

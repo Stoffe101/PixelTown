@@ -21,12 +21,16 @@ func run() -> Array[String]:
         if frames.has_animation("attack_right") and (frames.get_frame_count("attack_right") != 4 or frames.get_animation_loop("attack_right")):
             problems.append("Guard attack must be a one-shot four-frame strike")
         world.update_art(sim, false, 1)
-        if worker.get_meta("requested_action","") != "gather":
-            problems.append("Initial worker must gather, not walk")
+        if worker.get_meta("requested_action","") != "gather" or worker.animation != &"gather_down":
+            problems.append("Initial worker must play actual gather_down artwork")
         sim.advance(0.7)
         world.update_art(sim, false, 1)
         if worker.get_meta("requested_action","") != "carry":
             problems.append("Delivering must request carrying")
+        sim.worker_state = "build"
+        world.update_art(sim, false, 1)
+        if worker.animation != &"work_down":
+            problems.append("Construction must use genuine work_down tool animation")
         sim.combat_elapsed = 2.2
         world.update_art(sim, true, 1)
         if guard.animation != &"attack_right":
