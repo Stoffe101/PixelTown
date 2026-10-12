@@ -20,13 +20,13 @@ func _capture() -> void:
 	var scale_choice := int(args[4]) if args.size() > 4 else 0
 	var seconds := float(args[5]) if args.size() > 5 else 0.0
 	var camera_zoom := float(args[6]) if args.size() > 6 else 1.0
-	if mode != "village" and mode != "cave" and mode != "showcase":
+	if mode != "village" and mode != "cave" and mode != "showcase" and mode != "gallery":
 		printerr("Unknown capture mode ",mode)
 		quit(2)
 		return
 
 	DisplayServer.window_set_size(expected_size)
-	var scene_file: String = "res://scenes/levels/artist_showcase.tscn" if mode == "showcase" else "res://scenes/main.tscn"
+	var scene_file: String = "res://scenes/levels/premium_asset_gallery.tscn" if mode == "gallery" else ("res://scenes/levels/artist_showcase.tscn" if mode == "showcase" else "res://scenes/main.tscn")
 	var source := load(scene_file) as PackedScene
 	if source == null:
 		printerr("Unable to load main scene")
@@ -34,20 +34,22 @@ func _capture() -> void:
 		return
 	var scene: Node = source.instantiate()
 	get_root().add_child(scene)
-	if mode != "showcase" and not scene.has_method("configure_capture"):
+	if mode != "showcase" and mode != "gallery" and not scene.has_method("configure_capture"):
 		printerr("Scene missing capture configuration")
 		quit(1)
 		return
-	if mode != "showcase":
+	if mode != "showcase" and mode != "gallery":
 		scene.call("configure_capture",mode,scale_choice,seconds)
 	else:
 		(scene.get_node("ShowcaseCamera") as Camera2D).make_current()
 	if camera_zoom != 1.0:
-		var camera: Camera2D = scene.get_node_or_null("ShowcaseCamera" if mode == "showcase" else "WorldCamera")
+		var camera: Camera2D = scene.get_node_or_null("ShowcaseCamera" if mode == "showcase" or mode == "gallery" else "WorldCamera")
 		if camera != null:
 			camera.zoom = Vector2.ONE * camera_zoom
 	for i in range(6):
 		await process_frame
+	if mode == "gallery" and seconds > 0.0:
+		await create_timer(seconds).timeout
 	await RenderingServer.frame_post_draw
 	var result_image := get_root().get_texture().get_image()
 	if result_image == null or result_image.is_empty():

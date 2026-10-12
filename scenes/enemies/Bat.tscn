@@ -3,7 +3,8 @@
 
 [node name="Bat" type="AnimatedSprite2D"]
 texture_filter = 1
+centered = false
 sprite_frames = ExtResource("frames")
 animation = &"fly"
 autoplay = "fly"
-offset = Vector2(0, -60)
+offset = Vector2(-48, -62)

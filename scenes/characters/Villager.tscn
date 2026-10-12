@@ -3,7 +3,8 @@
 
 [node name="Villager" type="AnimatedSprite2D"]
 texture_filter = 1
+centered = false
 sprite_frames = ExtResource("frames")
 animation = &"walk_down"
 autoplay = "walk_down"
-offset = Vector2(0, -68)
+offset = Vector2(-32, -70)

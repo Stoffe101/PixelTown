@@ -1,5 +1,7 @@
 # PixelTown artwork: placing and editing (asset usability pass)
 
+Open `scenes/levels/premium_asset_gallery.tscn` to preview the separated sprite instances at real game scale.  A captured version appears in CI artifacts.
+
 This pack **does not replace the approved cottage**. Use the existing `HouseSmall.tscn` and `assets/sprites/buildings/house_small.png` unchanged.
 
 ## How to place individual objects

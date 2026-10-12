@@ -110,6 +110,8 @@ jobs:
           1920 1080 showcase 1 0 1
           3440 1440 showcase 1 0 1
           1920 1080 showcase 1 0 2
+          1920 1080 gallery 1 0.25 1
+          3440 1440 gallery 1 0.25 1
           1920 1080 village 1 18 2
           3440 1440 cave 1 8 2
           CAPTURES

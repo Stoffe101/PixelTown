@@ -3,7 +3,8 @@
 
 [node name="Spider" type="AnimatedSprite2D"]
 texture_filter = 1
+centered = false
 sprite_frames = ExtResource("frames")
 animation = &"walk"
 autoplay = "walk"
-offset = Vector2(0, -60)
+offset = Vector2(-40, -62)
