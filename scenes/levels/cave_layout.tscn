@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/ore_purple.png" id="ore_purple_new"]
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/torch_stand.png" id="torch_new"]
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/rock_small.png" id="rock_new"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/cave/cave_wall_32.png" id="cave_wall_image"]
 [ext_resource type="TileSet" path="res://assets/tilesets/cave/cave_walls.tres" id="cave_walls_32"]
 [ext_resource type="TileSet" path="res://assets/terrain_paint_tileset.tres" id="paint_tileset"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/ancient_altar.png" id="tancient_altar"]
@@ -61,8 +62,610 @@ tile_set = ExtResource("paint_tileset")
 
 [node name="ChamberWalls" type="TileMapLayer" parent="."]
 z_index = -6
-tile_map_data = PackedByteArray("AAAKAAUAAAAAAAAAAAAKAAYAAAAAAAEAAAAKABAAAAAAAAAAAAALAAUAAAABAAAAAAALAAYAAAABAAEAAAALABAAAAABAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAEAAAAMABAAAAAAAAAAAAANAAUAAAABAAAAAAANAAYAAAABAAEAAAANABAAAAABAAAAAAAOAAUAAAAAAAAAAAAOAAYAAAAAAAEAAAAOABAAAAAAAAAAAAAPAAUAAAABAAAAAAAPAAYAAAABAAEAAAAQAAUAAAAAAAAAAAAQAAYAAAAAAAEAAAARAAUAAAABAAAAAAARAAYAAAABAAEAAAASAAUAAAAAAAAAAAASAAYAAAAAAAEAAAASABAAAAAAAAAAAAATAAUAAAABAAAAAAATAAYAAAABAAEAAAATABAAAAABAAAAAAAUAAUAAAAAAAAAAAAUAAYAAAAAAAEAAAAUABAAAAAAAAAAAAAVAAUAAAABAAAAAAAVAAYAAAABAAEAAAAVABAAAAABAAAAAAAWAAUAAAAAAAAAAAAWAAYAAAAAAAEAAAAWABAAAAAAAAAAAAAXAAUAAAABAAAAAAAXAAYAAAABAAEAAAAXABAAAAABAAAAAAAYAAUAAAAAAAAAAAAYAAYAAAAAAAEAAAAYABAAAAAAAAAAAAAZAAUAAAABAAAAAAAZAAYAAAABAAEAAAAZABAAAAABAAAAAAAaAAUAAAAAAAAAAAAaAAYAAAAAAAEAAAAaABAAAAAAAAAAAAAbAAUAAAABAAAAAAAbAAYAAAABAAEAAAAbABAAAAABAAAAAAAcAAUAAAAAAAAAAAAcAAYAAAAAAAEAAAAcABAAAAAAAAAAAAAdAAUAAAABAAAAAAAdAAYAAAABAAEAAAAdABAAAAABAAAAAAAKAAcAAAAAAAIAAAAdAAcAAAADAAIAAAAKAAgAAAAAAAIAAAAdAAgAAAADAAIAAAAKAAkAAAAAAAIAAAAdAAkAAAADAAIAAAAKAAoAAAAAAAIAAAAdAAoAAAADAAIAAAAKAAsAAAAAAAIAAAAdAAsAAAADAAIAAAAKAAwAAAAAAAIAAAAdAAwAAAADAAIAAAAKAA0AAAAAAAIAAAAdAA0AAAADAAIAAAAKAA4AAAAAAAIAAAAdAA4AAAADAAIAAAAKAA8AAAAAAAIAAAAdAA8AAAADAAIA")
 tile_set = ExtResource("cave_walls_32")
+
+[node name="WallVisuals" type="Node2D" parent="."]
+z_index = -7
+
+[node name="WallTile001" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile002" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile003" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile004" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(352, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile005" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(352, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile006" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(352, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile007" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(384, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile008" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(384, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile009" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(384, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile010" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(416, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile011" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(416, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile012" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(416, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile013" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(448, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile014" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(448, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile015" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(448, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile016" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(480, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile017" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(480, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile018" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(512, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile019" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(512, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile020" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(544, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile021" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(544, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile022" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(576, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile023" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(576, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile024" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(576, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile025" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(608, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile026" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(608, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile027" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(608, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile028" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(640, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile029" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(640, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile030" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(640, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile031" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(672, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile032" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(672, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile033" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(672, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile034" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(704, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile035" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(704, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile036" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(704, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile037" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(736, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile038" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(736, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile039" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(736, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile040" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(768, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile041" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(768, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile042" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(768, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile043" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(800, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile044" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(800, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile045" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(800, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile046" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(832, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile047" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(832, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile048" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(832, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile049" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(864, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile050" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(864, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile051" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(864, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile052" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(896, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile053" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(896, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+centered = false
+
+[node name="WallTile054" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(896, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+centered = false
+
+[node name="WallTile055" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 160)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile056" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 192)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+centered = false
+
+[node name="WallTile057" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 512)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+centered = false
+
+[node name="WallTile058" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 224)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile059" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 224)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile060" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 256)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile061" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 256)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile062" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 288)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile063" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 288)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile064" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 320)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile065" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 320)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile066" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 352)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile067" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 352)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile068" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 384)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile069" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 384)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile070" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 416)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile071" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 416)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile072" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 448)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile073" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 448)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
+
+[node name="WallTile074" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(320, 480)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(0, 64, 32, 32)
+centered = false
+
+[node name="WallTile075" type="Sprite2D" parent="WallVisuals"]
+position = Vector2(928, 480)
+texture_filter = 1
+texture = ExtResource("cave_wall_image")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 32)
+centered = false
 
 [node name="Objects" type="Node2D" parent="." unique_id=42291998]
 y_sort_enabled = true
