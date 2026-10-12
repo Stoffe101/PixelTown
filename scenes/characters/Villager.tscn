@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="SpriteFrames" path="res://assets/animations/villager_frames.tres" id="frames"]
+
+[node name="Villager" type="AnimatedSprite2D"]
+texture_filter = 1
+centered = false
+sprite_frames = ExtResource("frames")
+animation = &"idle_down"
+autoplay = "idle_down"
+offset = Vector2(-32, -70)

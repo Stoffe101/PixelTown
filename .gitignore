@@ -1,11 +1,14 @@
-# Godot 4 generated import data and editor state.
+# Godot editor caches and build/debug outputs only
 .godot/
-
-# Local CI and diagnostic outputs; GitHub Actions stores review screenshots as artifacts.
+*.gd.uid
 artifacts/
 *.log
 
-# Local editor/OS files.
+# Temporary cloned upstream sources, NOT shipping art.
+_vendor_reference/
+
+# ORIGINAL PixelTown PNG/ORA art and CC0 assets are deliberately tracked!
+# Never ignore assets/ or art/source/architecture/ again.
 .DS_Store
 Thumbs.db
 .vscode/

@@ -22,7 +22,7 @@ func run() -> Array[String]:
 		if factor < 1:
 			problems.append("Insufficient integer scale for %s" % str(display_size))
 			continue
-		if display_size.x / factor < base_width or display_size.y / factor < base_height:
+		if float(display_size.x) / float(factor) < base_width or float(display_size.y) / float(factor) < base_height:
 			problems.append("Visible canvas shrinks below design area for %s" % str(display_size))
 		if display_size.x == 3440 and display_size.x / factor <= base_width:
 			problems.append("Ultrawide must reveal additional horizontal canvas")

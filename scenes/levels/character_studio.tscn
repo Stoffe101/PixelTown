@@ -1,0 +1,200 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="bodies"]
+[ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="gear"]
+
+[node name="CharacterStudio" type="Node2D"]
+texture_filter = 1
+
+[node name="Worker_South_16x24" type="Sprite2D" parent="."]
+position = Vector2(150, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_South_16x24" type="Sprite2D" parent="."]
+position = Vector2(150, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 128, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_South_16x24" type="Sprite2D" parent="."]
+position = Vector2(150, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_North_16x24" type="Sprite2D" parent="."]
+position = Vector2(225, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 32, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_North_16x24" type="Sprite2D" parent="."]
+position = Vector2(225, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 160, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_North_16x24" type="Sprite2D" parent="."]
+position = Vector2(225, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(0, 32, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_West_16x24" type="Sprite2D" parent="."]
+position = Vector2(300, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 64, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_West_16x24" type="Sprite2D" parent="."]
+position = Vector2(300, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 192, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_West_16x24" type="Sprite2D" parent="."]
+position = Vector2(300, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(0, 64, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_East_16x24" type="Sprite2D" parent="."]
+position = Vector2(375, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 96, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_East_16x24" type="Sprite2D" parent="."]
+position = Vector2(375, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(0, 224, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_East_16x24" type="Sprite2D" parent="."]
+position = Vector2(375, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(0, 96, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_South_20x30" type="Sprite2D" parent="."]
+position = Vector2(500, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 0, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_South_20x30" type="Sprite2D" parent="."]
+position = Vector2(500, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 128, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_South_20x30" type="Sprite2D" parent="."]
+position = Vector2(500, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(192, 0, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_North_20x30" type="Sprite2D" parent="."]
+position = Vector2(575, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 32, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_North_20x30" type="Sprite2D" parent="."]
+position = Vector2(575, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 160, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_North_20x30" type="Sprite2D" parent="."]
+position = Vector2(575, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(192, 32, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_West_20x30" type="Sprite2D" parent="."]
+position = Vector2(650, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 64, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_West_20x30" type="Sprite2D" parent="."]
+position = Vector2(650, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 192, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_West_20x30" type="Sprite2D" parent="."]
+position = Vector2(650, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(192, 64, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Worker_East_20x30" type="Sprite2D" parent="."]
+position = Vector2(725, 160)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 96, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Guard_East_20x30" type="Sprite2D" parent="."]
+position = Vector2(725, 300)
+texture = ExtResource("bodies")
+region_enabled = true
+region_rect = Rect2(192, 224, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+
+[node name="Equipment_East_20x30" type="Sprite2D" parent="."]
+position = Vector2(725, 300)
+texture = ExtResource("gear")
+region_enabled = true
+region_rect = Rect2(192, 96, 24, 32)
+centered = false
+offset = Vector2(-12, -31)
+

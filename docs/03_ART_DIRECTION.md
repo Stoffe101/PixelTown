@@ -1,6 +1,15 @@
-# Art Direction: Whimsical Pixel-Art Miniatures
+# Art Direction v1.0: Original Modular Fantasy Pixel Art
 
-**Status:** selected creative direction, but feasibility is NOT YET demonstrated by original in-engine art.
+**Status:** **Visual reference hierarchy approved** on 2026-10-11. Exact produced artwork and scale are NOT approved; review Prototype 00B in actual Godot screenshots.
+
+## Accepted reference priority
+
+1. **Necesse** (official presskit: https://necessegame.com/presskit): readability, normal top-down village scale, distinct silhouettes, modularity and sustainable pixel-art complexity.
+2. **Graveyard Keeper** (official images: https://www.graveyardkeeper.com/copy-of-home): some atmosphere, forge warmth, believable materials, trees and torch accents. Do NOT attempt its full handcrafted complexity.
+3. **Stardew Valley** (official media: https://www.stardewvalley.net/media/): character warmth, expressive hair/clothing, short readable motions.
+4. **Original PixelTown identity:** artwork, maps, sprites, interactions, equipment and UI must be independent creations. Never trace, lift or republish reference-game assets.
+
+This is **Art Direction v1.0**; do not casually restart the overall art debate. Technical choices can change on real-engine evidence.
 
 ## Chosen direction
 
@@ -22,7 +31,7 @@ These are examples to STUDY, not games to copy. Do not lift their copyrighted sp
 | --- | --- | --- |
 | World perspective | slightly angled-looking top-down art with visible building fronts on a **normal square tile grid**, four-direction movement; **not true isometric** | direction chosen; actual camera and proportions to test |
 | Terrain tiles | 16×16 logical pixels | to test |
-| Character sprite | around 16×24 logical pixels | to test |
+| Character sprite | **20×30 and 24×32** candidates in reusable 24×32 animation cells | compare in engine; 24×32 is provisional favorite |
 | Structures | modular buildings roughly 3–6 tiles wide | to test |
 | Character movement | four-direction walking, few-frame cycles | to test |
 | Pixel presentation | nearest-neighbor texture sampling and practical integer scaling | intended |
@@ -30,6 +39,16 @@ These are examples to STUDY, not games to copy. Do not lift their copyrighted sp
 | Dungeon palette | desaturated rock, torch amber, fungus/cave crystal accents and clear combat effects | direction |
 
 Compare **two candidate sprite scales** in a real Godot scene before fixing dimensions. Do not build large animation frame sets before the base characters look convincing. Keep scale, overlays and palette consistent across village and caves.
+
+## Maintainable production pipeline
+
+The old `art/world_canvas.gd` rectangle-painter is retained as prototype history only. Prototype 00B creates **actual editable PNG sprite/tileset atlases** with `tools/art/build_art.py` (standard-library-only source master). `scenes/world_art.gd` renders terrain via Godot **TileMapLayer** and y-sorted buildings, props, characters and independently aligned gear via reusable **Sprite2D** atlas regions. See `assets/README.md` and [00B log](09_PROTOTYPE_00B.md).
+
+- Square 16×16 terrain cells, orthographic camera and visible building fronts (not isometric).
+- Common 24×32 animation grid with 20×30 versus 24×32 original character drawings; four directional roles, idle/walk/work/attack frames, aligned helmet/shield/sword overlays.
+- Review 1440×810, 1920×1080, 2560×1440 and **3440×1440** at regular and zoomed camera settings. Extra ultrawide world space, not horizontal stretching.
+- Moderate reusable grass variation, integrated roads, warm forge lights and cooler cave rocks. Low-noise depth and silhouettes, not decorative scatter or excessive effects.
+- PNGs are generated from the source master and attached in CI until the owner accepts the art. **Passing CI is not art approval.**
 
 ## Artwork production strategy
 

@@ -1,0 +1,15 @@
+{
+  "publisher": "Pixel-boy / AAA",
+  "pack": "Ninja Adventure Asset Pack (art subset from official Godot V4 example)",
+  "original_url": "https://pixel-boy.itch.io/ninja-adventure-asset-pack",
+  "repository": "https://github.com/pixel-boy/NinjaAdventure",
+  "pinned_ref": "6ac78232d5aedcc85ce5f27d060ea92366f7c24a",
+  "license": "CC0-1.0 (applies to these original PNG artwork files)",
+  "not_imported": "scripts, Godot project, fonts, music, paid packs, shaders",
+  "files": {
+    "tileset_floor.png": "e111065065edf806e7e893330086e68efc8755175d92f14d087b42d40a331e16",
+    "tileset_village_abandoned.png": "6787c6e22a4d44ceee4f158309b2519707bdb70c59aca00b3d49006cadcca06e",
+    "tileset_wall_simple.png": "ad5eb80ab4d5e65dbcda9dc012f9981323b277717349cdab012fc65ce06e43b2",
+    "tileset_interior_floor.png": "e281598e2d90f43b31fd557b94c2d2abb00d307758a053b7df301575bf535e3a"
+  }
+}

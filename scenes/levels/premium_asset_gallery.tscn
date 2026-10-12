@@ -1,0 +1,49 @@
+[gd_scene load_steps=13 format=3]
+[ext_resource type="PackedScene" path="res://scenes/levels/village_layout.tscn" id="Village"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/HouseSmall.tscn" id="House"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Blacksmith.tscn" id="Smithy"]
+[ext_resource type="PackedScene" path="res://scenes/environment/OakTree.tscn" id="Tree"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Villager.tscn" id="Villager"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Guard.tscn" id="Guard"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Slime.tscn" id="Slime"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Bat.tscn" id="Bat"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Spider.tscn" id="Spider"]
+[ext_resource type="PackedScene" path="res://scenes/props/Well.tscn" id="Well"]
+[ext_resource type="PackedScene" path="res://scenes/props/Crate.tscn" id="Crate"]
+[node name="PremiumAssetGallery" type="Node2D"]
+texture_filter = 1
+y_sort_enabled = true
+[node name="ExistingVillage" parent="." instance=ExtResource("Village")]
+[editable path="ExistingVillage"]
+[node name="Objects" parent="ExistingVillage" index="2"]
+visible = false
+[node name="EditorBackdrop" parent="ExistingVillage" index="0"]
+visible = false
+[node name="ShowcaseCamera" type="Camera2D" parent="."]
+position = Vector2(552, 351)
+[node name="HouseApproved" parent="." instance=ExtResource("House")]
+position = Vector2(365, 353)
+[node name="BlacksmithPremium" parent="." instance=ExtResource("Smithy")]
+position = Vector2(655, 353)
+[node name="OakLeft" parent="." instance=ExtResource("Tree")]
+position = Vector2(254, 289)
+[node name="OakRight" parent="." instance=ExtResource("Tree")]
+position = Vector2(814, 288)
+[node name="WellPlaced" parent="." instance=ExtResource("Well")]
+position = Vector2(508, 427)
+[node name="CratePlaced" parent="." instance=ExtResource("Crate")]
+position = Vector2(576, 427)
+[node name="VillagerAnimated" parent="." instance=ExtResource("Villager")]
+animation = &"walk_down"
+autoplay = "walk_down"
+position = Vector2(465, 448)
+[node name="GuardAnimated" parent="." instance=ExtResource("Guard")]
+animation = &"walk_down"
+autoplay = "walk_down"
+position = Vector2(745, 452)
+[node name="SlimeAnimated" parent="." instance=ExtResource("Slime")]
+position = Vector2(614, 478)
+[node name="BatAnimated" parent="." instance=ExtResource("Bat")]
+position = Vector2(826, 470)
+[node name="SpiderAnimated" parent="." instance=ExtResource("Spider")]
+position = Vector2(328, 467)

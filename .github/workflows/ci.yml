@@ -30,6 +30,18 @@ jobs:
       - name: Check repository and licensing contracts
         run: python3 tools/ci/check_repo.py
 
+      - name: Validate committed source artwork (no runtime generation)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pillow==11.3.0
+          python3 tools/ci/check_asset_dependencies.py
+          python3 tools/art/validate_assets.py
+          python3 tools/art/validate_hero.py
+          python3 tools/art_export/validate_native_assets.py
+          python3 tools/art_export/validate_production_manifest.py
+          python3 tools/art_export/export_production.py --dry-run
+
       - name: Install pinned Godot and verify release hash
         shell: bash
         run: |
@@ -76,25 +88,121 @@ jobs:
           set -euo pipefail
           mkdir -p artifacts/screenshots
           # Same camera/art at 16:9 and 21:9, with both proposed sprite sizes.
-          while read -r width height mode scale seconds; do
+          while read -r width height mode scale seconds zoom label; do
             [ -z "$width" ] && continue
-            stem="${width}x${height}-${mode}-scale${scale}"
+            stem="${width}x${height}-${mode}-scale${scale}-zoom${zoom:-1}${label:+-${label}}"
             output="artifacts/screenshots/${stem}.png"
             timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
               godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
-              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$mode" "$scale" "$seconds" \
+              --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$mode" "$scale" "$seconds" "${zoom:-1}" \
               2>&1 | tee "artifacts/logs/render-${stem}.log"
             python3 tools/ci/check_engine_log.py "artifacts/logs/render-${stem}.log"
             python3 tools/ci/verify_png.py "$output" "$width" "$height"
           done <<'CAPTURES'
-          1920 1080 village 0 4
-          1920 1080 village 1 18
-          2560 1440 village 0 32
-          3440 1440 village 0 4
-          3440 1440 village 1 18
-          1920 1080 cave 0 5
-          3440 1440 cave 1 8
+          1440 810 village 1 12 1
+          1920 1080 village 0 5 1
+          1920 1080 village 1 18 1
+          2560 1440 village 1 20 1
+          3440 1440 village 0 5 1
+          3440 1440 village 1 18 1
+          1920 1080 village 1 0.1 1 gathering
+          1920 1080 village 1 5.75 1 building
+          1920 1080 cave 1 2.17 1 striking
+          1920 1080 cave 1 8 1
+          3440 1440 cave 1 8 1
+          1920 1080 showcase 1 0 1
+          3440 1440 showcase 1 0 1
+          1920 1080 showcase 1 0 2
+          1920 1080 gallery 1 0.25 1
+          3440 1440 gallery 1 0.25 1
+          1920 1080 village 1 18 2
+          3440 1440 cave 1 8 2
           CAPTURES
+
+      - name: Prove actual AnimatedSprite2D frame changes in Godot gallery
+        shell: bash
+        run: |
+          set -euo pipefail
+          for phase in 0.10 0.55; do
+            output="artifacts/screenshots/1920x1080-gallery-motion-${phase}.png"
+            timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution 1920x1080 --windowed \
+              --script res://tests/visual/capture.gd -- 1920 1080 "$output" gallery 1 "$phase" 1 \
+              2>&1 | tee "artifacts/logs/gallery-motion-${phase}.log"
+            python3 tools/ci/check_engine_log.py "artifacts/logs/gallery-motion-${phase}.log"
+            python3 tools/ci/verify_png.py "$output" 1920 1080
+          done
+          python3 - <<'PY'
+          from PIL import Image, ImageChops
+          a=Image.open('artifacts/screenshots/1920x1080-gallery-motion-0.10.png').convert('RGBA')
+          b=Image.open('artifacts/screenshots/1920x1080-gallery-motion-0.55.png').convert('RGBA')
+          for name,box in {
+              'villager':(580,600,790,850),
+              'guard':(1420,620,1635,880),
+              'slime':(1040,740,1240,985),
+              'bat':(1600,735,1910,990),
+              'spider':(140,730,480,995)
+          }.items():
+              delta=ImageChops.difference(a.crop(box),b.crop(box)).convert('RGB')
+              changed=sum(any(v) for v in delta.getdata())
+              assert changed >= 10, f'No observed animated-frame change in {name} area: {changed}'
+              print('PASS rendered animation advances',name,changed)
+          PY
+
+      - name: Shared source image reimport across five placed oaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Only mutate a temporary CI checkout. Never commit the test recolor.
+          cp assets/sprites/environment/oak_tree.png artifacts/logs/oak-before-probe.png
+          trap 'cp artifacts/logs/oak-before-probe.png assets/sprites/environment/oak_tree.png' EXIT
+          python3 tools/art_export/shared_source_probe.py tint
+          timeout 120s godot --headless --editor --import --path . >/dev/null
+          timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+            godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution '1920x1080' --windowed \
+            --script res://tests/visual/capture.gd -- 1920 1080 artifacts/screenshots/1920x1080-showcase-oak-recolor.png showcase 1 0 1 \
+            2>&1 | tee artifacts/logs/shared-oak-probe.log
+          python3 tools/ci/check_engine_log.py artifacts/logs/shared-oak-probe.log
+          python3 tools/art_export/shared_source_probe.py verify \
+            artifacts/screenshots/1920x1080-showcase-scale1-zoom1.png \
+            artifacts/screenshots/1920x1080-showcase-oak-recolor.png
+          cp artifacts/logs/oak-before-probe.png assets/sprites/environment/oak_tree.png
+          trap - EXIT
+          timeout 120s godot --headless --editor --import --path . >/dev/null
+
+      - name: Pixel-density A/B visual experiment (2x physical pixels)
+        shell: bash
+        run: |
+          # Temporary art comparison only. Restore the tested production
+          # 640x360 contract after captures; keep main project untouched.
+          cp project.godot artifacts/logs/project-before-density-experiment.godot
+          for dims in '1920 1080' '3440 1440'; do
+            read -r width height <<< "$dims"
+            # Force exactly 2 physical pixels per logical pixel for the
+            # preview rather than relying on Godot's viewport rounding.
+            python3 - "$width" "$height" <<'PY'
+          import sys
+          from pathlib import Path
+          w,h=int(sys.argv[1]),int(sys.argv[2])
+          assert w%2==0 and h%2==0
+          text=Path('artifacts/logs/project-before-density-experiment.godot').read_text()
+          assert 'window/size/viewport_width=640' in text
+          assert 'window/size/viewport_height=360' in text
+          text=text.replace('window/size/viewport_width=640',f'window/size/viewport_width={w//2}')
+          text=text.replace('window/size/viewport_height=360',f'window/size/viewport_height={h//2}')
+          Path('project.godot').write_text(text)
+          PY
+            for view in village cave; do
+              output="artifacts/screenshots/${width}x${height}-${view}-density2x.png"
+              timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+                godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
+                --script res://tests/visual/capture.gd -- "$width" "$height" "$output" "$view" 1 18 1 \
+                2>&1 | tee "artifacts/logs/density-${width}x${height}-${view}.log"
+              python3 tools/ci/verify_png.py "$output" "$width" "$height"
+              python3 tools/ci/check_engine_log.py "artifacts/logs/density-${width}x${height}-${view}.log"
+            done
+          done
+          cp artifacts/logs/project-before-density-experiment.godot project.godot
 
       - name: Summary
         if: always()
@@ -103,7 +211,15 @@ jobs:
           echo '## PixelTown Prototype 00 art review' >> "$GITHUB_STEP_SUMMARY"
           echo 'Godot 4.7.2; Linux + Windows checks, deterministic worker test, and actual Godot village/cave renders.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Resolution coverage: 1920x1080, 2560x1440, 3440x1440.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
+          echo 'All output atlases are attached as PNG and JSON artifacts. Compare both proposed sprite scales. **These are unapproved prototype art candidates, not visual baselines or final game art.**' >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p artifacts/atlases
+          cp assets/*.png assets/atlas.json artifacts/atlases/
+          mkdir -p artifacts/hero-art artifacts/layered-masters
+          cp assets/original/hero/*.png artifacts/hero-art/
+          cp art/source/architecture/*.ora artifacts/layered-masters/
+          mkdir -p artifacts/cc0_sources
+          cp assets/third_party/ninja_adventure/PROVENANCE.json artifacts/cc0_sources/
+          cp assets/third_party/ninja_adventure/*.png artifacts/cc0_sources/
           for capture in artifacts/screenshots/*.png; do
             if test -f "$capture"; then echo "- $(basename "$capture")" >> "$GITHUB_STEP_SUMMARY"; fi
           done
@@ -143,6 +259,22 @@ jobs:
           $exe = Get-ChildItem $dest -Recurse -Filter '*win64_console.exe' | Select-Object -First 1
           if ($null -eq $exe) { throw 'Godot console executable not found' }
           Add-Content -Path $env:GITHUB_ENV -Value "GODOT_EXE=$($exe.FullName)"
+
+      - name: Validate committed artwork on Windows
+        shell: pwsh
+        run: |
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot install art validator dependency' }
+          python tools/ci/check_asset_dependencies.py
+          if ($LASTEXITCODE -ne 0) { throw 'Committed asset dependencies are missing' }
+          python tools/art/validate_assets.py
+          if ($LASTEXITCODE -ne 0) { throw 'Art sheets are invalid' }
+          python tools/art/validate_hero.py
+          if ($LASTEXITCODE -ne 0) { throw 'Hero master integrity failure' }
+          python tools/art_export/validate_native_assets.py
+          if ($LASTEXITCODE -ne 0) { throw 'Native pixel source verification failed' }
+          python tools/art_export/validate_production_manifest.py
+          if ($LASTEXITCODE -ne 0) { throw 'Production source mapping failure' }
 
       - name: Project import, unit tests and boot on Windows
         shell: pwsh

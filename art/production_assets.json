@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "approval": "ALL ART STILL UNAPPROVED. Missing .aseprite masters must be hand-authored; do not fake or synthesize sources.",
+  "objects": [
+    {
+      "id": "house_small",
+      "source": "art/handmade/buildings/house_small.aseprite",
+      "png": "assets/sprites/buildings/house_small.png",
+      "prefab": "scenes/buildings/HouseSmall.tscn",
+      "size": [
+        128,
+        144
+      ],
+      "status": "requires_genuine_hand_drawn_master"
+    },
+    {
+      "id": "blacksmith",
+      "source": "art/handmade/buildings/blacksmith.aseprite",
+      "png": "assets/sprites/buildings/blacksmith.png",
+      "prefab": "scenes/buildings/Blacksmith.tscn",
+      "size": [
+        160,
+        152
+      ],
+      "status": "requires_genuine_hand_drawn_master"
+    },
+    {
+      "id": "oak_tree",
+      "source": "art/handmade/environment/oak_tree.aseprite",
+      "png": "assets/sprites/environment/oak_tree.png",
+      "prefab": "scenes/environment/OakTree.tscn",
+      "size": [
+        96,
+        112
+      ],
+      "status": "requires_genuine_hand_drawn_master"
+    },
+    {
+      "id": "large_rock",
+      "source": "art/handmade/environment/large_rock.aseprite",
+      "png": "assets/sprites/environment/large_rock.png",
+      "prefab": "scenes/environment/LargeRock.tscn",
+      "size": [
+        40,
+        30
+      ],
+      "status": "requires_genuine_hand_drawn_master"
+    },
+    {
+      "id": "barrel",
+      "source": "art/handmade/props/barrel.aseprite",
+      "png": "assets/sprites/props/barrel.png",
+      "prefab": "scenes/props/Barrel.tscn",
+      "size": [
+        40,
+        44
+      ],
+      "status": "requires_genuine_hand_drawn_master"
+    }
+  ]
+}

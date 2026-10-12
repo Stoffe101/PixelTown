@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/objects.png" id="atlas"]
+
+[sub_resource type="AtlasTexture" id="sprite"]
+atlas = ExtResource("atlas")
+region = Rect2(280, 96, 32, 32)
+
+[node name="bush" type="Sprite2D"]
+texture_filter = 1
+texture = SubResource("sprite")
+centered = false
+offset = Vector2(-16, -32)

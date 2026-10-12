@@ -2,7 +2,7 @@
 
 > **A living fantasy village that supports autonomous adventurers exploring an increasingly dangerous underground world.** A cozy 2D pixel-art simulation with crafting, settlement development, equipment, expeditions, meaningful choices, and gradually expanding automation.
 
-**Status:** Prototype 00 art/camera experiment in progress. **PixelTown is a temporary repo name, not the final game title.** A minimal running Godot **art/activity proof** is being developed. It is not a finished game, approved art pack, expedition system or complete simulation.
+**Status:** **Prototype 00B** original sprite/tileset pipeline on a draft PR, awaiting visual approval. **PixelTown is a temporary repo name, not the final game title.** A minimal running Godot **art/activity proof** is being developed. It is not a finished game, approved art pack, expedition system or complete simulation.
 
 ## License and public visibility
 
@@ -49,6 +49,34 @@ This repository tracks the design discussion through October 2026. Gameplay deci
 
 A provisional Godot 4.7.2 display probe and CI pipeline now live in this repository. They are NOT the visual prototype or gameplay. CI checks Linux + Windows startup and captures 1920×1080, 2560×1440 and 3440×1440 diagnostics with real Godot rendering. See [CI & display](docs/07_CI_AND_DISPLAY.md) for evidence and limits.
 
+## Art Direction v1.0: original modular pixel art
+
+The real PNG textures, sprite sheets, isolated hero art, and layered master files are now committed to Git. A clean checkout works immediately, and the optional `tools/art/` authoring scripts are no longer needed to open Godot. See [00B development log](docs/09_PROTOTYPE_00B.md) and [editable art documentation](assets/README.md). The new source-driven asset system replaces runtime rectangle painting while preserving the demonstration simulation. **The visual style has not yet been approved by the owner.**
+
+`tools/art/build_art.py` is an optional artist-authoring tool, not a prerequisite for loading the game.
+
 ## Run the current art experiment
 
 Open `project.godot` with **Godot 4.7.2** and press Play. `Tab` toggles village/cave, `1`/`2` compare character scales, `Space` pauses the shared demonstration simulation, `R` resets it, mouse wheel changes zoom, middle mouse drag pans. Click near the cave entrance to inspect the cave. The worker will eventually deliver three wood units and reveal a small hut; the cave guard's encounter is just an autonomous animation/health feedback test. **No finished expedition or crafting loop exists.** See [Prototype 00 art log](docs/08_PROTOTYPE_00_ART_LOG.md) and CI screenshot artifacts for review evidence.
+
+## Third-party asset trial, October 2026
+
+The restricted CC0 Ninja Adventure terrain textures are now committed under `assets/third_party/ninja_adventure/` with license provenance. No source ZIP or external download is required on a fresh clone. [Asset audit](docs/10_ASSET_PACK_AUDIT.md).
+
+## Visual Quality Gate (still open)
+
+The first and second source-atlas trials **did not pass the desired visual bar**. The current screenshots are technical experiments. See [review checklist, current problems and required hero art](docs/12_VISUAL_QUALITY_GATE.md). No finalized proprietary production sprites or approved visual regression baselines exist yet.
+
+**Local setup:** Check out the feature branch, open `project.godot`, and edit the levels directly. No generation steps needed.
+
+## Art Pass 01 status
+
+[Art Pass 01 implementation, evidence and failed visual gate](docs/13_ART_PASS_01.md) includes original isolated smithy/cottage/storage/cave artwork, original trees, layered character/equipment masters and a source-driven construction-stage visualization. [Display-density experiment](docs/14_DISPLAY_DENSITY_EXPERIMENT.md) compares 2×-physical-pixel captures against the canonical viewport. **The latest technical checks pass; the art is still awaiting substantial hand-polish and owner approval.**
+
+## Edit the village and cave in Godot (artist workflow)
+
+[**Editable village, cave, terrain painting and prefab guide**](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md). Switch to draft feature branch `prototype/art-direction-v1-00b` (not `main`) and simply open Godot; the optional `setup-pixeltown.ps1` only checks for missing committed files. In Godot, open `scenes/levels/village_layout.tscn` or `cave_layout.tscn`. Drag prefabs from `scenes/props/`, move/duplicate scenery under `Objects`, edit already-saved terrain under `PaintedTerrain`, and place the simulation's locations with `Markers`. Scene changes persist on disk and the demonstration logic reads their positions. Art sign-off is still pending.
+
+## Art assets are real files, not runtime-generated images
+
+Art Pass 01 now tracks all required original PNG/ORA art, selected CC0 texture sheets, source provenance, and saved tile-painted Godot scenes. A fresh clone or branch checkout **must open in Godot without Python, ZIP files, generation scripts or downloading dependencies**. `tools/art/` is an optional offline authoring toolkit, never game startup logic. `setup-pixeltown.ps1` verifies tracked files instead of generating them. Run `python tools/ci/check_asset_dependencies.py` to verify that scene/script art dependencies are present **and tracked in Git**. See [editable scene guide](docs/15_GODOT_EDITOR_ARTIST_GUIDE.md).

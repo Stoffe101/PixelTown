@@ -28,6 +28,10 @@ All artwork is authored as editable deterministic drawing instructions in `art/w
 
 The first Linux/Windows pipeline passed and produced seven actual rendered view/scale screenshots ([workflow run 38142918828](https://github.com/Stoffe101/PixelTown/actions/runs/38142918828)). Reviewing those images revealed that **the art was too flat**: broad uniform grass tiles, featureless roof faces, a mostly empty cave center and simplistic settlement props. Before asking for style sign-off, the next art revision adds narrower grass tone variation, individual roof shingle highlights, a planted vegetable patch, fences, a handcart, a well, cave stone floor/column definition and small cave plants. These additions are still provisional: **verify with another actual screenshot run and human critique**, not with static source review alone.
 
+## Prototype 00B follow-up
+
+Art Direction v1.0 replaces the exploratory source-painted visuals with original sprite sheets and TileMapLayer/scene sprites, retaining the useful simulation and camera logic. This document remains the **baseline history**, not the current art standard. See [Prototype 00B](09_PROTOTYPE_00B.md).
+
 ## Known limitations and unfinished goals
 
 - No user-approved art style or decided sprite scale yet. Current art is primitive-coded; editability exists as source code, **not yet pixel-editor sprite sheets or Aseprite/Krita masters**.
