@@ -5,10 +5,10 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = {
  "assets/sprites/buildings/house_small.png": (128,144),
- "assets/sprites/buildings/blacksmith.png": (112,96),
- "assets/sprites/environment/oak_tree.png": (80,96),
+ "assets/sprites/buildings/blacksmith.png": (160,152),
+ "assets/sprites/environment/oak_tree.png": (96,112),
  "assets/sprites/environment/large_rock.png": (40,30),
- "assets/sprites/props/barrel.png": (22,28),
+ "assets/sprites/props/barrel.png": (40,44),
  "assets/tilesets/village/village_ground_16.png": (128,64),
 }
 def main():

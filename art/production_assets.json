@@ -19,8 +19,8 @@
       "png": "assets/sprites/buildings/blacksmith.png",
       "prefab": "scenes/buildings/Blacksmith.tscn",
       "size": [
-        112,
-        96
+        160,
+        152
       ],
       "status": "requires_genuine_hand_drawn_master"
     },
@@ -30,8 +30,8 @@
       "png": "assets/sprites/environment/oak_tree.png",
       "prefab": "scenes/environment/OakTree.tscn",
       "size": [
-        80,
-        96
+        96,
+        112
       ],
       "status": "requires_genuine_hand_drawn_master"
     },
@@ -52,8 +52,8 @@
       "png": "assets/sprites/props/barrel.png",
       "prefab": "scenes/props/Barrel.tscn",
       "size": [
-        22,
-        28
+        40,
+        44
       ],
       "status": "requires_genuine_hand_drawn_master"
     }

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="SpriteFrames" path="res://assets/animations/bat_frames.tres" id="frames"]
+
+[node name="Bat" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = ExtResource("frames")
+animation = &"fly"
+autoplay = "fly"
+offset = Vector2(0, -60)
