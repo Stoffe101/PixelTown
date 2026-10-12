@@ -382,7 +382,7 @@ offset = Vector2(-11, -13)
 [node name="Markers" type="Node2D" parent="." unique_id=225892847]
 
 [node name="Storage" type="Marker2D" parent="Markers" unique_id=827112596]
-position = Vector2(362, 352)
+position = Vector2(396, 400)
 
 [node name="Construction" type="Marker2D" parent="Markers" unique_id=1198067504]
 position = Vector2(731, 370)
