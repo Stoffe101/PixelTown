@@ -34,8 +34,12 @@ position = Vector2(508, 427)
 [node name="CratePlaced" parent="." instance=ExtResource("Crate")]
 position = Vector2(576, 427)
 [node name="VillagerAnimated" parent="." instance=ExtResource("Villager")]
+animation = &"walk_down"
+autoplay = "walk_down"
 position = Vector2(465, 448)
 [node name="GuardAnimated" parent="." instance=ExtResource("Guard")]
+animation = &"walk_down"
+autoplay = "walk_down"
 position = Vector2(745, 452)
 [node name="SlimeAnimated" parent="." instance=ExtResource("Slime")]
 position = Vector2(614, 478)
