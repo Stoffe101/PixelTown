@@ -39,6 +39,7 @@ jobs:
           python3 tools/art/validate_assets.py
           python3 tools/art/validate_hero.py
           python3 tools/art_export/validate_native_assets.py
+          python3 tools/art_export/validate_production_manifest.py
 
       - name: Install pinned Godot and verify release hash
         shell: bash
@@ -263,6 +264,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Hero master integrity failure' }
           python tools/art_export/validate_native_assets.py
           if ($LASTEXITCODE -ne 0) { throw 'Native pixel source verification failed' }
+          python tools/art_export/validate_production_manifest.py
+          if ($LASTEXITCODE -ne 0) { throw 'Production source mapping failure' }
 
       - name: Project import, unit tests and boot on Windows
         shell: pwsh

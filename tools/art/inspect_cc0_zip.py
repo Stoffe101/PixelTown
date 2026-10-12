@@ -34,7 +34,7 @@ def main():
             records.append({"file":item.filename,"export":fn,"width":im.width,"height":im.height,"sha256":hashlib.sha256(data).hexdigest(),"bytes":len(data)})
             images.append((item.filename,im))
     if not records:raise SystemExit("No PNG images found in remote CC0 ZIP; manual review blocked.")
-    (dest/"MANIFEST.json").write_text(json.dumps({"source":"https://opengameart.org/content/rpg-town-pixel-art-assets","author":"Ansimuz / Luis Zuno","license":"CC0, confirmed on creator's OpenGameArt entry","pack_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),"files":records},indent=2))
+    (dest/"MANIFEST.json").write_text(json.dumps({"source":("https://opengameart.org/content/puny-characters" if "puny" in source.name.lower() else "https://opengameart.org/content/rpg-town-pixel-art-assets"),"author":("Shade" if "puny" in source.name.lower() else "Ansimuz / Luis Zuno"),"license":"CC0, confirmed on creator's OpenGameArt entry","pack_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),"files":records},indent=2))
     page_w=960;col_w=320;row_h=260
     for start in range(0,len(images),9):
         tile=Image.new("RGB",(page_w,3*row_h),(30,27,37))
