@@ -303,4 +303,4 @@ position = Vector2(685, 468)
 position = Vector2(385, 335)
 
 [node name="AmbientSpider" parent="Objects" instance=ExtResource("ambient_spider")]
-position = Vector2(836, 477)
+position = Vector2(796, 477)
