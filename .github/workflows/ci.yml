@@ -116,6 +116,36 @@ jobs:
           3440 1440 cave 1 8 2
           CAPTURES
 
+      - name: Prove actual AnimatedSprite2D frame changes in Godot gallery
+        shell: bash
+        run: |
+          set -euo pipefail
+          for phase in 0.10 0.55; do
+            output="artifacts/screenshots/1920x1080-gallery-motion-${phase}.png"
+            timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
+              godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution 1920x1080 --windowed \
+              --script res://tests/visual/capture.gd -- 1920 1080 "$output" gallery 1 "$phase" 1 \
+              2>&1 | tee "artifacts/logs/gallery-motion-${phase}.log"
+            python3 tools/ci/check_engine_log.py "artifacts/logs/gallery-motion-${phase}.log"
+            python3 tools/ci/verify_png.py "$output" 1920 1080
+          done
+          python3 - <<'PY'
+          from PIL import Image, ImageChops
+          a=Image.open('artifacts/screenshots/1920x1080-gallery-motion-0.10.png').convert('RGBA')
+          b=Image.open('artifacts/screenshots/1920x1080-gallery-motion-0.55.png').convert('RGBA')
+          for name,box in {
+              'villager':(580,600,790,850),
+              'guard':(1420,620,1635,880),
+              'slime':(1040,740,1240,985),
+              'bat':(1600,735,1910,990),
+              'spider':(140,730,480,995)
+          }.items():
+              delta=ImageChops.difference(a.crop(box),b.crop(box)).convert('RGB')
+              changed=sum(any(v) for v in delta.getdata())
+              assert changed >= 10, f'No observed animated-frame change in {name} area: {changed}'
+              print('PASS rendered animation advances',name,changed)
+          PY
+
       - name: Shared source image reimport across five placed oaks
         shell: bash
         run: |
