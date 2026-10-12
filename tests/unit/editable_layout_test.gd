@@ -17,7 +17,7 @@ func run() -> Array[String]:
 			"Markers/CaveEntranceSpot", "Markers/GuardPost"]:
 		if village.get_node_or_null(path) == null:
 			issues.append("Village is missing editable node: " + path)
-	for path in ["EditorBackdrop", "PaintedTerrain", "Objects/MineralShrine", "Objects/Guard", "Objects/Slime",
+	for path in ["EditorBackdrop", "PaintedTerrain", "Objects/MineralShrine", "Objects/Guard", "Objects/Slime", "Objects/AmbientBat", "Objects/AmbientSpider",
 			"Markers/GuardPost", "Markers/EnemySpawn"]:
 		if cave.get_node_or_null(path) == null:
 			issues.append("Cave is missing editable node: " + path)

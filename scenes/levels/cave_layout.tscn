@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/characters/Guard.tscn" id="guard_anim"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/Slime.tscn" id="slime_anim"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Bat.tscn" id="ambient_bat"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Spider.tscn" id="ambient_spider"]
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/cave_entrance.png" id="cave_entrance_new"]
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/ore_blue.png" id="ore_blue_new"]
 [ext_resource type="Texture2D" path="res://assets/sprites/caves/ore_purple.png" id="ore_purple_new"]
@@ -296,3 +298,9 @@ position = Vector2(476, 437)
 position = Vector2(535, 353)
 [node name="CaveRockNew" parent="Objects" instance=ExtResource("newrock")]
 position = Vector2(685, 468)
+
+[node name="AmbientBat" parent="Objects" instance=ExtResource("ambient_bat")]
+position = Vector2(385, 335)
+
+[node name="AmbientSpider" parent="Objects" instance=ExtResource("ambient_spider")]
+position = Vector2(836, 477)
