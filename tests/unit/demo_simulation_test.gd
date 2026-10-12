@@ -26,4 +26,15 @@ func run() -> Array[String]:
 	sim.advance(15.0)
 	if sim.delivered_wood != after or not sim.resources_conserved():
 		failures.append("Finished building created extra material")
+	var activity := DemoState.new()
+	var seen: Dictionary = {}
+	for j in range(800):
+		seen[activity.worker_state] = true
+		activity.advance(0.05)
+		if not activity.resources_conserved():
+			failures.append("Lost resources during activity")
+			break
+	for state in ["gather","deliver","build","return","idle"]:
+		if not seen.has(state):
+			failures.append("Worker never entered real activity: "+state)
 	return failures

@@ -53,7 +53,9 @@ func _play(actor: AnimatedSprite2D, action: String, direction: String) -> void:
         wanted = ("walk_" if action == "carry" or action == "retreat" or action == "walk" else "idle_") + direction
     if not actor.sprite_frames.has_animation(wanted):
         wanted = "idle_down"
-    if actor.animation != wanted or not actor.is_playing():
+    if actor.animation != wanted:
+        actor.play(wanted)
+    elif not actor.is_playing() and actor.sprite_frames.get_animation_loop(wanted):
         actor.play(wanted)
 
 func update_art(sim, show_cave: bool, _size_choice: int) -> void:
@@ -81,9 +83,9 @@ func update_art(sim, show_cave: bool, _size_choice: int) -> void:
     dungeon_guard.position = _point(cave,"GuardPost")
     var attack_window: bool = sim.combat_elapsed >= 2.15
     _play(dungeon_guard, "attack" if attack_window else "defend", "right")
-    # A temporary readable lunge while the genuinely drawn attack sheet is pending.
-    dungeon_guard.offset = Vector2(-29,-70) if attack_window else Vector2(-32,-70)
-    dungeon_guard.rotation_degrees = -4.0 if attack_window else 0.0
+    # Stable ground anchor: spear movement is authored in the right-facing attack PNG.
+    dungeon_guard.offset = Vector2(-32,-70)
+    dungeon_guard.rotation_degrees = 0.0
     enemy.position = _point(cave,"EnemySpawn")
     if enemy.animation != &"bounce" or not enemy.is_playing():
         enemy.play(&"bounce")
