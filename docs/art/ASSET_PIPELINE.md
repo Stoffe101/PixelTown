@@ -1,8 +1,11 @@
-# Asset production pipeline (draft)
-1. In Aseprite create `art/handmade/<category>/name.aseprite` with real layers, no smoothing, alpha canvas and stable origin. Aseprite auto-export script uses official `--batch --sheet --data --format json-array` flags.
-2. On Windows: `powershell -ExecutionPolicy Bypass -File .\\tools\\art_export\\export-all.ps1` (optionally set `ASEPRITE_EXE`). PNGs exported to matching `assets/handmade/<category>/name.png`; animated sources get frame JSON.
-3. Create a reusable Sprite2D scene with `res://scripts/world/placeable_sprite.gd`, with centered=false, an offset of (-width/2,-height+foot_padding), Texture Filter=Nearest, and an authored StaticBody2D/CollisionShape2D child for obstructing objects.
-4. Save the prefab in `scenes/buildings`, `scenes/environment`, `scenes/props` or `scenes/caves`. Place instances in `scenes/levels/village_layout.tscn` under Objects and commit the map. Do not write new position constants in scripts.
-5. For painting use TileMapLayer and a project .tres TileSet. Starter candidate TileSet is manual-variant-only; actual terrain-connectivity patterns remain work.
-6. Whenever source art changes, re-export only the PNG, Godot will reload the shared texture. If dimensions/pivot/collision change, adjust the prefab once. Avoid overriding the Texture in individual instances.
-7. Run `python tools/art_export/validate_native_assets.py` and `python tools/ci/check_asset_dependencies.py` then Godot import/unit tests. Real CI screenshots are review evidence, not final approval.
+# PixelTown production art mapping
+
+This branch now uses art/production_assets.json to bind each future **real** layered Aseprite source to the PNG already referenced by a draggable .tscn scene. Missing handmade masters are explicitly marked, not fabricated or mislabeled as complete.
+
+For an oak-tree update: open assets/sprites/environment/oak_tree.png as a scale/layout reference. Redraw in Aseprite with genuine layered pixels and save as art/handmade/environment/oak_tree.aseprite. Run in PowerShell from the repository root:
+
+    powershell -ExecutionPolicy Bypass -File .\\tools\\art_export\\export-production.ps1 --id oak_tree
+
+This verifies the sprite dimensions (oak is currently 80x96) before writing to the actual assets/sprites/environment/oak_tree.png referenced by scenes/environment/OakTree.tscn. All placed instances inherit the new texture, keeping world coordinates. Use --dry-run to preview the map and omit --id for all existing real masters.
+
+The old export-all.ps1 targets unmapped experiments only. The new export-production.ps1 is canonical for permanent Godot prefabs. CI checks mapping uniqueness, alpha, texture links and dimensions with python tools/art_export/validate_production_manifest.py. This is a technical pipeline, NOT visual approval, and should not be confused with hand-authored artwork.

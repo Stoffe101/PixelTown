@@ -29,3 +29,5 @@ The asset review in CI uses the creator-published archive, inspects only PNGs, l
 ## Pass boundaries and acceptance
 One coherent slice: cottage + blacksmith + oak + readable ground/path edges + base villager + matching guard + enclosed cave corner. Keep the existing prefab/script architecture and live prototype. No giant scripted drawing overhaul, no automatic PR merge.
 The old Art Gate remains FAILED until original or properly licensed polished art has been integrated and engine-screen captures reviewed at 1920x1080, 2560x1440, 3440x1440 village and 1080p/ultrawide cave.
+
+Further CC0 source audits are linked from STYLE_REVIEW_BOARD.md. Neither alternative met the Stardew-first art target; no runtime replacement was made. Art Gate A remains FAILED.

@@ -30,7 +30,7 @@ def main():
                 print("Export failed",item["id"],proc.stdout,proc.stderr,file=sys.stderr);return 5
             frames=json.loads(meta.read_text()).get("frames",[])
             with png.open("rb") as f:header=f.read(24)
-            if header[:8]!=b"\\x89PNG\\r\\n\\x1a\\n":print("Not PNG",item["id"],file=sys.stderr);return 6
+            if header[:8]!=bytes([137,80,78,71,13,10,26,10]):print("Not PNG",item["id"],file=sys.stderr);return 6
             width,height=struct.unpack(">II",header[16:24])
             if [width,height]!=item["size"] or not frames:
                 print("Size/frame mismatch",item["id"],[width,height],"expected",item["size"],file=sys.stderr);return 7
