@@ -10,7 +10,8 @@ var plot_point: Vector2 = DEFAULT_PLOT
 const START_WOOD := 3
 
 var worker_pos: Vector2 = DEFAULT_STORAGE
-var worker_state: String = "collect"
+var worker_state: String = "gather"
+var activity_time: float = 0.0
 var storage_wood: int = START_WOOD
 var carried_wood: int = 0
 var delivered_wood: int = 0
@@ -33,15 +34,25 @@ func advance(delta: float) -> void:
 	# In this proof the village and cave logic update irrespective of active view.
 	if not building_complete:
 		if worker_state == "collect":
-			if storage_wood > 0:
-				storage_wood -= 1
-				carried_wood = 1
-				worker_state = "deliver"
-			else:
-				worker_state = "idle"
+			worker_state = "gather"
+			activity_time = 0.0
+		elif worker_state == "gather":
+			activity_time += delta
+			if activity_time >= 0.55:
+				if storage_wood > 0:
+					storage_wood -= 1
+					carried_wood = 1
+					worker_state = "deliver"
+				else:
+					worker_state = "idle"
 		elif worker_state == "deliver":
 			worker_pos = worker_pos.move_toward(plot_point, WALK_SPEED * delta)
 			if worker_pos.distance_to(plot_point) < 0.05:
+				activity_time = 0.0
+				worker_state = "build"
+		elif worker_state == "build":
+			activity_time += delta
+			if activity_time >= 0.5:
 				delivered_wood += carried_wood
 				carried_wood = 0
 				if delivered_wood >= START_WOOD:
@@ -73,6 +84,8 @@ func status() -> String:
 		return "Hauling wood to blueprint"
 	if worker_state == "return":
 		return "Returning to storage"
-	if worker_state == "collect":
-		return "Collecting wood"
+	if worker_state == "gather" or worker_state == "collect":
+		return "Gathering wood"
+	if worker_state == "build":
+		return "Working on the watch hut"
 	return "Standing by"

@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/placeable_sprite.gd" id="Placeable"]
-[ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="Texture"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/house_small.png" id="Texture"]
+
+[ext_resource type="PackedScene" path="res://scenes/props/Crate.tscn" id="Crate"]
 
 [sub_resource type="RectangleShape2D" id="Footprint"]
 size = Vector2(64, 24)
@@ -11,7 +13,7 @@ script = ExtResource("Placeable")
 texture_filter = 1
 texture = ExtResource("Texture")
 centered = false
-offset = Vector2(-62, -105)
+offset = Vector2(-64, -140)
 display_name = "Storage Hut"
 category = "Building"
 footprint_cells = Vector2i(4, 3)
@@ -24,3 +26,9 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
 shape = SubResource("Footprint")
+
+[node name="StorageCrateLeft" parent="." instance=ExtResource("Crate")]
+position = Vector2(-39, 2)
+
+[node name="StorageCrateRight" parent="." instance=ExtResource("Crate")]
+position = Vector2(38, 2)

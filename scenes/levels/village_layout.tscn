@@ -1,5 +1,12 @@
 [gd_scene format=4]
 
+[ext_resource type="PackedScene" path="res://scenes/buildings/StorageHut.tscn" id="storage_unified"]
+[ext_resource type="PackedScene" path="res://scenes/props/Anvil.tscn" id="anvil_unified"]
+[ext_resource type="PackedScene" path="res://scenes/props/Barrel.tscn" id="barrel_unified"]
+[ext_resource type="PackedScene" path="res://scenes/caves/RockSmall.tscn" id="rock_unified"]
+[ext_resource type="PackedScene" path="res://scenes/caves/TorchStand.tscn" id="torch_unified"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Villager.tscn" id="villager_anim"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Guard.tscn" id="guard_anim"]
 [ext_resource type="TileSet" path="res://assets/terrain_paint_tileset.tres" id="paint_tileset"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/cave_gate.png" id="tcave_gate"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/construction_site.png" id="tconstruction_site"]
@@ -85,11 +92,8 @@ texture = ExtResource("tcottage")
 centered = false
 offset = Vector2(-64, -140)
 
-[node name="Storehouse" type="Sprite2D" parent="Objects" unique_id=1590953281]
+[node name="Storehouse" parent="Objects" instance=ExtResource("storage_unified")]
 position = Vector2(432, 334)
-texture = ExtResource("tstorehouse")
-centered = false
-offset = Vector2(-62, -108)
 
 [node name="Smithy" type="Sprite2D" parent="Objects" unique_id=1328370523]
 position = Vector2(604, 358)
@@ -112,15 +116,13 @@ offset = Vector2(-59, -94)
 [node name="CompletedHut" type="Sprite2D" parent="Objects" unique_id=2057034140]
 visible = false
 position = Vector2(731, 370)
-texture = ExtResource("twatch_hut")
+texture_filter = 1
+texture = ExtResource("tcottage")
 centered = false
-offset = Vector2(-59, -94)
+offset = Vector2(-64, -140)
 
-[node name="Well" type="Sprite2D" parent="Objects" unique_id=261384161]
+[node name="Well" parent="Objects" instance=ExtResource("newwell")]
 position = Vector2(492, 450)
-texture = SubResource("atlas1")
-centered = false
-offset = Vector2(-24, -48)
 
 [node name="FarmWest" type="Sprite2D" parent="Objects" unique_id=1673269210]
 position = Vector2(225, 499)
@@ -242,23 +244,14 @@ texture = SubResource("atlas5")
 centered = false
 offset = Vector2(-32, -32)
 
-[node name="Rock01" type="Sprite2D" parent="Objects" unique_id=128802964]
+[node name="Rock01" parent="Objects" instance=ExtResource("rock_unified")]
 position = Vector2(684, 500)
-texture = SubResource("atlas6")
-centered = false
-offset = Vector2(-24, -40)
 
-[node name="Rock02" type="Sprite2D" parent="Objects" unique_id=933548977]
+[node name="Rock02" parent="Objects" instance=ExtResource("rock_unified")]
 position = Vector2(1014, 466)
-texture = SubResource("atlas6")
-centered = false
-offset = Vector2(-24, -40)
 
-[node name="Rock03" type="Sprite2D" parent="Objects" unique_id=727407046]
+[node name="Rock03" parent="Objects" instance=ExtResource("rock_unified")]
 position = Vector2(176, 461)
-texture = SubResource("atlas6")
-centered = false
-offset = Vector2(-24, -40)
 
 [node name="Flowers01" type="Sprite2D" parent="Objects" unique_id=2105569294]
 position = Vector2(142, 417)
@@ -338,33 +331,17 @@ texture = SubResource("atlas9")
 centered = false
 offset = Vector2(-11, -13)
 
-[node name="Torch01" type="Sprite2D" parent="Objects" unique_id=878472792]
+[node name="Torch01" parent="Objects" instance=ExtResource("torch_unified")]
 position = Vector2(546, 373)
-texture = SubResource("atlas10")
-centered = false
-offset = Vector2(-12, -40)
 
-[node name="Torch02" type="Sprite2D" parent="Objects" unique_id=590490733]
+[node name="Torch02" parent="Objects" instance=ExtResource("torch_unified")]
 position = Vector2(858, 386)
-texture = SubResource("atlas10")
-centered = false
-offset = Vector2(-12, -40)
 
-[node name="Worker" type="Sprite2D" parent="Objects" unique_id=1674933495]
+[node name="Worker" parent="Objects" instance=ExtResource("villager_anim")]
 position = Vector2(362, 352)
-texture = ExtResource("newvillager")
-centered = false
-offset = Vector2(-32, -68)
-region_enabled = true
-region_rect = Rect2(0, 0, 64, 72)
 
-[node name="Guard" type="Sprite2D" parent="Objects" unique_id=1876778421]
+[node name="Guard" parent="Objects" instance=ExtResource("guard_anim")]
 position = Vector2(777, 392)
-texture = ExtResource("newguard")
-centered = false
-offset = Vector2(-32, -68)
-region_enabled = true
-region_rect = Rect2(0, 0, 64, 72)
 
 [node name="GuardEquipment" type="Sprite2D" parent="Objects" unique_id=2064995592]
 visible = false
@@ -416,7 +393,10 @@ position = Vector2(777, 392)
 [node name="CaveEntranceSpot" type="Marker2D" parent="Markers" unique_id=187103251]
 position = Vector2(797, 275)
 
-[node name="NewWell" parent="Objects" instance=ExtResource("newwell")]
-position = Vector2(476, 434)
+[node name="SmithyAnvil" parent="Objects" instance=ExtResource("anvil_unified")]
+position = Vector2(657, 363)
 [node name="SupplyCrate" parent="Objects" instance=ExtResource("newcrate")]
 position = Vector2(572, 414)
+
+[node name="StorageBarrel" parent="Objects" instance=ExtResource("barrel_unified")]
+position = Vector2(478, 352)
