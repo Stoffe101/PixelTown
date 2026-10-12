@@ -43,6 +43,7 @@ Flexible work priorities and eventual specialization, simple food/health/rest, p
 | D-026 | **Necesse** is the primary production/legibility benchmark; **Graveyard Keeper** a secondary mood/material/lighting influence; **Stardew Valley** a secondary character-charm influence | Owner confirmed order; all output must be original PixelTown art, not copied assets |
 | D-027 | Move art from giant code-drawn scene rectangles to **editable PNG sheets/tilesets with documented reusable templates and equipment alignment** | Sustainable production pipeline for many inhabitants/buildings |
 | D-028 | Compare **20×30 and 24×32** character candidates within a common 24×32 cell grid | 24×32 preferred initially, but exact size remains subject to in-engine visual review |
+| D-030 | **2026-10-12: Stardew Valley becomes the PRIMARY art reference for color, texture, silhouettes, character appeal and environment composition; Necesse SECONDARY, Graveyard Keeper TERTIARY.** Supersedes the art reference ranking in D-026 but preserves D-020 square-grid projection and D-027 editable external assets | Owner rejected repeated flat geometry and painterly illustration; Art Gate A remains failed until real Godot screenshot approval |
 | D-029 | **Prototype 00B art must pass owner screenshot review before art is marked approved or PR merged**; CI success does not qualify | Strong art-quality gate without blocking working simulation |
 
 ## Strong design intentions, pending prototype evidence
