@@ -40,6 +40,7 @@ jobs:
           python3 tools/art/validate_hero.py
           python3 tools/art_export/validate_native_assets.py
           python3 tools/art_export/validate_production_manifest.py
+          python3 tools/art_export/export_production.py --dry-run
 
       - name: Install pinned Godot and verify release hash
         shell: bash
@@ -167,33 +168,6 @@ jobs:
             done
           done
           cp artifacts/logs/project-before-density-experiment.godot project.godot
-
-      - name: Audit real hand-pixeled CC0 village source (non-shipping A/B)
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p artifacts/cc0_research
-          curl --fail --location --retry 3 --max-time 90 --silent --show-error \
-            'https://opengameart.org/sites/default/files/town_rpg_pack.zip' \
-            -o "$RUNNER_TEMP/ansimuz-cc0-rpg-town.zip"
-          python3 tools/art/inspect_cc0_zip.py "$RUNNER_TEMP/ansimuz-cc0-rpg-town.zip" artifacts/cc0_research
-
-      - name: Audit cohesive CC0 overworld and dungeon sprites by Shade
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p artifacts/shade_cc0_review
-          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
-            'https://opengameart.org/sites/default/files/punyworld-overworld-tileset_0.png' \
-            -o artifacts/shade_cc0_review/overworld.png
-          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
-            'https://opengameart.org/sites/default/files/punyworld-dungeon-tileset.png' \
-            -o artifacts/shade_cc0_review/dungeon.png
-          python3 tools/art/inspect_cc0_images.py artifacts/shade_cc0_review
-          curl --fail --location --retry 2 --max-time 75 --silent --show-error \
-            'https://opengameart.org/sites/default/files/puny-characters.zip' \
-            -o "$RUNNER_TEMP/puny-characters.zip"
-          python3 tools/art/inspect_cc0_zip.py "$RUNNER_TEMP/puny-characters.zip" artifacts/shade_cc0_characters
 
       - name: Summary
         if: always()
