@@ -51,8 +51,13 @@ func configure_sim(sim) -> void:
 func get_cave_entrance_position() -> Vector2:
 	return _point(village,"CaveEntranceSpot")
 
-func _frame(body: Sprite2D, row: int, frame: int, size_choice: int) -> void:
-	body.region_rect = Rect2(24 * (size_choice * 8 + frame),32 * row,24,32)
+func _frame(body: Sprite2D, row: int, frame: int, _size_choice: int) -> void:
+	if body == guard_gear or body == dungeon_gear:
+		return
+	var sprite_row: int = 0
+	if body == worker:
+		sprite_row = [0, 3, 1, 2][clampi(row, 0, 3)]
+	body.region_rect = Rect2((frame % 4) * 64, sprite_row * 72, 64, 72)
 
 func update_art(sim, show_cave: bool, size_choice: int) -> void:
 	if village == null:
@@ -75,6 +80,7 @@ func update_art(sim, show_cave: bool, size_choice: int) -> void:
 	_frame(dungeon_guard,4,attack_frame,size_choice)
 	_frame(dungeon_gear,0,attack_frame,size_choice)
 	enemy.modulate = Color("#f4b2ae") if sim.combat_elapsed < 0.22 else Color.WHITE
+	enemy.region_rect = Rect2(anim * 64, 0, 64, 48)
 	enemy.position = _point(cave, "EnemySpawn") + Vector2(0.0, sin(sim.elapsed * 3.0) * 2.0)
 	# The visual cargo is not a looping animation: it follows the actual
 	# conserved material ledger in the demonstration simulation.

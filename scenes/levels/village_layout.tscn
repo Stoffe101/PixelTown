@@ -12,6 +12,13 @@
 [ext_resource type="Texture2D" path="res://assets/original/hero/storehouse.png" id="tstorehouse"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/watch_hut.png" id="twatch_hut"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/blacksmith.png" id="newsmithy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/oak_tree.png" id="newoak"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/villager_sheet.png" id="newvillager"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/guard_sheet.png" id="newguard"]
+[ext_resource type="Texture2D" path="res://assets/sprites/caves/cave_entrance.png" id="newgate"]
+[ext_resource type="PackedScene" path="res://scenes/props/Well.tscn" id="newwell"]
+[ext_resource type="PackedScene" path="res://scenes/props/Crate.tscn" id="newcrate"]
 [sub_resource type="AtlasTexture" id="atlas1"]
 atlas = ExtResource("tobj")
 region = Rect2(224, 96, 48, 48)
@@ -86,15 +93,15 @@ offset = Vector2(-62, -108)
 
 [node name="Smithy" type="Sprite2D" parent="Objects" unique_id=1328370523]
 position = Vector2(604, 358)
-texture = ExtResource("tsmithy")
+texture = ExtResource("newsmithy")
 centered = false
-offset = Vector2(-82, -126)
+offset = Vector2(-80, -150)
 
 [node name="CaveEntrance" type="Sprite2D" parent="Objects" unique_id=134739375]
 position = Vector2(797, 306)
-texture = ExtResource("tcave_gate")
+texture = ExtResource("newgate")
 centered = false
-offset = Vector2(-65, -110)
+offset = Vector2(-56, -94)
 
 [node name="ConstructionSite" type="Sprite2D" parent="Objects" unique_id=1025011994]
 position = Vector2(731, 370)
@@ -141,87 +148,87 @@ offset = Vector2(-40, -64)
 
 [node name="Tree01" type="Sprite2D" parent="Objects" unique_id=1608795820]
 position = Vector2(-205, 355)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree02" type="Sprite2D" parent="Objects" unique_id=533959712]
 position = Vector2(-157, 327)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree03" type="Sprite2D" parent="Objects" unique_id=898224239]
 position = Vector2(-84, 430)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree04" type="Sprite2D" parent="Objects" unique_id=479899731]
 position = Vector2(115, 318)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree05" type="Sprite2D" parent="Objects" unique_id=1136521239]
 position = Vector2(172, 278)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree06" type="Sprite2D" parent="Objects" unique_id=2061041604]
 position = Vector2(480, 267)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree07" type="Sprite2D" parent="Objects" unique_id=1941618379]
 position = Vector2(741, 273)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree08" type="Sprite2D" parent="Objects" unique_id=1566025276]
 position = Vector2(1014, 307)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree09" type="Sprite2D" parent="Objects" unique_id=94417219]
 position = Vector2(1059, 362)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree10" type="Sprite2D" parent="Objects" unique_id=118050044]
 position = Vector2(101, 479)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree11" type="Sprite2D" parent="Objects" unique_id=1747867183]
 position = Vector2(1041, 490)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree12" type="Sprite2D" parent="Objects" unique_id=468290287]
 position = Vector2(1210, 330)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree13" type="Sprite2D" parent="Objects" unique_id=1303862087]
 position = Vector2(1268, 374)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Tree14" type="Sprite2D" parent="Objects" unique_id=395464807]
 position = Vector2(1350, 412)
-texture = ExtResource("tmature_tree")
+texture = ExtResource("newoak")
 centered = false
-offset = Vector2(-43, -112)
+offset = Vector2(-48, -110)
 
 [node name="Fence01" type="Sprite2D" parent="Objects" unique_id=738506561]
 position = Vector2(306, 512)
@@ -345,21 +352,22 @@ offset = Vector2(-12, -40)
 
 [node name="Worker" type="Sprite2D" parent="Objects" unique_id=1674933495]
 position = Vector2(362, 352)
-texture = ExtResource("tinhabitants")
+texture = ExtResource("newvillager")
 centered = false
-offset = Vector2(-12, -31)
+offset = Vector2(-32, -68)
 region_enabled = true
-region_rect = Rect2(0, 0, 24, 32)
+region_rect = Rect2(0, 0, 64, 72)
 
 [node name="Guard" type="Sprite2D" parent="Objects" unique_id=1876778421]
 position = Vector2(777, 392)
-texture = ExtResource("tinhabitants")
+texture = ExtResource("newguard")
 centered = false
-offset = Vector2(-12, -31)
+offset = Vector2(-32, -68)
 region_enabled = true
-region_rect = Rect2(0, 128, 24, 32)
+region_rect = Rect2(0, 0, 64, 72)
 
 [node name="GuardEquipment" type="Sprite2D" parent="Objects" unique_id=2064995592]
+visible = false
 position = Vector2(777, 392)
 texture = ExtResource("tguard_equipment")
 centered = false
@@ -407,3 +415,8 @@ position = Vector2(777, 392)
 
 [node name="CaveEntranceSpot" type="Marker2D" parent="Markers" unique_id=187103251]
 position = Vector2(797, 275)
+
+[node name="NewWell" parent="Objects" instance=ExtResource("newwell")]
+position = Vector2(476, 434)
+[node name="SupplyCrate" parent="Objects" instance=ExtResource("newcrate")]
+position = Vector2(572, 414)

@@ -7,6 +7,13 @@
 [ext_resource type="PackedScene" path="res://scenes/environment/LargeRock.tscn" id="P4"]
 [ext_resource type="PackedScene" path="res://scenes/props/Barrel.tscn" id="P5"]
 [ext_resource type="PackedScene" path="res://scenes/caves/CaveEntrance.tscn" id="P6"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Villager.tscn" id="villager_new"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Guard.tscn" id="guard_new"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Slime.tscn" id="slime_new"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Bat.tscn" id="bat_new"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Spider.tscn" id="spider_new"]
+[ext_resource type="PackedScene" path="res://scenes/props/Well.tscn" id="well_new"]
+[ext_resource type="PackedScene" path="res://scenes/props/Crate.tscn" id="crate_new"]
 [node name="ArtistShowcase" type="Node2D"]
 y_sort_enabled = true
 
@@ -67,3 +74,18 @@ position = Vector2(760, 395)
 
 [node name="CaveEntranceTest" parent="." instance=ExtResource("P6")]
 position = Vector2(850, 440)
+
+[node name="VillagerAnimation" parent="." instance=ExtResource("villager_new")]
+position = Vector2(375, 400)
+[node name="GuardAnimation" parent="." instance=ExtResource("guard_new")]
+position = Vector2(685, 440)
+[node name="SlimeAnimation" parent="." instance=ExtResource("slime_new")]
+position = Vector2(540, 452)
+[node name="BatAnimation" parent="." instance=ExtResource("bat_new")]
+position = Vector2(792, 440)
+[node name="SpiderAnimation" parent="." instance=ExtResource("spider_new")]
+position = Vector2(465, 462)
+[node name="WellPlaced" parent="." instance=ExtResource("well_new")]
+position = Vector2(305, 440)
+[node name="CratePlaced" parent="." instance=ExtResource("crate_new")]
+position = Vector2(660, 414)

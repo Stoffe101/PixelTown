@@ -8,6 +8,12 @@
 [ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
 [ext_resource type="Texture2D" path="res://assets/objects.png" id="tobj"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/guard_sheet.png" id="newguard"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime_sheet.png" id="newslime"]
+[ext_resource type="PackedScene" path="res://scenes/caves/OreBlue.tscn" id="neworeblue"]
+[ext_resource type="PackedScene" path="res://scenes/caves/OrePurple.tscn" id="neworepurple"]
+[ext_resource type="PackedScene" path="res://scenes/caves/TorchStand.tscn" id="newtorch"]
+[ext_resource type="PackedScene" path="res://scenes/caves/RockSmall.tscn" id="newrock"]
 [sub_resource type="AtlasTexture" id="atlas1"]
 atlas = ExtResource("tobj")
 region = Rect2(416, 176, 48, 40)
@@ -170,13 +176,14 @@ offset = Vector2(-24, -48)
 
 [node name="Guard" type="Sprite2D" parent="Objects" unique_id=2012188096]
 position = Vector2(607, 395)
-texture = ExtResource("tinhabitants")
+texture = ExtResource("newguard")
 centered = false
-offset = Vector2(-12, -31)
+offset = Vector2(-32, -68)
 region_enabled = true
-region_rect = Rect2(0, 128, 24, 32)
+region_rect = Rect2(0, 0, 64, 72)
 
 [node name="GuardEquipment" type="Sprite2D" parent="Objects" unique_id=480538430]
+visible = false
 position = Vector2(607, 395)
 texture = ExtResource("tguard_equipment")
 centered = false
@@ -186,9 +193,11 @@ region_rect = Rect2(0, 0, 24, 32)
 
 [node name="Slime" type="Sprite2D" parent="Objects" unique_id=1702739310]
 position = Vector2(695, 395)
-texture = SubResource("atlas5")
+texture = ExtResource("newslime")
 centered = false
-offset = Vector2(-20, -32)
+offset = Vector2(-32, -44)
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 48)
 
 [node name="Markers" type="Node2D" parent="." unique_id=399571868]
 
@@ -197,3 +206,12 @@ position = Vector2(607, 395)
 
 [node name="EnemySpawn" type="Marker2D" parent="Markers" unique_id=999306703]
 position = Vector2(695, 395)
+
+[node name="OreBlueNew" parent="Objects" instance=ExtResource("neworeblue")]
+position = Vector2(760, 430)
+[node name="OrePurpleNew" parent="Objects" instance=ExtResource("neworepurple")]
+position = Vector2(476, 437)
+[node name="TorchNew" parent="Objects" instance=ExtResource("newtorch")]
+position = Vector2(535, 353)
+[node name="CaveRockNew" parent="Objects" instance=ExtResource("newrock")]
+position = Vector2(685, 468)
