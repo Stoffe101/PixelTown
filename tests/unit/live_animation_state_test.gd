@@ -5,6 +5,8 @@ func run() -> Array[String]:
     var world: Node2D = load("res://scenes/world_art.gd").new()
     var host := Node2D.new()
     host.add_child(world)
+    # Run the lifecycle manually: this standalone unit suite is not inside SceneTree.
+    world._ready()
     var sim = load("res://scripts/demo_simulation.gd").new()
     world.configure_sim(sim)
     var worker := world.get_node("VillageLayout/Objects/Worker") as AnimatedSprite2D
