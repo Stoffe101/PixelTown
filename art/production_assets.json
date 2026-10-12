@@ -8,8 +8,8 @@
       "png": "assets/sprites/buildings/house_small.png",
       "prefab": "scenes/buildings/HouseSmall.tscn",
       "size": [
-        96,
-        96
+        128,
+        144
       ],
       "status": "requires_genuine_hand_drawn_master"
     },
