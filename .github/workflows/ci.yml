@@ -105,6 +105,9 @@ jobs:
           2560 1440 village 1 20 1
           3440 1440 village 0 5 1
           3440 1440 village 1 18 1
+          1920 1080 village 1 0.1 1
+          1920 1080 village 1 6.2 1
+          1920 1080 cave 1 2.28 1
           1920 1080 cave 1 8 1
           3440 1440 cave 1 8 1
           1920 1080 showcase 1 0 1

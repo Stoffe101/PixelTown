@@ -189,18 +189,21 @@ centered = false
 offset = Vector2(-16, -32)
 
 [node name="Mushroom01" type="Sprite2D" parent="Objects" unique_id=937679770]
+visible = false
 position = Vector2(265, 421)
 texture = SubResource("atlas2")
 centered = false
 offset = Vector2(-16, -32)
 
 [node name="Mushroom02" type="Sprite2D" parent="Objects" unique_id=1070046339]
+visible = false
 position = Vector2(391, 289)
 texture = SubResource("atlas2")
 centered = false
 offset = Vector2(-16, -32)
 
 [node name="Mushroom03" type="Sprite2D" parent="Objects" unique_id=232644034]
+visible = false
 position = Vector2(821, 454)
 texture = SubResource("atlas2")
 centered = false
