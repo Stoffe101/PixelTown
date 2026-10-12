@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" path="res://assets/terrain_paint_tileset.tres" id="paint_tileset"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/cave_gate.png" id="tcave_gate"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/construction_site.png" id="tconstruction_site"]
-[ext_resource type="Texture2D" path="res://assets/original/hero/cottage.png" id="tcottage"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/house_small.png" id="tcottage"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/guard_equipment.png" id="tguard_equipment"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/inhabitants.png" id="tinhabitants"]
 [ext_resource type="Texture2D" path="res://assets/original/hero/mature_tree.png" id="tmature_tree"]
@@ -76,7 +76,7 @@ y_sort_enabled = true
 position = Vector2(309, 365)
 texture = ExtResource("tcottage")
 centered = false
-offset = Vector2(-69, -113)
+offset = Vector2(-64, -140)
 
 [node name="Storehouse" type="Sprite2D" parent="Objects" unique_id=1590953281]
 position = Vector2(432, 334)

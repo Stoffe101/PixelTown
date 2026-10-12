@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = {
- "assets/sprites/buildings/house_small.png": (96,96),
+ "assets/sprites/buildings/house_small.png": (128,144),
  "assets/sprites/buildings/blacksmith.png": (112,96),
  "assets/sprites/environment/oak_tree.png": (80,96),
  "assets/sprites/environment/large_rock.png": (40,30),

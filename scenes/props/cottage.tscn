@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/original/hero/cottage.png" id="sprite"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/house_small.png" id="sprite"]
 
 [node name="cottage" type="Sprite2D"]
 texture_filter = 1
 texture = ExtResource("sprite")
 centered = false
-offset = Vector2(-69, -113)
+offset = Vector2(-64, -140)

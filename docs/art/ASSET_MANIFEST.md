@@ -1,7 +1,7 @@
 # PixelTown candidate art manifest
 | PNG | Pixels | Godot scene | Rights/status |
 |---|---:|---|---|
-| assets/sprites/buildings/house_small.png | 96x96 | scenes/buildings/HouseSmall.tscn | PixelTown original, review |
+| assets/sprites/buildings/house_small.png | 128x144 | HouseSmall.tscn / props/cottage.tscn / running village | Native pixel CC0 composite based on Luis Zuno (Ansimuz) RPG Town; visually experimental, NOT an ARR original |
 | assets/sprites/buildings/blacksmith.png | 112x96 | scenes/buildings/Blacksmith.tscn | PixelTown original, review |
 | assets/sprites/environment/oak_tree.png | 80x96 | scenes/environment/OakTree.tscn | PixelTown original, review |
 | assets/sprites/environment/large_rock.png | 40x30 | scenes/environment/LargeRock.tscn | PixelTown original, review |
