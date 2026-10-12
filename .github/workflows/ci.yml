@@ -88,9 +88,9 @@ jobs:
           set -euo pipefail
           mkdir -p artifacts/screenshots
           # Same camera/art at 16:9 and 21:9, with both proposed sprite sizes.
-          while read -r width height mode scale seconds zoom; do
+          while read -r width height mode scale seconds zoom label; do
             [ -z "$width" ] && continue
-            stem="${width}x${height}-${mode}-scale${scale}-zoom${zoom:-1}"
+            stem="${width}x${height}-${mode}-scale${scale}-zoom${zoom:-1}${label:+-${label}}"
             output="artifacts/screenshots/${stem}.png"
             timeout 120s xvfb-run -a -s '-screen 0 3440x1440x24 -ac +extension GLX +render -noreset' \
               godot --audio-driver Dummy --path . --rendering-method gl_compatibility --resolution "${width}x${height}" --windowed \
@@ -105,9 +105,9 @@ jobs:
           2560 1440 village 1 20 1
           3440 1440 village 0 5 1
           3440 1440 village 1 18 1
-          1920 1080 village 1 0.1 1
-          1920 1080 village 1 6.2 1
-          1920 1080 cave 1 2.28 1
+          1920 1080 village 1 0.1 1 gathering
+          1920 1080 village 1 6.2 1 building
+          1920 1080 cave 1 2.28 1 striking
           1920 1080 cave 1 8 1
           3440 1440 cave 1 8 1
           1920 1080 showcase 1 0 1
